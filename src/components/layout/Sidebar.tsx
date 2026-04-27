@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { ui, type Locale } from "@/lib/i18n/ui";
 
 type Props = {
@@ -12,6 +14,14 @@ type Props = {
  */
 export function Sidebar({ locale, onLocaleChange }: Props) {
   const t = ui[locale];
+  const pathname = usePathname();
+  const isHome = pathname === "/";
+  const isMap = pathname === "/map";
+  const navBase =
+    "rounded-[var(--radius-md)] px-3 py-2 text-sm font-medium transition";
+  const navActive =
+    "bg-white/85 text-[var(--text)] shadow-[var(--shadow-soft)] ring-1 ring-white/90";
+  const navInactive = "text-[var(--text-muted)] hover:bg-white/65 hover:text-[var(--text)]";
 
   return (
     <aside
@@ -38,12 +48,20 @@ export function Sidebar({ locale, onLocaleChange }: Props) {
       </div>
 
       <nav className="flex flex-col gap-1 sm:flex-row sm:flex-wrap md:flex-col">
-        <span
-          className="rounded-[var(--radius-md)] bg-white/85 px-3 py-2 text-sm font-medium text-[var(--text)] shadow-[var(--shadow-soft)] ring-1 ring-white/90"
-          aria-current="page"
+        <Link
+          href="/"
+          className={`${navBase} ${isHome ? navActive : navInactive}`}
+          aria-current={isHome ? "page" : undefined}
         >
           {t.navHome}
-        </span>
+        </Link>
+        <Link
+          href="/map"
+          className={`${navBase} ${isMap ? navActive : navInactive}`}
+          aria-current={isMap ? "page" : undefined}
+        >
+          {t.navMap}
+        </Link>
         <span
           className="rounded-[var(--radius-md)] px-3 py-2 text-sm text-[var(--text-muted)]"
           title={t.navCreateHint}

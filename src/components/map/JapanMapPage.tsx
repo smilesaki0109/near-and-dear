@@ -1,0 +1,445 @@
+"use client";
+
+import { useMemo, useState } from "react";
+import { AppShell } from "@/components/layout/AppShell";
+import { IllustratedJapanMap } from "@/components/map/IllustratedJapanMap";
+import { useLanguage } from "@/contexts/LanguageContext";
+import type { JapanMapCategory, JapanMapPost } from "@/types/map";
+
+type Props = {
+  initialPosts: JapanMapPost[];
+};
+
+type FormState = {
+  category: JapanMapCategory;
+  title: string;
+  description: string;
+  x: string;
+  y: string;
+  imageUrl: string;
+};
+
+const categories: JapanMapCategory[] = [
+  "food",
+  "place",
+  "culture",
+  "daily_life",
+];
+
+const categoryLabels: Record<JapanMapCategory, string> = {
+  food: "Food",
+  place: "Place",
+  culture: "Culture",
+  daily_life: "Daily Life",
+};
+
+const categoryEmoji: Record<JapanMapCategory, string> = {
+  food: "🍜",
+  place: "🏠",
+  culture: "🎎",
+  daily_life: "🌿",
+};
+
+const categoryStyle: Record<JapanMapCategory, string> = {
+  food: "bg-[#fff0f4] text-[#d45f7e]",
+  place: "bg-[#eef7ff] text-[#4d8fd8]",
+  culture: "bg-[var(--primary-soft)] text-[var(--primary-deep)]",
+  daily_life: "bg-[#effaf4] text-[#4f956a]",
+};
+
+const samplePosts: JapanMapPost[] = [
+  {
+    id: "sample-sapporo-seafood",
+    category: "food",
+    title: "Seafood in Sapporo",
+    description: "The seafood here is amazing!",
+    x: 77,
+    y: 20,
+    imageUrl: null,
+    createdAt: new Date(0).toISOString(),
+  },
+  {
+    id: "sample-tokyo-ramen",
+    category: "food",
+    title: "Ramen shops in Tokyo",
+    description: "Warm bowls after work make me happy.",
+    x: 67,
+    y: 47,
+    imageUrl: null,
+    createdAt: new Date(0).toISOString(),
+  },
+  {
+    id: "sample-kyoto-temples",
+    category: "culture",
+    title: "Kyoto temples",
+    description: "Beautiful temples and gardens.",
+    x: 50,
+    y: 58,
+    imageUrl: null,
+    createdAt: new Date(0).toISOString(),
+  },
+  {
+    id: "sample-osaka-takoyaki",
+    category: "food",
+    title: "Takoyaki in Osaka",
+    description: "My comfort food with friends.",
+    x: 46,
+    y: 64,
+    imageUrl: null,
+    createdAt: new Date(0).toISOString(),
+  },
+];
+
+const copy = {
+  en: {
+    eyebrow: "Japan Map",
+    title: "What foreigners actually love in Japan",
+    subtitle:
+      "A playful map for the foods, places, culture, and daily joys people discover while living here.",
+    mapHint: "Click anywhere on the illustrated map to choose a spot.",
+    selectedPoint: "Selected spot",
+    formTitle: "Share what YOU love about Japan!",
+    formBody: "Add a place, food, culture, or anything that makes you happy.",
+    titleLabel: "Title",
+    category: "Category",
+    description: "Tell us more!",
+    x: "Map X",
+    y: "Map Y",
+    imageUrl: "Image URL (optional)",
+    submit: "Post",
+    saving: "Saving...",
+    emptyNote: "Sample pins are shown until the first real post arrives.",
+    recent: "Map posts",
+    success: "Added to Japan Map.",
+    error: "We couldn’t save that. Please try again.",
+  },
+  ja: {
+    eyebrow: "Japan Map",
+    title: "外国人が日本で本当に好きになったもの",
+    subtitle:
+      "日本で見つけた食べ物、場所、文化、日常の小さな好きにピンを立てる、楽しいマップです。",
+    mapHint: "イラスト地図をクリックすると投稿位置を選べます。",
+    selectedPoint: "選択中の位置",
+    formTitle: "あなたの好きな日本を投稿しよう！",
+    formBody: "場所、食べ物、文化、うれしかった体験を気軽に共有してください。",
+    titleLabel: "タイトル",
+    category: "カテゴリ",
+    description: "コメント",
+    x: "Map X",
+    y: "Map Y",
+    imageUrl: "画像URL（任意）",
+    submit: "Post",
+    saving: "保存中...",
+    emptyNote: "まだ投稿がないため、サンプルピンを表示しています。",
+    recent: "マップ投稿",
+    success: "Japan Mapに追加しました。",
+    error: "保存できませんでした。もう一度お試しください。",
+  },
+} as const;
+
+function cleanForm(): FormState {
+  return {
+    category: "food",
+    title: "",
+    description: "",
+    x: "",
+    y: "",
+    imageUrl: "",
+  };
+}
+
+function areaName(x: string, y: string): string {
+  const px = Number(x);
+  const py = Number(y);
+  if (!Number.isFinite(px) || !Number.isFinite(py)) return "";
+  if (py < 30 && px > 52) return "Hokkaido area";
+  if (px > 56 && py > 46 && py < 68) return "Tokyo area";
+  if (px > 38 && px < 54 && py > 52 && py < 76) return "Kansai area";
+  if (px < 34 && py > 58) return "Kyushu area";
+  return "Japan area";
+}
+
+export function JapanMapPage({ initialPosts }: Props) {
+  const { locale, setLocale } = useLanguage();
+  const t = copy[locale];
+
+  const [posts, setPosts] = useState<JapanMapPost[]>(initialPosts);
+  const [form, setForm] = useState<FormState>(() => cleanForm());
+  const [isSaving, setIsSaving] = useState(false);
+  const [message, setMessage] = useState<string | null>(null);
+  const [isError, setIsError] = useState(false);
+
+  const visiblePosts = useMemo(
+    () => (posts.length > 0 ? posts : samplePosts),
+    [posts],
+  );
+  const showingSamples = posts.length === 0;
+  const selectedPoint =
+    form.x && form.y ? { x: Number(form.x), y: Number(form.y) } : null;
+
+  function setPoint(point: { x: number; y: number }) {
+    setForm((prev) => ({
+      ...prev,
+      x: point.x.toFixed(2),
+      y: point.y.toFixed(2),
+    }));
+  }
+
+  async function submit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setMessage(null);
+    setIsError(false);
+    setIsSaving(true);
+
+    try {
+      const res = await fetch("/api/map-posts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          category: form.category,
+          title: form.title,
+          description: form.description,
+          x: form.x,
+          y: form.y,
+          imageUrl: form.imageUrl,
+        }),
+      });
+
+      const data = (await res.json().catch(() => ({}))) as {
+        post?: JapanMapPost;
+        error?: string;
+      };
+
+      if (!res.ok || !data.post) {
+        setIsError(true);
+        setMessage(data.error || t.error);
+        return;
+      }
+
+      setPosts((prev) => [data.post as JapanMapPost, ...prev]);
+      setForm(cleanForm());
+      setMessage(t.success);
+    } catch (err) {
+      setIsError(true);
+      setMessage(err instanceof Error ? err.message : t.error);
+    } finally {
+      setIsSaving(false);
+    }
+  }
+
+  return (
+    <AppShell locale={locale} onLocaleChange={setLocale}>
+      <div className="mx-auto max-w-6xl pb-16">
+        <section className="overflow-hidden rounded-[var(--radius-xl)] border border-white/80 bg-[#f8f5f2] p-3 shadow-[var(--shadow-hover)] ring-1 ring-white/80">
+          <IllustratedJapanMap
+            posts={visiblePosts}
+            selectedPoint={selectedPoint}
+            onPickPoint={setPoint}
+          />
+        </section>
+
+        <div className="mt-6 rounded-[var(--radius-xl)] border border-white/70 bg-white/70 p-6 shadow-[var(--shadow-soft)] backdrop-blur-md md:p-8">
+          <div className="grid gap-6 lg:grid-cols-[1fr_0.9fr] lg:items-start">
+            <div>
+              <p className="text-[0.68rem] font-semibold uppercase tracking-[0.28em] text-[var(--primary-deep)]/85">
+                {t.eyebrow}
+              </p>
+              <h1 className="mt-4 max-w-3xl text-3xl font-semibold leading-tight tracking-[-0.03em] text-[var(--text)] md:text-5xl">
+                {t.title}
+              </h1>
+              <p className="mt-5 max-w-2xl text-sm leading-relaxed text-[var(--text-muted)] md:text-base">
+                {t.subtitle}
+              </p>
+              <p className="mt-4 rounded-full bg-[var(--primary-soft)] px-4 py-2 text-xs font-semibold text-[var(--primary-deep)]">
+                {selectedPoint
+                  ? `${t.selectedPoint}: ${areaName(form.x, form.y)} (${form.x}, ${form.y})`
+                  : t.mapHint}
+              </p>
+            </div>
+
+            <form className="space-y-4" onSubmit={(e) => void submit(e)}>
+              <div>
+                <h2 className="text-xl font-semibold text-[var(--text)]">
+                  {t.formTitle}
+                </h2>
+                <p className="mt-2 text-sm leading-relaxed text-[var(--text-muted)]">
+                  {t.formBody}
+                </p>
+              </div>
+
+              <div className="grid gap-3 sm:grid-cols-2">
+                <label className="block">
+                  <span className="text-sm font-semibold text-[var(--text)]">
+                    {t.titleLabel}
+                  </span>
+                  <input
+                    required
+                    value={form.title}
+                    onChange={(e) =>
+                      setForm((prev) => ({ ...prev, title: e.target.value }))
+                    }
+                    className="mt-2 w-full rounded-[var(--radius-md)] border border-white/80 bg-white/75 px-4 py-3 text-sm shadow-[var(--shadow-soft)] placeholder:text-[var(--text-muted)] focus:border-[var(--primary)]/35 focus:outline-none focus:ring-2 focus:ring-[var(--primary-soft)]"
+                    placeholder="Best ramen in Tokyo"
+                  />
+                </label>
+                <label className="block">
+                  <span className="text-sm font-semibold text-[var(--text)]">
+                    {t.category}
+                  </span>
+                  <select
+                    value={form.category}
+                    onChange={(e) =>
+                      setForm((prev) => ({
+                        ...prev,
+                        category: e.target.value as JapanMapCategory,
+                      }))
+                    }
+                    className="mt-2 w-full rounded-[var(--radius-md)] border border-white/80 bg-white/75 px-4 py-3 text-sm shadow-[var(--shadow-soft)] focus:border-[var(--primary)]/35 focus:outline-none focus:ring-2 focus:ring-[var(--primary-soft)]"
+                  >
+                    {categories.map((category) => (
+                      <option key={category} value={category}>
+                        {categoryEmoji[category]} {categoryLabels[category]}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+              </div>
+
+              <textarea
+                rows={3}
+                value={form.description}
+                onChange={(e) =>
+                  setForm((prev) => ({
+                    ...prev,
+                    description: e.target.value,
+                  }))
+                }
+                className="w-full resize-y rounded-[var(--radius-md)] border border-white/80 bg-white/75 px-4 py-3 text-sm leading-relaxed shadow-[var(--shadow-soft)] placeholder:text-[var(--text-muted)] focus:border-[var(--primary)]/35 focus:outline-none focus:ring-2 focus:ring-[var(--primary-soft)]"
+                placeholder={t.description}
+              />
+
+              <div className="grid gap-3 sm:grid-cols-3">
+                <input
+                  required
+                  inputMode="decimal"
+                  value={form.x}
+                  onChange={(e) =>
+                    setForm((prev) => ({ ...prev, x: e.target.value }))
+                  }
+                  className="rounded-[var(--radius-md)] border border-white/80 bg-white/75 px-4 py-3 text-sm shadow-[var(--shadow-soft)] placeholder:text-[var(--text-muted)] focus:border-[var(--primary)]/35 focus:outline-none focus:ring-2 focus:ring-[var(--primary-soft)]"
+                  placeholder={t.x}
+                />
+                <input
+                  required
+                  inputMode="decimal"
+                  value={form.y}
+                  onChange={(e) =>
+                    setForm((prev) => ({ ...prev, y: e.target.value }))
+                  }
+                  className="rounded-[var(--radius-md)] border border-white/80 bg-white/75 px-4 py-3 text-sm shadow-[var(--shadow-soft)] placeholder:text-[var(--text-muted)] focus:border-[var(--primary)]/35 focus:outline-none focus:ring-2 focus:ring-[var(--primary-soft)]"
+                  placeholder={t.y}
+                />
+                <input
+                  value={form.imageUrl}
+                  onChange={(e) =>
+                    setForm((prev) => ({ ...prev, imageUrl: e.target.value }))
+                  }
+                  className="rounded-[var(--radius-md)] border border-white/80 bg-white/75 px-4 py-3 text-sm shadow-[var(--shadow-soft)] placeholder:text-[var(--text-muted)] focus:border-[var(--primary)]/35 focus:outline-none focus:ring-2 focus:ring-[var(--primary-soft)] sm:col-span-3"
+                  placeholder={t.imageUrl}
+                />
+              </div>
+
+              <button
+                type="submit"
+                disabled={isSaving}
+                className="w-full rounded-full bg-[var(--primary)] px-6 py-3 text-sm font-semibold text-white shadow-[var(--shadow-hover)] ring-1 ring-white/30 transition hover:brightness-[1.03] active:scale-95 disabled:cursor-not-allowed disabled:opacity-65"
+              >
+                🛫 {isSaving ? t.saving : t.submit}
+              </button>
+
+              {message ? (
+                <p
+                  className={`rounded-[var(--radius-md)] px-4 py-3 text-center text-sm ${
+                    isError
+                      ? "bg-[var(--accent-peach)]/25 text-[#87483f]"
+                      : "bg-[var(--accent-mint)]/35 text-[#4d755d]"
+                  }`}
+                  role={isError ? "alert" : "status"}
+                >
+                  {message}
+                </p>
+              ) : null}
+            </form>
+          </div>
+        </div>
+
+        <section className="mt-8">
+          <div className="mb-5 flex flex-wrap items-end justify-between gap-3">
+            <div>
+              <h2 className="text-xl font-semibold text-[var(--text)]">
+                {t.recent}
+              </h2>
+              {showingSamples ? (
+                <p className="mt-2 text-sm text-[var(--text-muted)]">
+                  {t.emptyNote}
+                </p>
+              ) : null}
+            </div>
+            <p className="rounded-full bg-white/70 px-4 py-2 text-xs font-semibold text-[var(--primary-deep)] shadow-[var(--shadow-soft)] ring-1 ring-white/80">
+              {visiblePosts.length} pins
+            </p>
+          </div>
+
+          <div className="grid gap-4 md:grid-cols-2">
+            {visiblePosts.map((post) => (
+              <article
+                key={post.id}
+                className="overflow-hidden rounded-[var(--radius-xl)] border border-white/70 bg-white/65 shadow-[var(--shadow-soft)] ring-1 ring-white/80 backdrop-blur-md transition hover:-translate-y-0.5 hover:shadow-[var(--shadow-hover)]"
+              >
+                <div className="grid sm:grid-cols-[130px_1fr]">
+                  <div
+                    className="min-h-28 bg-gradient-to-br from-[var(--primary-soft)] via-white to-[var(--accent-cream)] sm:min-h-full"
+                    style={
+                      post.imageUrl
+                        ? {
+                            backgroundImage: `linear-gradient(rgba(255,255,255,0.05), rgba(255,255,255,0.1)), url(${post.imageUrl})`,
+                            backgroundPosition: "center",
+                            backgroundSize: "cover",
+                          }
+                        : undefined
+                    }
+                    aria-hidden
+                  >
+                    {!post.imageUrl ? (
+                      <div className="flex h-full min-h-28 items-center justify-center text-4xl">
+                        {categoryEmoji[post.category]}
+                      </div>
+                    ) : null}
+                  </div>
+                  <div className="p-5">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className={`rounded-full px-3 py-1 text-xs font-semibold ${categoryStyle[post.category]}`}>
+                        {categoryEmoji[post.category]} {categoryLabels[post.category]}
+                      </span>
+                      <span className="rounded-full bg-white/75 px-3 py-1 text-xs font-semibold text-[var(--primary-deep)] ring-1 ring-white/90">
+                        {areaName(String(post.x), String(post.y))}
+                      </span>
+                    </div>
+                    <h3 className="mt-4 text-lg font-semibold leading-snug text-[var(--text)]">
+                      {post.title}
+                    </h3>
+                    {post.description ? (
+                      <p className="mt-2 text-sm leading-relaxed text-[var(--text-muted)]">
+                        {post.description}
+                      </p>
+                    ) : null}
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+      </div>
+    </AppShell>
+  );
+}

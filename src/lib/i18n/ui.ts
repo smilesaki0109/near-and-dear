@@ -9,6 +9,7 @@ export const ui = {
   en: {
     brand: "Near & Dear",
     navHome: "Home",
+    navMap: "Japan Map",
     heroTitle: "A little warmth for the miles between you",
     heroSubtitle:
       "Browse gentle cards for special days and hard days—made for people living far from home.",
@@ -19,6 +20,7 @@ export const ui = {
     categoryGratitude: "Gratitude",
     categoryMissingHome: "Missing home",
     categoryNewChapter: "New chapter",
+    categoryJapan: "Japan 🇯🇵",
     cardsHeading: "Cards for your heart",
     cardsEmpty: "No cards match. Try another word or category.",
     chipHint: "Filter by feeling",
@@ -27,7 +29,7 @@ export const ui = {
     createBack: "Back to browse",
     createHeading: "Add your words",
     createSub:
-      "Take your time. This space is only for you right now—nothing is saved online yet.",
+      "Take your time. When you save, we’ll store your card so you can share a link.",
     createSelectedLabel: "You chose",
     createMessageLabel: "Your message",
     createMessagePlaceholder:
@@ -43,23 +45,39 @@ export const ui = {
       "Your message will appear here…",
     createSave: "Save card",
     createSaveNote:
-      "Creates a gentle link you can share. (Demo: kept in server memory for now.)",
+      "Creates a shareable link and saves it so you can open it again later.",
     createSavedAck:
       "Saved on this device for preview. We’ll help you share it in the next step.",
-    createSaving: "Opening your card…",
+    createSaving: "Saving…",
     createShareError: "We couldn’t save that. Please try again.",
     shareKicker: "A card for you",
+    shareCopyLink: "Copy link",
+    shareCopyShort: "Copy",
+    shareCopied: "Copied!",
+    shareCopyFailed:
+      "Couldn’t copy. You can copy the address from your browser’s bar.",
+    shareNative: "Share",
+    shareSending: "Sending...",
+    shareSent: "Sent with care",
+    shareAfterglow: "Your card is on its way.",
+    shareUnable: "Unable to share",
+    shareLine: "LINE",
+    shareTwitter: "X",
+    shareInstagram: "Instagram",
+    shareInstagramCopied: "Link copied. Paste it in Instagram.",
+    shareSocialText: "Someone sent you a card on Near & Dear.",
     shareFooterNote:
       "Whoever sent this picked these words and colors with you in mind.",
     shareBrowseMore: "Browse more cards",
     shareMessageEmpty: "Sometimes words are hard. This space is still a hug.",
     shareNotFoundTitle: "This card isn’t here anymore",
     shareNotFoundBody:
-      "In this demo, links can reset if the server restarts. Ask your friend to send a fresh one, or make a new card.",
+      "This link may be invalid or the card could not be loaded. Ask your friend to send it again, or make a new card.",
   },
   ja: {
     brand: "ニア アンド ディア",
     navHome: "ホーム",
+    navMap: "Japan Map",
     navCreateHint: "カードを選んで始める",
     heroTitle: "遠くにいても、気持ちがそっと届くように",
     heroSubtitle:
@@ -71,6 +89,7 @@ export const ui = {
     categoryGratitude: "ありがとう",
     categoryMissingHome: "ふるさと",
     categoryNewChapter: "新しい一歩",
+    categoryJapan: "Japan 🇯🇵",
     cardsHeading: "心に寄り添うカード",
     cardsEmpty: "該当するカードがありません。別の言葉やカテゴリを試してください。",
     chipHint: "気持ちで絞り込み",
@@ -78,7 +97,7 @@ export const ui = {
     createBack: "一覧に戻る",
     createHeading: "ことばを添える",
     createSub:
-      "急がなくて大丈夫。いまはこの端末の中だけの下書きで、まだオンラインには保存されません。",
+      "急がなくて大丈夫。保存すると、あとからも開ける共有リンクになります。",
     createSelectedLabel: "えらんだカード",
     createMessageLabel: "メッセージ",
     createMessagePlaceholder:
@@ -94,12 +113,27 @@ export const ui = {
       "メッセージがここに表示されます…",
     createSave: "カードを保存",
     createSaveNote:
-      "共有用のやさしいリンクができます（※デモではサーバーのメモリにだけ保存されます）。",
+      "共有用のリンクをつくり、あとからも開けるように保存します。",
     createSavedAck:
       "この端末でのプレビュー用にとっておきました。共有は次のステップで。",
-    createSaving: "カードをひらいています…",
+    createSaving: "保存中…",
     createShareError: "保存できませんでした。もう一度お試しください。",
     shareKicker: "あなたへ届くカード",
+    shareCopyLink: "リンクをコピー",
+    shareCopyShort: "コピー",
+    shareCopied: "コピーしました",
+    shareCopyFailed:
+      "コピーできませんでした。ブラウザのアドレスバーからコピーしてください。",
+    shareNative: "共有する",
+    shareSending: "送信中...",
+    shareSent: "届けました",
+    shareAfterglow: "この想いは届いています",
+    shareUnable: "共有できません",
+    shareLine: "LINE",
+    shareTwitter: "X",
+    shareInstagram: "Instagram",
+    shareInstagramCopied: "リンクをコピーしました。Instagramに貼り付けてください。",
+    shareSocialText: "Near & Dearからカードが届きました。",
     shareFooterNote:
       "送ってくれた人が、あなたのことを思いながらえらびました。",
     shareBrowseMore: "ほかのカードを見る",
@@ -107,6 +141,6 @@ export const ui = {
       "ことばにできない日もあるけれど、そのぶんやさしさが届きます。",
     shareNotFoundTitle: "このカードは見つかりませんでした",
     shareNotFoundBody:
-      "デモではサーバーを再起動するとリンクが無効になることがあります。送り直してもらうか、新しいカードをつくってみてください。",
+      "リンクが正しくないか、カードを読み込めませんでした。送り直してもらうか、新しいカードをつくってみてください。",
   },
 } as const;

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import type { MockCard } from "@/data/mockCards";
 import type { Locale } from "@/lib/i18n/ui";
 import { ui } from "@/lib/i18n/ui";
@@ -31,6 +32,14 @@ export function CreateLivePreview({
       <div
         className={`relative aspect-[16/10] overflow-hidden bg-gradient-to-br ${card.gradientClass}`}
       >
+        <Image
+          src={card.image}
+          alt=""
+          fill
+          sizes="(min-width: 1024px) 50vw, 100vw"
+          className="object-cover"
+          priority
+        />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_30%_0%,rgba(255,255,255,0.5)_0%,transparent_55%)]" />
         <div className="absolute inset-0 bg-gradient-to-t from-[var(--text)]/[0.08] to-transparent" />
 

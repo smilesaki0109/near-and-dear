@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { MockCard } from "@/data/mockCards";
 import type { Locale } from "@/lib/i18n/ui";
 import { ui } from "@/lib/i18n/ui";
@@ -5,14 +6,14 @@ import { ui } from "@/lib/i18n/ui";
 type Props = {
   card: MockCard;
   message: string;
-  photoDataUrl: string | null;
+  photoUrl: string | null;
   locale: Locale;
 };
 
 /**
  * Read-only full card: matches create preview styling, tuned for small screens.
  */
-export function SharedCardView({ card, message, photoDataUrl, locale }: Props) {
+export function SharedCardView({ card, message, photoUrl, locale }: Props) {
   const t = ui[locale];
   const title = locale === "ja" ? card.titleJa : card.titleEn;
   const trimmed = message.trim();
@@ -23,14 +24,22 @@ export function SharedCardView({ card, message, photoDataUrl, locale }: Props) {
       <div
         className={`relative aspect-[16/11] overflow-hidden bg-gradient-to-br sm:aspect-[16/10] ${card.gradientClass}`}
       >
+        <Image
+          src={card.image}
+          alt=""
+          fill
+          sizes="(min-width: 640px) 512px, 100vw"
+          className="object-cover"
+          priority
+        />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_30%_0%,rgba(255,255,255,0.5)_0%,transparent_55%)]" />
         <div className="absolute inset-0 bg-gradient-to-t from-[var(--text)]/[0.08] to-transparent" />
 
-        {photoDataUrl ? (
+        {photoUrl ? (
           <div className="absolute bottom-3 right-3 max-w-[46%] overflow-hidden rounded-[var(--radius-md)] bg-white/90 p-1.5 shadow-[var(--shadow-hover)] ring-1 ring-white/90 sm:bottom-4 sm:right-4 sm:max-w-[42%]">
-            {/* eslint-disable-next-line @next/next/no-img-element -- data URL from share payload */}
+            {/* eslint-disable-next-line @next/next/no-img-element -- Supabase URL or data URL fallback */}
             <img
-              src={photoDataUrl}
+              src={photoUrl}
               alt=""
               className="max-h-36 w-full rounded-[calc(var(--radius-md)-4px)] object-cover sm:max-h-40"
             />

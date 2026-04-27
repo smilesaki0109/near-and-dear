@@ -19,6 +19,7 @@ const categories: { id: CategoryFilter; labelKey: keyof (typeof ui)["en"] }[] =
     { id: "gratitude", labelKey: "categoryGratitude" },
     { id: "missing_home", labelKey: "categoryMissingHome" },
     { id: "new_chapter", labelKey: "categoryNewChapter" },
+    { id: "japan", labelKey: "categoryJapan" },
   ];
 
 /** Pill filters: one active state, soft pastel fills when selected. */

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ui } from "@/lib/i18n/ui";
 
-/** Shown when token is unknown or the in-memory store was cleared (e.g. server restart). */
+/** Shown when token is unknown or the share cannot be loaded. */
 export default function ShareNotFound() {
   const en = ui.en;
   const ja = ui.ja;

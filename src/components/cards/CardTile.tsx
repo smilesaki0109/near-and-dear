@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import type { MockCard } from "@/data/mockCards";
 import type { Locale } from "@/lib/i18n/ui";
 
@@ -22,12 +23,19 @@ export function CardTile({ card, locale }: Props) {
         aria-hidden
       />
       <div
-        className="relative flex flex-col overflow-hidden rounded-[var(--radius-lg)] bg-[var(--surface-elevated)] shadow-[var(--shadow-soft)] ring-1 ring-white/90 transition duration-300 [box-shadow:var(--shadow-soft),inset_0_1px_0_rgba(255,255,255,0.75)] group-hover:-translate-y-1 group-hover:shadow-[var(--shadow-hover)]"
+        className="relative flex flex-col overflow-hidden rounded-[var(--radius-lg)] bg-[var(--surface-elevated)] shadow-[var(--shadow-soft)] ring-1 ring-white/90 transition duration-300 [box-shadow:var(--shadow-soft),inset_0_1px_0_rgba(255,255,255,0.75)] group-hover:-translate-y-1 group-hover:scale-[1.015] group-hover:shadow-[var(--shadow-hover)]"
       >
         <div
           className={`relative aspect-[4/3] overflow-hidden bg-gradient-to-br ${card.gradientClass}`}
           aria-hidden
         >
+          <Image
+            src={card.image}
+            alt=""
+            fill
+            sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+            className="object-cover"
+          />
           {/* Inner vignette + sheen for tactile depth */}
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_30%_0%,rgba(255,255,255,0.55)_0%,transparent_55%)]" />
           <div className="absolute inset-0 bg-gradient-to-t from-[var(--text)]/[0.06] to-transparent opacity-60" />

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { MockCard } from "@/data/mockCards";
-import type { ShareRecord } from "@/lib/shareMemoryStore";
+import type { ShareRecord } from "@/types/share";
+import { SharedCardActions } from "@/components/share/SharedCardActions";
 import { SharedCardView } from "@/components/share/SharedCardView";
 import { ui } from "@/lib/i18n/ui";
 
@@ -15,11 +16,6 @@ type Props = {
 export function SharedCardScreen({ card, share }: Props) {
   const locale = share.locale;
   const t = ui[locale];
-
-  const photoDataUrl =
-    share.imageBase64 && share.imageMimeType
-      ? `data:${share.imageMimeType};base64,${share.imageBase64}`
-      : null;
 
   return (
     <div className="flex min-h-screen flex-col bg-[var(--bg-page)]">
@@ -44,9 +40,11 @@ export function SharedCardScreen({ card, share }: Props) {
         <SharedCardView
           card={card}
           message={share.message}
-          photoDataUrl={photoDataUrl}
+          photoUrl={share.photoUrl}
           locale={locale}
         />
+
+        <SharedCardActions locale={locale} />
 
         <p className="mt-8 max-w-sm text-center text-sm leading-relaxed text-[var(--text-muted)]">
           {t.shareFooterNote}

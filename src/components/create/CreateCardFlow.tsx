@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { AppShell } from "@/components/layout/AppShell";
@@ -34,6 +35,11 @@ function readFileAsDataParts(file: File): Promise<{
 
 type Props = {
   card: MockCard;
+};
+
+type ShareResponse = {
+  token?: string;
+  error?: string;
 };
 
 /**
@@ -121,20 +127,21 @@ export function CreateCardFlow({ card }: Props) {
         }),
       });
 
+      const data = (await res.json().catch(() => ({}))) as ShareResponse;
+
       if (!res.ok) {
-        setSaveError(t.createShareError);
+        setSaveError(data.error || t.createShareError);
         return;
       }
 
-      const data = (await res.json()) as { token?: string };
       if (!data.token) {
-        setSaveError(t.createShareError);
+        setSaveError(data.error || t.createShareError);
         return;
       }
 
       router.push(`/c/${data.token}`);
-    } catch {
-      setSaveError(t.createShareError);
+    } catch (err) {
+      setSaveError(err instanceof Error ? err.message : t.createShareError);
     } finally {
       setIsSaving(false);
     }
@@ -161,6 +168,14 @@ export function CreateCardFlow({ card }: Props) {
           <div
             className={`relative mx-auto aspect-[4/3] w-full max-w-[220px] shrink-0 overflow-hidden rounded-[var(--radius-lg)] bg-gradient-to-br shadow-[var(--shadow-soft)] ring-1 ring-white/80 ${card.gradientClass}`}
           >
+            <Image
+              src={card.image}
+              alt=""
+              fill
+              sizes="220px"
+              className="object-cover"
+              priority
+            />
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_30%_0%,rgba(255,255,255,0.5)_0%,transparent_55%)]" />
           </div>
           <div className="mt-6 md:mt-0">
