@@ -2,8 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, MapPin, Plus, Search } from "lucide-react";
-import type { ReactNode } from "react";
+import type { ReactNode, SVGProps } from "react";
 import { Sidebar } from "@/components/layout/Sidebar";
 import type { Locale } from "@/lib/i18n/ui";
 
@@ -36,25 +35,25 @@ function MobileTabBar() {
     {
       href: "/",
       label: "Cards",
-      icon: Home,
+      icon: CardsTabIcon,
       active: isHome,
     },
     {
       href: "/map",
       label: "Map",
-      icon: MapPin,
+      icon: MapTabIcon,
       active: isMap,
     },
     {
       href: "/",
       label: "Create",
-      icon: Plus,
+      icon: PlusTabIcon,
       active: isCreate,
     },
     {
       href: "/#cards",
       label: "Explore",
-      icon: Search,
+      icon: SearchTabIcon,
       active: false,
     },
   ];
@@ -78,12 +77,48 @@ function MobileTabBar() {
               }`}
               aria-current={item.active ? "page" : undefined}
             >
-              <Icon className="h-5 w-5" strokeWidth={2.2} aria-hidden />
+              <Icon className="h-5 w-5" />
               <span className="truncate">{item.label}</span>
             </Link>
           );
         })}
       </div>
     </nav>
+  );
+}
+
+function CardsTabIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden {...props}>
+      <rect x="4" y="5" width="16" height="14" rx="4" stroke="currentColor" strokeWidth="2" />
+      <path d="m5.5 8 6.5 5 6.5-5" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
+    </svg>
+  );
+}
+
+function MapTabIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden {...props}>
+      <path d="M12 21s6-5.2 6-11a6 6 0 0 0-12 0c0 5.8 6 11 6 11Z" stroke="currentColor" strokeWidth="2" />
+      <circle cx="12" cy="10" r="2" stroke="currentColor" strokeWidth="2" />
+    </svg>
+  );
+}
+
+function PlusTabIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden {...props}>
+      <circle cx="12" cy="12" r="8" stroke="currentColor" strokeWidth="2" />
+      <path d="M12 8v8M8 12h8" stroke="currentColor" strokeLinecap="round" strokeWidth="2" />
+    </svg>
+  );
+}
+
+function SearchTabIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden {...props}>
+      <circle cx="11" cy="11" r="6" stroke="currentColor" strokeWidth="2" />
+      <path d="m16 16 4 4" stroke="currentColor" strokeLinecap="round" strokeWidth="2" />
+    </svg>
   );
 }

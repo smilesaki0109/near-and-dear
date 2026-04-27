@@ -109,7 +109,7 @@ function FloatingEmoji({
 }) {
   return (
     <span
-        className={`pointer-events-none absolute z-10 flex h-12 w-12 items-center justify-center text-3xl drop-shadow-sm ${className}`}
+      className={`pointer-events-none absolute z-10 flex h-12 w-12 items-center justify-center text-3xl drop-shadow-sm ${className}`}
       aria-label={label}
       role="img"
     >

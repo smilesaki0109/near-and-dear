@@ -2,6 +2,12 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import type { ReactNode } from "react";
+import { CatCardsIcon } from "@/components/icons/CatCardsIcon";
+import { CatCloudIcon, CatHeartIcon, CatPawIcon } from "@/components/icons/CatDecorations";
+import { CatExploreIcon } from "@/components/icons/CatExploreIcon";
+import { CatHomeIcon } from "@/components/icons/CatHomeIcon";
+import { CatMapIcon } from "@/components/icons/CatMapIcon";
 import { ui, type Locale } from "@/lib/i18n/ui";
 
 type Props = {
@@ -17,64 +23,100 @@ export function Sidebar({ locale, onLocaleChange }: Props) {
   const pathname = usePathname();
   const isHome = pathname === "/";
   const isMap = pathname === "/map";
-  const navBase =
-    "rounded-[var(--radius-md)] px-3 py-2 text-sm font-medium transition";
-  const navActive =
-    "bg-white/85 text-[var(--text)] shadow-[var(--shadow-soft)] ring-1 ring-white/90";
-  const navInactive = "text-[var(--text-muted)] hover:bg-white/65 hover:text-[var(--text)]";
+  const isCreate = pathname.startsWith("/create");
+  const navItems = [
+    {
+      href: "/",
+      label: t.navHome,
+      icon: <CatHomeIcon className="h-10 w-10" />,
+      color: "from-[#fff4f0] to-[#ffe6dd]",
+      active: isHome,
+    },
+    {
+      href: "/map",
+      label: t.navMap,
+      icon: <CatMapIcon className="h-10 w-10" />,
+      color: "from-[#eef7ff] to-[#dff0ff]",
+      active: isMap,
+    },
+    {
+      href: "/#cards",
+      label: locale === "en" ? "Cards" : "カード",
+      icon: <CatCardsIcon className="h-10 w-10" />,
+      color: "from-[#f6f0ff] to-[#ebe3f7]",
+      active: isCreate,
+    },
+    {
+      href: "/#cards",
+      label: locale === "en" ? "Explore" : "さがす",
+      icon: <CatExploreIcon className="h-10 w-10" />,
+      color: "from-[#f0fbf5] to-[#ddf4e8]",
+      active: false,
+    },
+  ];
 
   return (
     <aside
-      className="hidden w-full shrink-0 flex-col border-b border-[var(--line)] bg-[var(--bg-sidebar)] px-5 py-6 md:flex md:h-auto md:w-[260px] md:border-b-0 md:border-r md:py-8"
+      className="relative hidden w-full shrink-0 overflow-hidden border-b border-[var(--line)] bg-[linear-gradient(180deg,#f6efff_0%,#fff7f0_55%,#effaf4_100%)] px-5 py-6 md:flex md:h-auto md:w-[260px] md:flex-col md:border-b-0 md:border-r md:py-8"
       aria-label="Main navigation"
     >
-      <div className="mb-6 md:mb-10">
-        <div className="flex items-start gap-3">
+      <span className="pointer-events-none absolute right-4 top-24 opacity-70" aria-hidden>
+        <CatCloudIcon className="h-11 w-14" />
+      </span>
+      <span className="pointer-events-none absolute bottom-36 left-4 opacity-70" aria-hidden>
+        <CatPawIcon className="h-8 w-8" />
+      </span>
+      <span className="pointer-events-none absolute bottom-52 right-8 opacity-60" aria-hidden>
+        <CatHeartIcon className="h-8 w-8" />
+      </span>
+
+      <div className="relative mb-8 md:mb-10">
+        <div className="flex flex-col items-center text-center">
           <div
-            className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-[var(--primary-soft)] to-white shadow-[var(--shadow-soft)] ring-1 ring-white/80"
+            className="flex h-20 w-20 shrink-0 items-center justify-center rounded-[1.5rem] bg-white/75 shadow-[var(--shadow-soft)] ring-1 ring-white/90"
             aria-hidden
           >
-            <span className="text-lg text-[var(--primary-deep)]">✦</span>
+            <CatHomeIcon className="h-16 w-16" />
           </div>
           <div>
-            <p className="text-sm font-semibold tracking-tight text-[var(--text)]">
+            <p className="mt-3 text-base font-extrabold tracking-tight text-[var(--text)]">
               {t.brand}
             </p>
-            <p className="mt-1 text-xs leading-snug text-[var(--text-muted)]">
+            <p className="mt-1 text-xs font-semibold leading-snug text-[var(--text-muted)]">
               {locale === "en" ? "Emotional support cards" : "心に寄り添うカード"}
             </p>
           </div>
         </div>
       </div>
 
-      <nav className="flex flex-col gap-1 sm:flex-row sm:flex-wrap md:flex-col">
-        <Link
-          href="/"
-          className={`${navBase} ${isHome ? navActive : navInactive}`}
-          aria-current={isHome ? "page" : undefined}
-        >
-          {t.navHome}
-        </Link>
-        <Link
-          href="/map"
-          className={`${navBase} ${isMap ? navActive : navInactive}`}
-          aria-current={isMap ? "page" : undefined}
-        >
-          {t.navMap}
-        </Link>
-        <span
-          className="rounded-[var(--radius-md)] px-3 py-2 text-sm text-[var(--text-muted)]"
-          title={t.navCreateHint}
-        >
-          {t.navCreateHint}
-        </span>
+      <nav className="relative flex flex-col gap-3">
+        {navItems.map((item) => (
+          <SidebarButton
+            key={item.label}
+            href={item.href}
+            icon={item.icon}
+            label={item.label}
+            color={item.color}
+            active={item.active}
+          />
+        ))}
       </nav>
 
-      <div className="mt-6 space-y-2 border-t border-[var(--line)] pt-6 md:mt-auto">
-        <p className="text-xs text-[var(--text-muted)]">
+      <div className="relative mt-6 rounded-[1.35rem] border border-white/70 bg-white/45 p-4 text-center shadow-[var(--shadow-soft)] ring-1 ring-white/75">
+        <p className="text-xs font-semibold leading-relaxed text-[var(--primary-deep)]">
+          {t.navCreateHint}
+        </p>
+        <p className="mt-2 flex justify-center gap-1.5" aria-hidden>
+          <CatCardsIcon className="h-7 w-7" />
+          <CatHeartIcon className="h-7 w-7" />
+        </p>
+      </div>
+
+      <div className="relative mt-6 space-y-2 border-t border-white/65 pt-6 md:mt-auto">
+        <p className="text-center text-xs font-semibold text-[var(--text-muted)]">
           {locale === "en" ? "Language" : "言語"}
         </p>
-        <div className="flex gap-2">
+        <div className="flex justify-center gap-2">
           <button
             type="button"
             onClick={() => onLocaleChange("en")}
@@ -100,5 +142,47 @@ export function Sidebar({ locale, onLocaleChange }: Props) {
         </div>
       </div>
     </aside>
+  );
+}
+
+function SidebarButton({
+  href,
+  icon,
+  label,
+  color,
+  active,
+}: {
+  href: string;
+  icon: ReactNode;
+  label: string;
+  color: string;
+  active: boolean;
+}) {
+  return (
+    <Link
+      href={href}
+      className={`group relative overflow-hidden rounded-[1.35rem] border px-4 py-3 text-sm font-extrabold transition duration-200 hover:-translate-y-0.5 hover:scale-[1.03] active:scale-[0.98] ${
+        active
+          ? "border-white/90 bg-gradient-to-br from-[var(--primary-soft)] to-white text-[var(--primary-deep)] shadow-[inset_0_2px_8px_rgba(125,98,176,0.12),var(--shadow-soft)]"
+          : `border-white/75 bg-gradient-to-br ${color} text-[var(--text)] shadow-[var(--shadow-soft)] hover:shadow-[var(--shadow-hover)]`
+      }`}
+      aria-current={active ? "page" : undefined}
+    >
+      <span
+        className="pointer-events-none absolute right-3 top-2 text-white/70 opacity-0 transition group-hover:opacity-100"
+        aria-hidden
+      >
+        ✦
+      </span>
+      <span className="flex items-center gap-3">
+        <span
+          className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white/70 shadow-sm ring-1 ring-white/80 transition duration-200 group-hover:rotate-[-4deg] group-hover:scale-110"
+          aria-hidden
+        >
+          {icon}
+        </span>
+        <span className="leading-tight">{label}</span>
+      </span>
+    </Link>
   );
 }
