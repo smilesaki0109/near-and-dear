@@ -25,7 +25,7 @@ export function Sidebar({ locale, onLocaleChange }: Props) {
 
   return (
     <aside
-      className="flex w-full shrink-0 flex-col border-b border-[var(--line)] bg-[var(--bg-sidebar)] px-5 py-6 md:h-auto md:w-[260px] md:border-b-0 md:border-r md:py-8"
+      className="hidden w-full shrink-0 flex-col border-b border-[var(--line)] bg-[var(--bg-sidebar)] px-5 py-6 md:flex md:h-auto md:w-[260px] md:border-b-0 md:border-r md:py-8"
       aria-label="Main navigation"
     >
       <div className="mb-6 md:mb-10">

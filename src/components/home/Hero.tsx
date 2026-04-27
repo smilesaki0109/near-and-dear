@@ -26,10 +26,10 @@ export function Hero({ locale }: Props) {
       : ["🇯🇵 日本の毎日", "❤️ 小さな想い", "🌸 やさしい時間"];
 
   return (
-    <header className="relative mx-auto mb-14 w-full max-w-6xl">
+    <header className="relative mx-auto mb-8 w-full max-w-6xl md:mb-14">
       {/* Decorative spark — tiny emotional cue, no extra copy */}
       <p
-        className="mb-5 inline-flex items-center gap-3 text-[0.65rem] font-semibold uppercase tracking-[0.28em] text-[var(--primary-deep)]/80"
+        className="mb-3 inline-flex items-center gap-3 text-[0.65rem] font-semibold uppercase tracking-[0.28em] text-[var(--primary-deep)]/80 md:mb-5"
         aria-hidden
       >
         <span className="inline-block h-px w-10 rounded-full bg-gradient-to-r from-transparent via-[var(--primary)]/70 to-transparent" />
@@ -38,7 +38,7 @@ export function Hero({ locale }: Props) {
       </p>
 
       <div
-        className="relative overflow-hidden rounded-[var(--radius-xl)] border border-white/70 bg-gradient-to-br from-[var(--surface-elevated)] via-[var(--surface)] to-[var(--primary-soft)]/35 px-6 py-12 shadow-[var(--shadow-soft)] sm:px-8 md:px-10 md:py-16"
+        className="relative overflow-hidden rounded-[var(--radius-xl)] border border-white/70 bg-gradient-to-br from-[var(--surface-elevated)] via-[var(--surface)] to-[var(--primary-soft)]/35 px-5 py-8 shadow-[var(--shadow-soft)] sm:px-8 md:px-10 md:py-16"
       >
         <FloatingEmoji className="right-8 top-8 rotate-6 hidden sm:flex" label="Japan flag">
           🇯🇵
@@ -69,14 +69,14 @@ export function Hero({ locale }: Props) {
 
         <div className="relative">
           <h1
-            className={`text-[1.65rem] font-semibold leading-[1.2] tracking-[-0.02em] text-[var(--text)] sm:text-4xl md:text-[2.35rem] ${fraunces.className}`}
+            className={`text-[1.45rem] font-semibold leading-[1.18] tracking-[-0.02em] text-[var(--text)] sm:text-4xl md:text-[2.35rem] ${fraunces.className}`}
           >
             {t.heroTitle}
           </h1>
-          <p className="mt-5 max-w-2xl text-[0.95rem] leading-[1.75] text-[var(--text-muted)] md:text-lg md:leading-relaxed">
+          <p className="mt-4 max-w-2xl text-sm leading-[1.7] text-[var(--text-muted)] md:mt-5 md:text-lg md:leading-relaxed">
             {t.heroSubtitle}
           </p>
-          <div className="mt-7 flex flex-wrap gap-2">
+          <div className="mt-5 flex flex-wrap gap-2 md:mt-7">
             {moodChips.map((chip) => (
               <span
                 key={chip}
