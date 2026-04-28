@@ -62,7 +62,7 @@ export function IllustratedJapanMap({
 
   return (
     <div className="overflow-hidden rounded-[24px] bg-[#f8f5f2] shadow-[var(--shadow-hover)] ring-1 ring-white/80">
-      <div className="p-5 md:p-6">
+      <div className="hidden p-5 md:block md:p-6">
         <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[var(--primary-deep)]/80">
           Japan Map
         </p>

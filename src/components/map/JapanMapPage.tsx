@@ -259,7 +259,147 @@ export function JapanMapPage({ initialPosts }: Props) {
   return (
     <AppShell locale={locale} onLocaleChange={setLocale}>
       <div className="mx-auto max-w-6xl pb-16">
-        <section className="overflow-hidden rounded-[var(--radius-xl)] border border-white/80 bg-[#f8f5f2] p-3 shadow-[var(--shadow-hover)] ring-1 ring-white/80">
+        <div className="space-y-5 md:hidden">
+          <section className="relative overflow-hidden rounded-3xl border border-white/80 bg-white/72 p-5 shadow-[0_16px_38px_rgba(54,47,61,0.10)] ring-1 ring-white/80 backdrop-blur-md">
+            <div
+              className="pointer-events-none absolute -right-16 top-14 h-56 w-56 rotate-6 bg-contain bg-center bg-no-repeat opacity-[0.07] blur-[1px]"
+              style={{ backgroundImage: "url('/images/japan-map.png')" }}
+              aria-hidden
+            />
+            <div className="relative space-y-4">
+              <p className="text-[0.68rem] font-bold uppercase tracking-[0.24em] text-[var(--primary-deep)]/75">
+                {t.eyebrow}
+              </p>
+              <div className="space-y-3">
+                <h1 className="text-2xl font-semibold leading-[1.18] tracking-[-0.03em] text-[var(--text)]">
+                  {t.title}
+                </h1>
+                <p className="text-sm leading-relaxed text-[var(--text-muted)]">
+                  {t.subtitle}
+                </p>
+              </div>
+              <a
+                href="#japan-map-form"
+                className="inline-flex w-full items-center justify-center rounded-2xl bg-gradient-to-r from-[var(--primary)] to-[#b58ad6] px-5 py-3.5 text-sm font-bold text-white shadow-[0_12px_28px_rgba(149,120,198,0.24)] transition active:scale-95"
+              >
+                {locale === "en" ? "Add your moment" : "好きな瞬間を投稿する"}
+              </a>
+            </div>
+            <div className="relative mt-5 overflow-hidden rounded-[26px] bg-[#f8f5f2] p-2 shadow-sm ring-1 ring-white/80">
+              <IllustratedJapanMap
+                posts={visiblePosts}
+                selectedPoint={selectedPoint}
+                onPickPoint={setPoint}
+              />
+            </div>
+            <p className="relative mt-4 rounded-2xl bg-[var(--primary-soft)]/75 px-4 py-3 text-xs font-semibold leading-relaxed text-[var(--primary-deep)]">
+              {selectedPoint
+                ? `${t.selectedPoint}: ${areaName(form.x, form.y)}`
+                : t.mapHint}
+            </p>
+          </section>
+
+          <form
+            id="japan-map-form"
+            className="space-y-5 rounded-3xl border border-white/80 bg-white/75 p-5 shadow-[0_14px_34px_rgba(54,47,61,0.09)] ring-1 ring-white/80 backdrop-blur-md"
+            onSubmit={(e) => void submit(e)}
+          >
+            <div className="space-y-2">
+              <h2 className="text-xl font-semibold leading-tight text-[var(--text)]">
+                {t.formTitle}
+              </h2>
+              <p className="text-sm leading-relaxed text-[var(--text-muted)]">
+                {t.formBody}
+              </p>
+            </div>
+
+            <label className="block space-y-2">
+              <span className="text-xs font-bold uppercase tracking-[0.18em] text-[var(--primary-deep)]/75">
+                {t.titleLabel}
+              </span>
+              <input
+                required
+                value={form.title}
+                onChange={(e) =>
+                  setForm((prev) => ({ ...prev, title: e.target.value }))
+                }
+                className="h-13 w-full rounded-2xl border border-white/85 bg-white/82 px-4 text-sm shadow-sm placeholder:text-[var(--text-muted)]/45 focus:border-[var(--primary)]/45 focus:outline-none focus:ring-4 focus:ring-[var(--primary-soft)]/70 focus:shadow-[0_10px_24px_rgba(149,120,198,0.12)]"
+                placeholder="Best ramen in Tokyo"
+              />
+            </label>
+
+            <label className="block space-y-2">
+              <span className="text-xs font-bold uppercase tracking-[0.18em] text-[var(--primary-deep)]/75">
+                {t.category}
+              </span>
+              <select
+                value={form.category}
+                onChange={(e) =>
+                  setForm((prev) => ({
+                    ...prev,
+                    category: e.target.value as JapanMapCategory,
+                  }))
+                }
+                className="h-13 w-full rounded-2xl border border-white/85 bg-white/82 px-4 text-sm shadow-sm focus:border-[var(--primary)]/45 focus:outline-none focus:ring-4 focus:ring-[var(--primary-soft)]/70 focus:shadow-[0_10px_24px_rgba(149,120,198,0.12)]"
+              >
+                {categories.map((category) => (
+                  <option key={category} value={category}>
+                    {categoryEmoji[category]} {categoryLabels[category]}
+                  </option>
+                ))}
+              </select>
+            </label>
+
+            <label className="block space-y-2">
+              <span className="text-xs font-bold uppercase tracking-[0.18em] text-[var(--primary-deep)]/75">
+                {t.description}
+              </span>
+              <textarea
+                rows={3}
+                value={form.description}
+                onChange={(e) =>
+                  setForm((prev) => ({
+                    ...prev,
+                    description: e.target.value,
+                  }))
+                }
+                className="w-full resize-y rounded-2xl border border-white/85 bg-white/82 px-4 py-3 text-sm leading-relaxed shadow-sm placeholder:text-[var(--text-muted)]/45 focus:border-[var(--primary)]/45 focus:outline-none focus:ring-4 focus:ring-[var(--primary-soft)]/70 focus:shadow-[0_10px_24px_rgba(149,120,198,0.12)]"
+                placeholder={t.formBody}
+              />
+            </label>
+
+            <input type="hidden" value={form.x} readOnly />
+            <input type="hidden" value={form.y} readOnly />
+            <input type="hidden" value={form.imageUrl} readOnly />
+
+            <button
+              type="submit"
+              disabled={isSaving}
+              className="w-full rounded-2xl bg-gradient-to-r from-[var(--primary)] to-[#b58ad6] px-6 py-3.5 text-sm font-bold text-white shadow-[0_14px_30px_rgba(149,120,198,0.26)] ring-1 ring-white/30 transition active:scale-95 disabled:cursor-not-allowed disabled:opacity-65"
+            >
+              {isSaving
+                ? t.saving
+                : locale === "en"
+                  ? "Add your moment"
+                  : "投稿する"}
+            </button>
+
+            {message ? (
+              <p
+                className={`rounded-2xl px-4 py-3 text-center text-sm ${
+                  isError
+                    ? "bg-[var(--accent-peach)]/25 text-[#87483f]"
+                    : "bg-[var(--accent-mint)]/35 text-[#4d755d]"
+                }`}
+                role={isError ? "alert" : "status"}
+              >
+                {message}
+              </p>
+            ) : null}
+          </form>
+        </div>
+
+        <section className="hidden overflow-hidden rounded-[var(--radius-xl)] border border-white/80 bg-[#f8f5f2] p-3 shadow-[var(--shadow-hover)] ring-1 ring-white/80 md:block">
           <IllustratedJapanMap
             posts={visiblePosts}
             selectedPoint={selectedPoint}
@@ -267,7 +407,7 @@ export function JapanMapPage({ initialPosts }: Props) {
           />
         </section>
 
-        <div className="mt-6 rounded-[var(--radius-xl)] border border-white/70 bg-white/70 p-6 shadow-[var(--shadow-soft)] backdrop-blur-md md:p-8">
+        <div className="mt-6 hidden rounded-[var(--radius-xl)] border border-white/70 bg-white/70 p-6 shadow-[var(--shadow-soft)] backdrop-blur-md md:block md:p-8">
           <div className="grid gap-6 lg:grid-cols-[1fr_0.9fr] lg:items-start">
             <div>
               <p className="text-[0.68rem] font-semibold uppercase tracking-[0.28em] text-[var(--primary-deep)]/85">
