@@ -24,6 +24,11 @@ export function Hero({ locale }: Props) {
     locale === "en"
       ? ["🇯🇵 Japan days", "❤️ tiny care", "🌸 soft moments"]
       : ["🇯🇵 日本の毎日", "❤️ 小さな想い", "🌸 やさしい時間"];
+  const mobileChipStyles = [
+    "from-[#fff0ee] via-[#ffe2e1] to-[#fff7ef] text-[#b65f66] shadow-[0_10px_24px_rgba(242,190,180,0.28)]",
+    "from-[#fff0f7] via-[#ffe0ee] to-[#fff5fa] text-[#b95786] shadow-[0_10px_24px_rgba(236,133,176,0.24)]",
+    "from-[#f7f1ff] via-[#eee4ff] to-[#fff6fb] text-[#8060b5] shadow-[0_10px_24px_rgba(149,120,198,0.24)]",
+  ];
 
   return (
     <header className="relative mx-auto mb-8 w-full max-w-6xl md:mb-14">
@@ -76,7 +81,18 @@ export function Hero({ locale }: Props) {
           <p className="mt-4 max-w-2xl text-sm leading-[1.7] text-[var(--text-muted)] md:mt-5 md:text-lg md:leading-relaxed">
             {t.heroSubtitle}
           </p>
-          <div className="mt-5 flex flex-wrap gap-2 md:mt-7">
+          <div className="-mx-1 mt-5 flex snap-x gap-3 overflow-x-auto px-1 pb-2 md:hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            {moodChips.map((chip, index) => (
+              <span
+                key={chip}
+                className={`animate-card-rise shrink-0 snap-start whitespace-nowrap rounded-full bg-gradient-to-br px-5 py-3 text-sm font-bold ring-1 ring-white/70 transition-transform duration-200 ease-out hover:scale-105 active:scale-105 ${mobileChipStyles[index]}`}
+                style={{ animationDelay: `${index * 90}ms` }}
+              >
+                {chip}
+              </span>
+            ))}
+          </div>
+          <div className="mt-5 hidden flex-wrap gap-2 md:mt-7 md:flex">
             {moodChips.map((chip) => (
               <span
                 key={chip}
