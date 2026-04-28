@@ -270,7 +270,7 @@ export function JapanMapPage({ initialPosts }: Props) {
     <AppShell locale={locale} onLocaleChange={setLocale}>
       <div className="mx-auto max-w-6xl pb-16">
         <div className="space-y-5 md:hidden">
-          <section className="relative overflow-hidden rounded-3xl border border-white/80 bg-white/72 p-4 shadow-[0_16px_38px_rgba(54,47,61,0.10)] ring-1 ring-white/80 backdrop-blur-md">
+          <section className="relative -mx-2 overflow-hidden rounded-3xl border border-white/80 bg-white/72 p-4 shadow-[0_16px_38px_rgba(54,47,61,0.10)] ring-1 ring-white/80 backdrop-blur-md">
             <div
               className="pointer-events-none absolute -right-16 top-12 h-64 w-64 rotate-6 bg-contain bg-center bg-no-repeat opacity-[0.06] blur-[1px]"
               style={{ backgroundImage: "url('/images/japan-map.png')" }}
