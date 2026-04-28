@@ -33,14 +33,10 @@ function SplashScreen() {
   const [leaving, setLeaving] = useState(false);
 
   useEffect(() => {
-    const key = "near-dear-splash-seen";
-    if (window.localStorage.getItem(key)) return;
-
-    window.localStorage.setItem(key, "true");
     setVisible(true);
 
-    const fadeTimer = window.setTimeout(() => setLeaving(true), 3600);
-    const removeTimer = window.setTimeout(() => setVisible(false), 4200);
+    const fadeTimer = window.setTimeout(() => setLeaving(true), 5000);
+    const removeTimer = window.setTimeout(() => setVisible(false), 5700);
 
     return () => {
       window.clearTimeout(fadeTimer);
@@ -69,8 +65,8 @@ function SplashScreen() {
           <NearDearMascot className="near-dear-mascot-glow h-64 w-64 sm:h-80 sm:w-80" />
         </div>
         <div className="mt-8 space-y-4">
-          <p className="near-dear-splash-text text-3xl font-semibold tracking-[-0.035em] text-[var(--text)] sm:text-4xl">
-            You are not alone.
+          <p className="near-dear-splash-text text-[1.7rem] font-semibold tracking-[-0.035em] text-[var(--text)] sm:text-[2.2rem]">
+            It’s time to unwind. <SoftHeartMark className="ml-1 inline h-[0.72em] w-[0.72em] translate-y-[0.03em]" />
           </p>
           <p className="near-dear-splash-text-delay max-w-sm text-base font-medium leading-relaxed text-[var(--text-muted)] sm:text-lg">
             Small moments can feel like home.
@@ -78,6 +74,27 @@ function SplashScreen() {
         </div>
       </div>
     </div>
+  );
+}
+
+function SoftHeartMark({ className }: { className: string }) {
+  return (
+    <svg viewBox="0 0 32 32" fill="none" className={className} aria-hidden>
+      <path
+        d="M16 26S6 20 6 12.8C6 8.7 10.5 7.1 16 11.7c5.5-4.6 10-3 10 1.1C26 20 16 26 16 26Z"
+        fill="#F4AFC1"
+        stroke="#D88EA4"
+        strokeLinejoin="round"
+        strokeWidth="1.6"
+      />
+      <path
+        d="M10.8 12.4c1.5-1.7 3.3-1.4 4.8.2"
+        stroke="white"
+        strokeLinecap="round"
+        strokeWidth="1.4"
+        opacity="0.75"
+      />
+    </svg>
   );
 }
 
