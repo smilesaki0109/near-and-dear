@@ -27,16 +27,16 @@ export function CardGrid({ cards, locale }: Props) {
   }
 
   return (
-    <ul className="grid grid-cols-1 gap-8 sm:grid-cols-2 sm:gap-9 xl:grid-cols-3 xl:gap-10">
+    <ul className="-mx-4 grid snap-x snap-mandatory grid-flow-col gap-4 overflow-x-auto px-4 pb-4 [grid-auto-columns:78%] [scrollbar-width:none] md:mx-0 md:grid-flow-row md:grid-cols-2 md:gap-9 md:overflow-visible md:px-0 md:pb-0 xl:grid-cols-3 xl:gap-10 [&::-webkit-scrollbar]:hidden">
       {cards.map((card, index) => (
         <li
           key={card.id}
-          className="animate-card-rise"
+          className="animate-card-rise snap-start"
           style={{ animationDelay: `${Math.min(index, 10) * 55}ms` }}
         >
           <Link
             href={`/create/${card.id}`}
-            className="block cursor-pointer rounded-[var(--radius-lg)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-page)]"
+            className="block cursor-pointer rounded-[var(--radius-lg)] transition active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-page)] md:active:scale-100"
           >
             <CardTile card={card} locale={locale} />
           </Link>

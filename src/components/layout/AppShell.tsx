@@ -63,16 +63,16 @@ function MobileTabBar() {
       className="fixed inset-x-0 bottom-0 z-50 px-4 pb-[calc(env(safe-area-inset-bottom)+0.65rem)] md:hidden"
       aria-label="Bottom navigation"
     >
-      <div className="mx-auto flex h-16 max-w-md items-center justify-around rounded-[2rem] border border-white/70 bg-white/82 px-2 shadow-[0_10px_35px_rgba(54,47,61,0.16)] ring-1 ring-white/70 backdrop-blur-xl">
+      <div className="mx-auto flex h-16 max-w-md items-center justify-around rounded-[2rem] border border-white/75 bg-white/86 px-2 shadow-[0_14px_42px_rgba(54,47,61,0.18)] ring-1 ring-white/80 backdrop-blur-xl">
         {items.map((item) => {
           const Icon = item.icon;
           return (
             <Link
               key={item.label}
               href={item.href}
-              className={`flex min-w-0 flex-1 flex-col items-center justify-center gap-1 rounded-2xl px-2 py-2 text-[0.68rem] font-semibold transition ${
+              className={`flex min-w-0 flex-1 flex-col items-center justify-center gap-1 rounded-2xl px-2 py-2 text-[0.68rem] font-semibold transition active:scale-95 ${
                 item.active
-                  ? "bg-[var(--primary-soft)] text-[var(--primary-deep)] shadow-sm"
+                  ? "bg-gradient-to-br from-[var(--primary-soft)] to-[#fff0f7] text-[var(--primary-deep)] shadow-[0_8px_18px_rgba(149,120,198,0.18)] ring-1 ring-white/80"
                   : "text-[var(--text-muted)] active:bg-[var(--primary-soft)]/60"
               }`}
               aria-current={item.active ? "page" : undefined}

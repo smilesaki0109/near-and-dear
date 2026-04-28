@@ -32,7 +32,7 @@ export function CategoryChips({ locale, active, onChange }: Props) {
         {t.chipHint}
       </p>
       <div
-        className="flex flex-wrap gap-2.5"
+        className="-mx-4 flex flex-nowrap gap-2.5 overflow-x-auto px-4 pb-2 [scrollbar-width:none] md:mx-0 md:flex-wrap md:overflow-visible md:px-0 md:pb-0 [&::-webkit-scrollbar]:hidden"
         role="group"
         aria-label={t.chipHint}
       >
@@ -43,10 +43,10 @@ export function CategoryChips({ locale, active, onChange }: Props) {
               key={id}
               type="button"
               onClick={() => onChange(id)}
-              className={`rounded-full px-4 py-2.5 text-sm font-medium transition duration-200 ${
+              className={`shrink-0 rounded-full px-4 py-2.5 text-sm font-medium transition duration-200 active:scale-95 md:active:scale-100 ${
                 selected
-                  ? "bg-[var(--primary-soft)] text-[var(--primary-deep)] shadow-[var(--shadow-soft)] ring-1 ring-[var(--primary)]/25"
-                  : "bg-white/70 text-[var(--text)] shadow-[var(--shadow-soft)] ring-1 ring-white/80 hover:bg-white hover:shadow-[var(--shadow-hover)]"
+                  ? "bg-gradient-to-r from-[var(--primary-soft)] to-[#fff0f7] text-[var(--primary-deep)] shadow-[var(--shadow-soft)] ring-1 ring-[var(--primary)]/25 md:bg-[var(--primary-soft)] md:bg-none"
+                  : "bg-white/78 text-[var(--text)] shadow-[var(--shadow-soft)] ring-1 ring-white/80 hover:bg-white hover:shadow-[var(--shadow-hover)]"
               }`}
             >
               {t[labelKey]}

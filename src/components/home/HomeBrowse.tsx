@@ -13,6 +13,7 @@ import { CatCardsIcon } from "@/components/icons/CatCardsIcon";
 import { CatExploreIcon } from "@/components/icons/CatExploreIcon";
 import { CatHeartIcon } from "@/components/icons/CatDecorations";
 import { CatHomeIcon } from "@/components/icons/CatHomeIcon";
+import { CatMapIcon } from "@/components/icons/CatMapIcon";
 import { mockCards } from "@/data/mockCards";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { ui } from "@/lib/i18n/ui";
@@ -28,6 +29,36 @@ export function HomeBrowse() {
 
   const t = ui[locale];
   const home = homeStoryCopy[locale];
+  const quickActions = [
+    {
+      href: "/map",
+      label: locale === "en" ? "Map" : "Mapを見る",
+      hint: locale === "en" ? "Find Japan favorites" : "日本の好きへ",
+      icon: <CatMapIcon className="h-12 w-12" />,
+      card: "from-[#eef7ff] via-white to-[#eaf8ef]",
+    },
+    {
+      href: "#cards",
+      label: locale === "en" ? "Cards" : "カード",
+      hint: locale === "en" ? "Choose a feeling" : "気持ちを選ぶ",
+      icon: <CatCardsIcon className="h-12 w-12" />,
+      card: "from-[#fff7ef] via-white to-[#fff0ee]",
+    },
+    {
+      href: "/create/1",
+      label: locale === "en" ? "Write" : "書く",
+      hint: locale === "en" ? "Make it personal" : "ことばを添える",
+      icon: <CatHomeIcon className="h-12 w-12" />,
+      card: "from-[#fff0f7] via-white to-[#f7f1ff]",
+    },
+    {
+      href: "#cards",
+      label: "Explore",
+      hint: locale === "en" ? "Swipe and browse" : "楽しく探す",
+      icon: <CatExploreIcon className="h-12 w-12" />,
+      card: "from-[#f6efff] via-white to-[#eef7ff]",
+    },
+  ];
   const whySymbols = ["✉️", "🌸", "💛"];
   const stepSymbols = ["🎴", "💌", "🚀"];
   const mobileStepCards = [
@@ -71,9 +102,42 @@ export function HomeBrowse() {
     <AppShell locale={locale} onLocaleChange={setLocale}>
       <div className="mx-auto max-w-6xl">
         <Hero locale={locale} />
+        <section className="-mx-4 mb-7 md:hidden" aria-label="Quick actions">
+          <div className="mb-3 flex items-end justify-between px-4">
+            <div>
+              <p className="text-[0.65rem] font-bold uppercase tracking-[0.22em] text-[var(--primary-deep)]/70">
+                {locale === "en" ? "Quick pick" : "クイック選択"}
+              </p>
+              <h2 className="mt-1 text-xl font-semibold tracking-[-0.02em] text-[var(--text)]">
+                {locale === "en" ? "What do you want to do?" : "何から始める？"}
+              </h2>
+            </div>
+            <span className="rounded-full bg-white/75 px-3 py-1 text-[0.68rem] font-semibold text-[var(--text-muted)] shadow-sm">
+              {locale === "en" ? "Swipe" : "スワイプ"}
+            </span>
+          </div>
+          <div className="grid snap-x snap-mandatory grid-flow-col gap-3 overflow-x-auto px-4 pb-2 [grid-auto-columns:42%] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            {quickActions.map((action, index) => (
+              <Link
+                key={action.label}
+                href={action.href}
+                className={`animate-card-rise snap-start rounded-3xl border border-white/80 bg-gradient-to-br p-3.5 shadow-[0_14px_34px_rgba(54,47,61,0.10)] ring-1 ring-white/80 transition active:scale-95 ${action.card}`}
+                style={{ animationDelay: `${index * 70}ms` }}
+              >
+                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/70 shadow-sm">
+                  {action.icon}
+                </div>
+                <p className="mt-3 text-sm font-bold text-[var(--text)]">{action.label}</p>
+                <p className="mt-1 text-[0.72rem] leading-snug text-[var(--text-muted)]">
+                  {action.hint}
+                </p>
+              </Link>
+            ))}
+          </div>
+        </section>
         <WavyDivider className="-mt-2 mb-8 md:-mt-4 md:mb-12" />
 
-        <section className="relative overflow-hidden rounded-[var(--radius-xl)] border border-white/70 bg-white/55 p-5 shadow-[var(--shadow-soft)] backdrop-blur-md md:p-8">
+        <section className="relative overflow-hidden rounded-3xl border border-white/75 bg-gradient-to-br from-white/80 via-[#fff9f5]/80 to-[#f6efff]/65 p-6 shadow-[0_18px_45px_rgba(54,47,61,0.10)] backdrop-blur-md md:rounded-[var(--radius-xl)] md:bg-white/55 md:bg-none md:p-8 md:shadow-[var(--shadow-soft)]">
           <DecorativeBubble className="-right-8 -top-8 h-24 w-24 bg-[var(--accent-peach)]/35" />
           <DecorativeBubble className="bottom-5 right-20 h-12 w-12 bg-[var(--accent-mint)]/45" />
           <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[var(--primary-deep)]/80">
@@ -81,10 +145,10 @@ export function HomeBrowse() {
           </p>
           <div className="mt-4 grid gap-6 md:grid-cols-[1fr_0.8fr] md:items-center">
             <div>
-              <h2 className="text-[1.45rem] font-semibold tracking-[-0.02em] text-[var(--text)] md:text-4xl">
+              <h2 className="text-2xl font-semibold tracking-[-0.02em] text-[var(--text)] md:text-4xl">
                 {home.whyTitle}
               </h2>
-              <p className="mt-4 max-w-2xl text-sm leading-relaxed text-[var(--text-muted)] md:text-base">
+              <p className="mt-4 max-w-2xl text-sm leading-[1.8] text-[var(--text-muted)] md:text-base md:leading-relaxed">
                 {home.whyBody}
               </p>
             </div>
@@ -106,12 +170,12 @@ export function HomeBrowse() {
 
         <WavyDivider className="my-8 rotate-180 md:my-12" />
 
-        <section>
-          <div className="mb-6 text-center">
+        <section className="relative">
+          <div className="mb-6 text-center md:mb-6">
             <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[var(--primary-deep)]/80">
               {home.howKicker}
             </p>
-            <h2 className="mt-3 text-[1.45rem] font-semibold tracking-[-0.02em] text-[var(--text)] md:text-4xl">
+            <h2 className="mt-3 text-2xl font-semibold tracking-[-0.02em] text-[var(--text)] md:text-4xl">
               {home.howTitle}
             </h2>
           </div>
@@ -182,11 +246,11 @@ export function HomeBrowse() {
             <div>
               <h2
                 id="cards-heading"
-                className="text-[1.45rem] font-semibold tracking-[-0.02em] text-[var(--text)] md:text-4xl"
+                className="text-2xl font-semibold tracking-[-0.02em] text-[var(--text)] md:text-4xl"
               >
                 {t.cardsHeading}
               </h2>
-              <p className="mt-3 max-w-xl text-sm leading-relaxed text-[var(--text-muted)]">
+              <p className="mt-3 max-w-xl text-sm leading-[1.8] text-[var(--text-muted)] md:leading-relaxed">
                 {home.cardsBody}
               </p>
               <div
@@ -196,7 +260,7 @@ export function HomeBrowse() {
             </div>
           </div>
 
-          <div className="relative mb-6 overflow-hidden rounded-[var(--radius-xl)] border border-white/60 bg-white/45 p-4 shadow-[var(--shadow-soft)] backdrop-blur-md md:mb-8 md:p-8">
+          <div className="relative mb-6 overflow-hidden rounded-3xl border border-white/70 bg-gradient-to-br from-white/80 via-[#fff8f0]/70 to-[#eef7ff]/60 p-4 shadow-[0_16px_40px_rgba(54,47,61,0.10)] backdrop-blur-md md:mb-8 md:rounded-[var(--radius-xl)] md:bg-white/45 md:bg-none md:p-8 md:shadow-[var(--shadow-soft)]">
             <PopSticker className="right-4 top-3 rotate-6 hidden lg:flex">🔎</PopSticker>
             <PopSticker className="bottom-3 right-6 -rotate-3 hidden lg:flex">✨</PopSticker>
             <SearchBar locale={locale} value={query} onChange={setQuery} />
@@ -208,7 +272,7 @@ export function HomeBrowse() {
 
         <WavyDivider className="my-8 rotate-180 md:my-12" />
 
-        <section className="relative overflow-hidden rounded-[var(--radius-xl)] border border-white/70 bg-gradient-to-br from-[#fff8f0] via-white to-[#eef7ff] p-5 shadow-[var(--shadow-soft)] md:p-8">
+        <section className="relative overflow-hidden rounded-3xl border border-white/75 bg-gradient-to-br from-[#fff8f0] via-white to-[#eef7ff] p-6 shadow-[0_18px_45px_rgba(54,47,61,0.10)] md:rounded-[var(--radius-xl)] md:p-8 md:shadow-[var(--shadow-soft)]">
           <DecorativeBubble className="-right-10 top-10 h-28 w-28 bg-[var(--accent-sky)]/35" />
           <DecorativeBubble className="bottom-12 left-10 h-20 w-20 bg-[var(--accent-peach)]/30" />
           <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
@@ -216,10 +280,10 @@ export function HomeBrowse() {
               <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[var(--primary-deep)]/80">
                 Japan
               </p>
-              <h2 className="mt-3 text-[1.45rem] font-semibold tracking-[-0.02em] text-[var(--text)] md:text-4xl">
+              <h2 className="mt-3 text-2xl font-semibold tracking-[-0.02em] text-[var(--text)] md:text-4xl">
                 {home.japanTitle}
               </h2>
-              <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[var(--text-muted)]">
+              <p className="mt-3 max-w-2xl text-sm leading-[1.8] text-[var(--text-muted)] md:leading-relaxed">
                 {home.japanBody}
               </p>
               <div className="mt-4 flex flex-wrap gap-2">
@@ -255,16 +319,16 @@ export function HomeBrowse() {
           </div>
         </section>
 
-        <section className="relative mt-8 overflow-hidden rounded-[var(--radius-xl)] border border-white/70 bg-white/60 p-5 shadow-[var(--shadow-soft)] md:mt-12 md:p-8">
+        <section className="relative mt-8 overflow-hidden rounded-3xl border border-white/75 bg-gradient-to-br from-white/80 via-[#f8fbff]/80 to-[#fff3ed]/60 p-6 shadow-[0_18px_45px_rgba(54,47,61,0.10)] md:mt-12 md:rounded-[var(--radius-xl)] md:bg-white/60 md:bg-none md:p-8 md:shadow-[var(--shadow-soft)]">
           <DecorativeBubble className="left-10 top-8 h-16 w-16 bg-[var(--accent-sky)]/35" />
           <PopSticker className="right-6 top-5 rotate-6 hidden lg:flex">🗻</PopSticker>
           <PopSticker className="bottom-5 right-16 -rotate-6 hidden lg:flex">🍜</PopSticker>
           <div className="relative grid gap-6 md:grid-cols-[1fr_auto] md:items-center">
             <div>
-              <h2 className="text-[1.45rem] font-semibold tracking-[-0.02em] text-[var(--text)] md:text-4xl">
+              <h2 className="text-2xl font-semibold tracking-[-0.02em] text-[var(--text)] md:text-4xl">
                 {home.mapTitle}
               </h2>
-              <p className="mt-4 max-w-2xl text-sm leading-relaxed text-[var(--text-muted)] md:text-base">
+              <p className="mt-4 max-w-2xl text-sm leading-[1.8] text-[var(--text-muted)] md:text-base md:leading-relaxed">
                 {home.mapBody}
               </p>
             </div>
@@ -277,7 +341,7 @@ export function HomeBrowse() {
           </div>
         </section>
 
-        <section className="relative mt-8 overflow-hidden rounded-[var(--radius-xl)] border border-white/70 bg-gradient-to-br from-[var(--primary-soft)] via-white to-[var(--accent-peach)]/35 p-6 text-center shadow-[var(--shadow-hover)] md:mt-12 md:p-12">
+        <section className="relative mt-8 overflow-hidden rounded-3xl border border-white/75 bg-gradient-to-br from-[var(--primary-soft)] via-white to-[var(--accent-peach)]/35 p-7 text-center shadow-[0_20px_50px_rgba(54,47,61,0.13)] md:mt-12 md:rounded-[var(--radius-xl)] md:p-12 md:shadow-[var(--shadow-hover)]">
           <PopSticker className="left-6 top-6 -rotate-6 hidden md:flex">💌</PopSticker>
           <PopSticker className="right-6 top-6 rotate-6 hidden md:flex">🇯🇵</PopSticker>
           <PopSticker className="bottom-6 left-10 rotate-3 hidden lg:flex">❤️</PopSticker>
@@ -285,10 +349,10 @@ export function HomeBrowse() {
           <p className="text-4xl" aria-hidden>
             ✨
           </p>
-          <h2 className="mt-4 text-[1.45rem] font-semibold tracking-[-0.02em] text-[var(--text)] md:text-4xl">
+          <h2 className="mt-4 text-2xl font-semibold tracking-[-0.02em] text-[var(--text)] md:text-4xl">
             {home.ctaTitle}
           </h2>
-          <p className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-[var(--text-muted)] md:text-base">
+          <p className="mx-auto mt-4 max-w-xl text-sm leading-[1.8] text-[var(--text-muted)] md:text-base md:leading-relaxed">
             {home.ctaBody}
           </p>
           <Link
