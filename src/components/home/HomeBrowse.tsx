@@ -9,6 +9,10 @@ import { CardTile } from "@/components/cards/CardTile";
 import { CategoryChips, type CategoryFilter } from "@/components/home/CategoryChips";
 import { Hero } from "@/components/home/Hero";
 import { SearchBar } from "@/components/home/SearchBar";
+import { CatCardsIcon } from "@/components/icons/CatCardsIcon";
+import { CatExploreIcon } from "@/components/icons/CatExploreIcon";
+import { CatHeartIcon } from "@/components/icons/CatDecorations";
+import { CatHomeIcon } from "@/components/icons/CatHomeIcon";
 import { mockCards } from "@/data/mockCards";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { ui } from "@/lib/i18n/ui";
@@ -26,6 +30,23 @@ export function HomeBrowse() {
   const home = homeStoryCopy[locale];
   const whySymbols = ["✉️", "🌸", "💛"];
   const stepSymbols = ["🎴", "💌", "🚀"];
+  const mobileStepCards = [
+    {
+      art: <CatCardsIcon className="h-24 w-24" />,
+      accent: "bg-[#fff1ee] text-[#b65f66]",
+      card: "from-[#fff9f5] via-[#fff1ee] to-white",
+    },
+    {
+      art: <CatExploreIcon className="h-24 w-24" />,
+      accent: "bg-[#f6efff] text-[#8060b5]",
+      card: "from-[#fbf7ff] via-[#f2ebff] to-white",
+    },
+    {
+      art: <CatHomeIcon className="h-24 w-24" />,
+      accent: "bg-[#fff0f7] text-[#b95786]",
+      card: "from-[#fff7fb] via-[#ffeef6] to-white",
+    },
+  ];
   const japanVibes = ["🇯🇵", "🍜", "🍵", "🌸", "🏮", "🗻", "🍙", "🎴"];
 
   const filtered = useMemo(() => {
@@ -94,7 +115,41 @@ export function HomeBrowse() {
               {home.howTitle}
             </h2>
           </div>
-          <div className="grid gap-4 md:grid-cols-3">
+          <div className="-mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-3 md:hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            {home.steps.map((step, index) => (
+              <article
+                key={step.title}
+                className={`relative min-h-[270px] w-[84vw] max-w-[320px] shrink-0 snap-start overflow-hidden rounded-3xl border border-white/80 bg-gradient-to-br p-5 shadow-[0_18px_45px_rgba(54,47,61,0.10)] ring-1 ring-white/80 ${mobileStepCards[index].card}`}
+              >
+                <div
+                  className="pointer-events-none absolute -right-8 -top-8 h-28 w-28 rounded-full bg-white/65 blur-xl"
+                  aria-hidden
+                />
+                <div className="relative flex items-start justify-between gap-4">
+                  <div>
+                    <span
+                      className={`inline-flex rounded-full px-3 py-1.5 text-[0.65rem] font-bold uppercase tracking-[0.2em] shadow-sm ${mobileStepCards[index].accent}`}
+                    >
+                      Step {index + 1}
+                    </span>
+                    <h3 className="mt-4 text-xl font-semibold leading-tight tracking-[-0.02em] text-[var(--text)]">
+                      {step.title}
+                    </h3>
+                  </div>
+                  <div className="flex h-24 w-24 shrink-0 items-center justify-center rounded-[1.6rem] bg-white/70 shadow-[var(--shadow-soft)] ring-1 ring-white/80">
+                    {mobileStepCards[index].art}
+                  </div>
+                </div>
+                <p className="relative mt-5 text-sm leading-relaxed text-[var(--text-muted)]">
+                  {step.body}
+                </p>
+                {index === 2 ? (
+                  <CatHeartIcon className="absolute bottom-4 right-5 h-10 w-10 opacity-80" />
+                ) : null}
+              </article>
+            ))}
+          </div>
+          <div className="hidden gap-4 md:grid md:grid-cols-3">
             {home.steps.map((step, index) => (
               <article
                 key={step.title}

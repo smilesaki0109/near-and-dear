@@ -81,11 +81,11 @@ export function Hero({ locale }: Props) {
           <p className="mt-4 max-w-2xl text-sm leading-[1.7] text-[var(--text-muted)] md:mt-5 md:text-lg md:leading-relaxed">
             {t.heroSubtitle}
           </p>
-          <div className="-mx-1 mt-5 flex snap-x gap-3 overflow-x-auto px-1 pb-2 md:hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <div className="-mx-1 mt-5 flex flex-nowrap items-center gap-2 overflow-x-auto px-1 pb-2 md:hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             {moodChips.map((chip, index) => (
               <span
                 key={chip}
-                className={`animate-card-rise shrink-0 snap-start whitespace-nowrap rounded-full bg-gradient-to-br px-5 py-3 text-sm font-bold ring-1 ring-white/70 transition-transform duration-200 ease-out hover:scale-105 active:scale-105 ${mobileChipStyles[index]}`}
+                className={`animate-card-rise shrink-0 whitespace-nowrap rounded-full bg-gradient-to-br px-3.5 py-2.5 text-[0.78rem] font-bold ring-1 ring-white/70 transition-transform duration-200 ease-out hover:scale-105 active:scale-105 ${mobileChipStyles[index]}`}
                 style={{ animationDelay: `${index * 90}ms` }}
               >
                 {chip}
