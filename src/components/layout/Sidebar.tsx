@@ -8,6 +8,7 @@ import { CatCloudIcon, CatHeartIcon, CatPawIcon } from "@/components/icons/CatDe
 import { CatExploreIcon } from "@/components/icons/CatExploreIcon";
 import { CatHomeIcon } from "@/components/icons/CatHomeIcon";
 import { CatMapIcon } from "@/components/icons/CatMapIcon";
+import { NearDearMascot } from "@/components/icons/NearDearMascot";
 import { ui, type Locale } from "@/lib/i18n/ui";
 
 type Props = {
@@ -73,10 +74,10 @@ export function Sidebar({ locale, onLocaleChange }: Props) {
       <div className="relative mb-8 md:mb-10">
         <div className="flex flex-col items-center text-center">
           <div
-            className="flex h-20 w-20 shrink-0 items-center justify-center rounded-[1.5rem] bg-white/75 shadow-[var(--shadow-soft)] ring-1 ring-white/90"
+            className="near-dear-mascot-glow flex h-24 w-24 shrink-0 items-center justify-center rounded-[2rem] bg-white/55 shadow-[0_16px_42px_rgba(149,120,198,0.16)] ring-1 ring-white/90"
             aria-hidden
           >
-            <CatHomeIcon className="h-16 w-16" />
+            <NearDearMascot className="h-24 w-24" />
           </div>
           <div>
             <p className="mt-3 text-base font-extrabold tracking-tight text-[var(--text)]">
