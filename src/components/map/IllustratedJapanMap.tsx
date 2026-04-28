@@ -76,7 +76,7 @@ export function IllustratedJapanMap({
 
       <div
         onClick={pick}
-        className="relative mx-auto w-full max-w-4xl cursor-pointer overflow-hidden"
+        className="relative mx-auto w-[116%] max-w-4xl -translate-x-[8%] cursor-pointer overflow-hidden md:w-full md:translate-x-0"
         aria-label="Japan map image. Click to choose a post position."
       >
         {/* eslint-disable-next-line @next/next/no-img-element -- local map asset used as an interactive coordinate plane */}
