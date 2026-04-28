@@ -2,6 +2,8 @@
 
 import { useMemo, useState } from "react";
 import { AppShell } from "@/components/layout/AppShell";
+import { CatPawIcon } from "@/components/icons/CatDecorations";
+import { CatMapIcon } from "@/components/icons/CatMapIcon";
 import { IllustratedJapanMap } from "@/components/map/IllustratedJapanMap";
 import { useLanguage } from "@/contexts/LanguageContext";
 import type { JapanMapCategory, JapanMapPost } from "@/types/map";
@@ -191,6 +193,14 @@ function areaName(x: string, y: string): string {
 export function JapanMapPage({ initialPosts }: Props) {
   const { locale, setLocale } = useLanguage();
   const t = copy[locale];
+  const mobileTitle =
+    locale === "en" ? "Japan, through tiny loves" : "小さな好きで見る日本";
+  const mobileSubtitle =
+    locale === "en"
+      ? "Tap the map and share one thing you love."
+      : "地図をタップして、好きな瞬間をひとつだけ。";
+  const mobileFormTitle =
+    locale === "en" ? "Add your moment" : "好きな瞬間を追加";
 
   const [posts, setPosts] = useState<JapanMapPost[]>(initialPosts);
   const [form, setForm] = useState<FormState>(() => cleanForm());
@@ -260,39 +270,45 @@ export function JapanMapPage({ initialPosts }: Props) {
     <AppShell locale={locale} onLocaleChange={setLocale}>
       <div className="mx-auto max-w-6xl pb-16">
         <div className="space-y-5 md:hidden">
-          <section className="relative overflow-hidden rounded-3xl border border-white/80 bg-white/72 p-5 shadow-[0_16px_38px_rgba(54,47,61,0.10)] ring-1 ring-white/80 backdrop-blur-md">
+          <section className="relative overflow-hidden rounded-3xl border border-white/80 bg-white/72 p-4 shadow-[0_16px_38px_rgba(54,47,61,0.10)] ring-1 ring-white/80 backdrop-blur-md">
             <div
-              className="pointer-events-none absolute -right-16 top-14 h-56 w-56 rotate-6 bg-contain bg-center bg-no-repeat opacity-[0.07] blur-[1px]"
+              className="pointer-events-none absolute -right-16 top-12 h-64 w-64 rotate-6 bg-contain bg-center bg-no-repeat opacity-[0.06] blur-[1px]"
               style={{ backgroundImage: "url('/images/japan-map.png')" }}
               aria-hidden
             />
-            <div className="relative space-y-4">
-              <p className="text-[0.68rem] font-bold uppercase tracking-[0.24em] text-[var(--primary-deep)]/75">
-                {t.eyebrow}
-              </p>
-              <div className="space-y-3">
-                <h1 className="text-2xl font-semibold leading-[1.18] tracking-[-0.03em] text-[var(--text)]">
-                  {t.title}
+            <CatPawIcon className="pointer-events-none absolute right-4 top-4 h-9 w-9 rotate-12 opacity-70" />
+            <div className="relative flex items-start gap-3">
+              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white/72 ring-1 ring-white/80">
+                <CatMapIcon className="h-12 w-12" />
+              </div>
+              <div className="min-w-0 space-y-2">
+                <p className="text-[0.65rem] font-bold uppercase tracking-[0.22em] text-[var(--primary-deep)]/70">
+                  {t.eyebrow}
+                </p>
+                <h1 className="text-[1.55rem] font-semibold leading-[1.12] tracking-[-0.03em] text-[var(--text)]">
+                  {mobileTitle}
                 </h1>
-                <p className="text-sm leading-relaxed text-[var(--text-muted)]">
-                  {t.subtitle}
+                <p className="max-w-[15rem] text-sm leading-relaxed text-[var(--text-muted)]">
+                  {mobileSubtitle}
                 </p>
               </div>
+            </div>
+            <div className="relative mt-4">
               <a
                 href="#japan-map-form"
                 className="inline-flex w-full items-center justify-center rounded-2xl bg-gradient-to-r from-[var(--primary)] to-[#b58ad6] px-5 py-3.5 text-sm font-bold text-white shadow-[0_12px_28px_rgba(149,120,198,0.24)] transition active:scale-95"
               >
-                {locale === "en" ? "Add your moment" : "好きな瞬間を投稿する"}
+                {mobileFormTitle}
               </a>
             </div>
-            <div className="relative mt-5 overflow-hidden rounded-[26px] bg-[#f8f5f2] p-2 shadow-sm ring-1 ring-white/80">
+            <div className="relative -mx-4 mt-5 overflow-hidden rounded-[32px] bg-[#f8f5f2] shadow-[0_18px_42px_rgba(54,47,61,0.12)] ring-1 ring-white/80">
               <IllustratedJapanMap
                 posts={visiblePosts}
                 selectedPoint={selectedPoint}
                 onPickPoint={setPoint}
               />
             </div>
-            <p className="relative mt-4 rounded-2xl bg-[var(--primary-soft)]/75 px-4 py-3 text-xs font-semibold leading-relaxed text-[var(--primary-deep)]">
+            <p className="relative mt-3 rounded-2xl bg-[var(--primary-soft)]/65 px-4 py-2.5 text-xs font-semibold leading-relaxed text-[var(--primary-deep)]">
               {selectedPoint
                 ? `${t.selectedPoint}: ${areaName(form.x, form.y)}`
                 : t.mapHint}
@@ -306,10 +322,12 @@ export function JapanMapPage({ initialPosts }: Props) {
           >
             <div className="space-y-2">
               <h2 className="text-xl font-semibold leading-tight text-[var(--text)]">
-                {t.formTitle}
+                {mobileFormTitle}
               </h2>
               <p className="text-sm leading-relaxed text-[var(--text-muted)]">
-                {t.formBody}
+                {locale === "en"
+                  ? "A short title is enough."
+                  : "短いタイトルだけでも大丈夫です。"}
               </p>
             </div>
 

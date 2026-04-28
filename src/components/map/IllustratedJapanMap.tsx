@@ -89,7 +89,7 @@ export function IllustratedJapanMap({
 
         <div className="pointer-events-none absolute inset-0 z-10" aria-hidden>
           <MapBubble
-            className="left-[4%] top-[5%] max-w-[168px] px-4 py-2.5 text-sm leading-relaxed sm:max-w-[230px] sm:px-5 sm:py-3 sm:text-base md:left-[7%] md:top-[8%]"
+            className="left-[4%] top-[5%] hidden max-w-[168px] px-4 py-2.5 text-sm leading-relaxed sm:max-w-[230px] sm:px-5 sm:py-3 sm:text-base md:left-[7%] md:top-[8%] md:block"
             delay="0s"
           >
             <span className="block font-bold text-[var(--primary-deep)]">
@@ -106,7 +106,7 @@ export function IllustratedJapanMap({
             🍡 Tiny joys everywhere
           </MapBubble>
           <MapBubble
-            className="left-[7%] bottom-[11%] px-3.5 py-2 text-xs sm:text-sm md:left-[12%] md:bottom-[17%]"
+            className="left-[7%] bottom-[11%] hidden px-3.5 py-2 text-xs sm:text-sm md:left-[12%] md:bottom-[17%] md:block"
             delay="1.4s"
           >
             🌸 What do you love here?
