@@ -74,4 +74,70 @@ body {
   animation: card-rise 0.55s ease-out both;
 }
 
+@keyframes map-soft-float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-1deg) scale(1);
+  }
+  50% {
+    transform: translateY(-8px) rotate(1.2deg) scale(1.02);
+  }
+}
+
+@keyframes map-soft-sparkle {
+  0%,
+  100% {
+    opacity: 0.72;
+    transform: translateY(0) rotate(-5deg) scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-8px) rotate(6deg) scale(1.06);
+  }
+}
+
+.near-dear-map-float {
+  animation: map-soft-float 7.2s ease-in-out infinite;
+}
+
+.near-dear-map-float:hover {
+  transform: translateY(-3px) scale(1.03);
+}
+
+.near-dear-map-sparkle {
+  animation: map-soft-sparkle 8s ease-in-out infinite;
+}
+
+@keyframes map-pin-breathe {
+  0%,
+  100% {
+    filter: saturate(1);
+    opacity: 0.94;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    filter: saturate(1.08);
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.07);
+  }
+}
+
+@keyframes map-balloon-rise {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-3deg);
+  }
+  50% {
+    transform: translateY(-14px) rotate(4deg);
+  }
+}
+
+.near-dear-map-pin-pulse {
+  animation: map-pin-breathe 3.6s ease-in-out infinite;
+}
+
+.near-dear-map-balloon {
+  animation: map-balloon-rise 7.8s ease-in-out infinite;
+}
+
 

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import type { ReactNode } from "react";
 import type { JapanMapCategory, JapanMapPost } from "@/types/map";
 
 type Props = {
@@ -19,10 +20,19 @@ const categoryLabels: Record<JapanMapCategory, string> = {
 
 const categoryEmoji: Record<JapanMapCategory, string> = {
   food: "🍜",
-  place: "🏠",
+  place: "🗻",
   culture: "🎎",
   daily_life: "🌿",
 };
+
+function postEmoji(post: Pick<JapanMapPost, "category" | "title">): string {
+  const title = post.title.toLowerCase();
+  if (title.includes("onigiri") || title.includes("rice")) return "🍙";
+  if (title.includes("takoyaki")) return "🐙";
+  if (title.includes("okinawa") || title.includes("ocean")) return "🌊";
+  if (title.includes("kyoto") || title.includes("temple")) return "🏯";
+  return categoryEmoji[post.category];
+}
 
 const categoryPinClass: Record<JapanMapCategory, string> = {
   food: "bg-[#fff0f4] text-[#d45f7e] ring-[#f4b4c7]/50",
@@ -51,82 +61,8 @@ export function IllustratedJapanMap({
   }
 
   return (
-    <div
-      onClick={pick}
-      className="relative min-h-[440px] cursor-crosshair overflow-hidden rounded-[24px] bg-[#f8f5f2] shadow-[var(--shadow-hover)] ring-1 ring-white/80 sm:min-h-[520px]"
-      aria-label="Illustrated Japan map. Click to choose a post position."
-    >
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_15%_18%,rgba(255,255,255,0.9),transparent_14%),radial-gradient(circle_at_88%_20%,rgba(255,255,255,0.75),transparent_12%),radial-gradient(circle_at_45%_80%,rgba(255,236,220,0.55),transparent_18%)]" />
-      <span className="absolute left-[8%] top-[22%] text-5xl" aria-hidden>☁️</span>
-      <span className="absolute right-[7%] top-[26%] text-4xl" aria-hidden>☁️</span>
-      <span className="absolute left-[18%] bottom-[20%] text-3xl" aria-hidden>🎈</span>
-      <span className="absolute right-[11%] bottom-[18%] text-3xl" aria-hidden>✈️</span>
-      <span className="absolute left-[44%] top-[14%] text-2xl text-[var(--accent-sky)]" aria-hidden>≋</span>
-      <span className="absolute right-[24%] top-[35%] text-2xl text-[var(--accent-sky)]" aria-hidden>≋</span>
-
-      <svg
-        viewBox="0 0 760 460"
-        className="absolute inset-x-0 top-6 mx-auto h-[82%] max-h-[470px] w-full max-w-[860px]"
-        aria-hidden
-      >
-        <defs>
-          <pattern id="dotPattern" width="16" height="16" patternUnits="userSpaceOnUse">
-            <circle cx="3" cy="3" r="1.5" fill="#f4d69c" opacity="0.55" />
-          </pattern>
-          <filter id="softMapShadow" x="-20%" y="-20%" width="140%" height="140%">
-            <feDropShadow dx="0" dy="9" stdDeviation="9" floodColor="#8f744f" floodOpacity="0.16" />
-          </filter>
-        </defs>
-        <rect x="0" y="0" width="760" height="460" fill="#bfe8ee" opacity="0.78" rx="34" />
-        <text x="596" y="34" fontSize="12" fontWeight="700" fill="#7d62b0" opacity="0.55">
-          HOKKAIDO
-        </text>
-        <path
-          d="M568 48 C610 35 650 58 652 94 C654 129 621 151 585 139 C548 127 533 85 568 48Z"
-          fill="#f9d86b"
-          filter="url(#softMapShadow)"
-        />
-        <path
-          d="M568 48 C610 35 650 58 652 94 C654 129 621 151 585 139 C548 127 533 85 568 48Z"
-          fill="url(#dotPattern)"
-        />
-        <path
-          d="M530 142 C561 168 568 198 543 219 C520 239 496 239 476 260 C449 288 427 315 384 326 C351 333 311 325 305 300 C299 279 331 266 355 249 C386 226 402 201 423 178 C456 142 500 116 530 142Z"
-          fill="#f9d86b"
-          filter="url(#softMapShadow)"
-        />
-        <path
-          d="M530 142 C561 168 568 198 543 219 C520 239 496 239 476 260 C449 288 427 315 384 326 C351 333 311 325 305 300 C299 279 331 266 355 249 C386 226 402 201 423 178 C456 142 500 116 530 142Z"
-          fill="url(#dotPattern)"
-        />
-        <path
-          d="M289 296 C257 301 231 326 224 358 C249 383 289 376 306 346 C320 321 312 300 289 296Z"
-          fill="#f7ca62"
-          filter="url(#softMapShadow)"
-        />
-        <path
-          d="M357 337 C392 321 428 327 448 347 C429 368 388 374 354 358 C346 350 348 342 357 337Z"
-          fill="#f6c35f"
-          filter="url(#softMapShadow)"
-        />
-        <path
-          d="M252 371 C239 382 238 402 253 413 C271 409 281 393 274 376 C268 369 259 366 252 371Z"
-          fill="#f6c35f"
-          filter="url(#softMapShadow)"
-        />
-        <circle cx="568" cy="151" r="7" fill="#f7ca62" filter="url(#softMapShadow)" />
-        <circle cx="220" cy="397" r="6" fill="#f6c35f" filter="url(#softMapShadow)" />
-        <circle cx="192" cy="409" r="5" fill="#f6c35f" filter="url(#softMapShadow)" />
-        <circle cx="160" cy="417" r="4" fill="#f6c35f" filter="url(#softMapShadow)" />
-        <text x="456" y="247" fontSize="34">🗻</text>
-        <text x="429" y="186" fontSize="24">🌸</text>
-        <text x="355" y="286" fontSize="28">🏯</text>
-        <text x="525" y="215" fontSize="27">🍜</text>
-        <text x="395" y="358" fontSize="25">🐙</text>
-        <text x="242" y="346" fontSize="22">😊</text>
-      </svg>
-
-      <div className="absolute left-7 top-7 max-w-sm rounded-[var(--radius-xl)] bg-white/65 p-5 shadow-[var(--shadow-soft)] ring-1 ring-white/80 backdrop-blur-md">
+    <div className="overflow-hidden rounded-[24px] bg-[#f8f5f2] shadow-[var(--shadow-hover)] ring-1 ring-white/80">
+      <div className="p-5 md:p-6">
         <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[var(--primary-deep)]/80">
           Japan Map
         </p>
@@ -138,25 +74,88 @@ export function IllustratedJapanMap({
         </p>
       </div>
 
-      {posts.map((post) => (
-        <button
-          key={post.id}
-          type="button"
-          onClick={(e) => {
-            e.stopPropagation();
-            setActivePost((prev) => (prev?.id === post.id ? null : post));
-          }}
-          className={`absolute z-20 flex h-10 w-10 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full text-lg shadow-[var(--shadow-hover)] ring-2 transition duration-200 hover:scale-110 ${categoryPinClass[post.category]}`}
-          style={{ left: `${post.x}%`, top: `${post.y}%` }}
-          aria-label={post.title}
-        >
-          {categoryEmoji[post.category]}
-        </button>
-      ))}
+      <div
+        onClick={pick}
+        className="relative mx-auto w-full max-w-4xl cursor-pointer overflow-hidden"
+        aria-label="Japan map image. Click to choose a post position."
+      >
+        {/* eslint-disable-next-line @next/next/no-img-element -- local map asset used as an interactive coordinate plane */}
+        <img
+          src="/images/japan-map.png"
+          alt="Illustrated Japan map"
+          className="block w-full select-none rounded-b-[24px] shadow-sm"
+          draggable={false}
+        />
+
+        <div className="pointer-events-none absolute inset-0 z-10" aria-hidden>
+          <MapBubble
+            className="left-[4%] top-[5%] max-w-[168px] px-4 py-2.5 text-sm leading-relaxed sm:max-w-[230px] sm:px-5 sm:py-3 sm:text-base md:left-[7%] md:top-[8%]"
+            delay="0s"
+          >
+            <span className="block font-bold text-[var(--primary-deep)]">
+              ✨ Discover Japan!
+            </span>
+            <span className="mt-1 hidden text-xs font-semibold text-[var(--text-muted)] sm:block">
+              Tiny stories are hiding everywhere.
+            </span>
+          </MapBubble>
+          <MapBubble
+            className="right-[4%] top-[15%] hidden px-4 py-2 text-sm md:block"
+            delay="0.8s"
+          >
+            🍡 Tiny joys everywhere
+          </MapBubble>
+          <MapBubble
+            className="left-[7%] bottom-[11%] px-3.5 py-2 text-xs sm:text-sm md:left-[12%] md:bottom-[17%]"
+            delay="1.4s"
+          >
+            🌸 What do you love here?
+          </MapBubble>
+          <MapBubble
+            className="right-[7%] bottom-[9%] hidden px-4 py-2 text-sm lg:block"
+            delay="2s"
+          >
+            💌 Tap to share your moment
+          </MapBubble>
+          <FloatingDecoration className="left-[30%] top-[12%] text-sm sm:text-base" delay="0.2s">
+            ♡
+          </FloatingDecoration>
+          <FloatingDecoration className="right-[27%] top-[31%] text-sm sm:text-lg" delay="0.9s">
+            ✨
+          </FloatingDecoration>
+          <FloatingDecoration className="left-[42%] bottom-[20%] hidden text-lg sm:block" delay="1.4s">
+            🌸
+          </FloatingDecoration>
+          <FloatingDecoration className="right-[18%] bottom-[31%] hidden text-base sm:block" delay="2s">
+            ♡
+          </FloatingDecoration>
+          <FloatingDecoration className="right-[36%] top-[9%] hidden text-sm md:block" delay="2.8s">
+            ✨
+          </FloatingDecoration>
+          <MapBalloon className="left-[18%] top-[24%] bg-[#f6c7d3]" delay="0.3s" />
+          <MapBalloon className="right-[13%] top-[40%] hidden bg-[#d8cff7] sm:block" delay="1.2s" />
+          <MapBalloon className="left-[35%] bottom-[9%] hidden bg-[#f8de83] md:block" delay="2.1s" />
+        </div>
+
+        {posts.map((post) => (
+          <button
+            key={post.id}
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              setActivePost((prev) => (prev?.id === post.id ? null : post));
+            }}
+            className={`near-dear-map-pin-pulse absolute z-20 flex h-8 w-8 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full text-base shadow-[var(--shadow-hover)] ring-2 transition duration-200 hover:scale-125 sm:h-10 sm:w-10 sm:text-lg ${categoryPinClass[post.category]}`}
+            style={{ left: `${post.x}%`, top: `${post.y}%` }}
+            aria-label={post.title}
+          >
+            {postEmoji(post)}
+          </button>
+        ))}
 
       {selectedPoint ? (
         <div
-          className="pointer-events-none absolute z-10 flex h-9 w-9 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-base text-[var(--primary-deep)] shadow-[var(--shadow-hover)] ring-2 ring-[var(--primary)]/30"
+          className="pointer-events-none absolute z-10 flex h-8 w-8 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-sm text-[var(--primary-deep)] shadow-[var(--shadow-hover)] ring-2 ring-[var(--primary)]/30 sm:h-9 sm:w-9 sm:text-base"
           style={{ left: `${selectedPoint.x}%`, top: `${selectedPoint.y}%` }}
           aria-hidden
         >
@@ -182,7 +181,7 @@ export function IllustratedJapanMap({
           ) : null}
           <div className="p-4">
             <span className={`rounded-full px-3 py-1 text-xs font-semibold ${categoryPinClass[activePost.category]}`}>
-              {categoryEmoji[activePost.category]} {categoryLabels[activePost.category]}
+              {postEmoji(activePost)} {categoryLabels[activePost.category]}
             </span>
             <h3 className="mt-3 text-base font-semibold leading-snug text-[var(--text)]">
               {activePost.title}
@@ -201,6 +200,62 @@ export function IllustratedJapanMap({
           </div>
         </div>
       ) : null}
+      </div>
     </div>
+  );
+}
+
+function MapBubble({
+  className,
+  delay,
+  children,
+}: {
+  className: string;
+  delay: string;
+  children: ReactNode;
+}) {
+  return (
+    <div
+      className={`near-dear-map-float absolute rounded-[2rem_1.5rem_2.2rem_1.6rem] bg-gradient-to-br from-white/90 via-white/82 to-[#f7edf7]/82 font-semibold text-[var(--text)] shadow-[0_14px_42px_rgba(54,47,61,0.14)] ring-1 ring-white/80 backdrop-blur-md transition-transform duration-300 ${className}`}
+      style={{ animationDelay: delay }}
+    >
+      {children}
+    </div>
+  );
+}
+
+function MapBalloon({
+  className,
+  delay,
+}: {
+  className: string;
+  delay: string;
+}) {
+  return (
+    <span
+      className={`near-dear-map-balloon absolute h-5 w-4 rounded-full opacity-55 shadow-[0_8px_18px_rgba(54,47,61,0.12)] ${className}`}
+      style={{ animationDelay: delay }}
+    >
+      <span className="absolute left-1/2 top-full h-4 w-px -translate-x-1/2 bg-white/70" />
+    </span>
+  );
+}
+
+function FloatingDecoration({
+  className,
+  delay,
+  children,
+}: {
+  className: string;
+  delay: string;
+  children: ReactNode;
+}) {
+  return (
+    <span
+      className={`near-dear-map-sparkle absolute drop-shadow-sm ${className}`}
+      style={{ animationDelay: delay }}
+    >
+      {children}
+    </span>
   );
 }

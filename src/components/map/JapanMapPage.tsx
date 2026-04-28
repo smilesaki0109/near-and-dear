@@ -35,10 +35,19 @@ const categoryLabels: Record<JapanMapCategory, string> = {
 
 const categoryEmoji: Record<JapanMapCategory, string> = {
   food: "🍜",
-  place: "🏠",
+  place: "🗻",
   culture: "🎎",
   daily_life: "🌿",
 };
+
+function postEmoji(post: Pick<JapanMapPost, "category" | "title">): string {
+  const title = post.title.toLowerCase();
+  if (title.includes("onigiri") || title.includes("rice")) return "🍙";
+  if (title.includes("takoyaki")) return "🐙";
+  if (title.includes("okinawa") || title.includes("ocean")) return "🌊";
+  if (title.includes("kyoto") || title.includes("temple")) return "🏯";
+  return categoryEmoji[post.category];
+}
 
 const categoryStyle: Record<JapanMapCategory, string> = {
   food: "bg-[#fff0f4] text-[#d45f7e]",
@@ -53,8 +62,18 @@ const samplePosts: JapanMapPost[] = [
     category: "food",
     title: "Seafood in Sapporo",
     description: "The seafood here is amazing!",
-    x: 77,
-    y: 20,
+    x: 72,
+    y: 16,
+    imageUrl: null,
+    createdAt: new Date(0).toISOString(),
+  },
+  {
+    id: "sample-niigata-onigiri",
+    category: "food",
+    title: "Onigiri in Niigata",
+    description: "Rice tastes extra comforting here.",
+    x: 56,
+    y: 38,
     imageUrl: null,
     createdAt: new Date(0).toISOString(),
   },
@@ -63,8 +82,8 @@ const samplePosts: JapanMapPost[] = [
     category: "food",
     title: "Ramen shops in Tokyo",
     description: "Warm bowls after work make me happy.",
-    x: 67,
-    y: 47,
+    x: 66,
+    y: 55,
     imageUrl: null,
     createdAt: new Date(0).toISOString(),
   },
@@ -73,8 +92,8 @@ const samplePosts: JapanMapPost[] = [
     category: "culture",
     title: "Kyoto temples",
     description: "Beautiful temples and gardens.",
-    x: 50,
-    y: 58,
+    x: 48,
+    y: 63,
     imageUrl: null,
     createdAt: new Date(0).toISOString(),
   },
@@ -83,8 +102,18 @@ const samplePosts: JapanMapPost[] = [
     category: "food",
     title: "Takoyaki in Osaka",
     description: "My comfort food with friends.",
-    x: 46,
-    y: 64,
+    x: 38,
+    y: 72,
+    imageUrl: null,
+    createdAt: new Date(0).toISOString(),
+  },
+  {
+    id: "sample-okinawa-ocean",
+    category: "place",
+    title: "Okinawa ocean",
+    description: "The water feels so clear and gentle.",
+    x: 16,
+    y: 88,
     imageUrl: null,
     createdAt: new Date(0).toISOString(),
   },
@@ -412,14 +441,14 @@ export function JapanMapPage({ initialPosts }: Props) {
                   >
                     {!post.imageUrl ? (
                       <div className="flex h-full min-h-28 items-center justify-center text-4xl">
-                        {categoryEmoji[post.category]}
+                        {postEmoji(post)}
                       </div>
                     ) : null}
                   </div>
                   <div className="p-5">
                     <div className="flex flex-wrap items-center gap-2">
                       <span className={`rounded-full px-3 py-1 text-xs font-semibold ${categoryStyle[post.category]}`}>
-                        {categoryEmoji[post.category]} {categoryLabels[post.category]}
+                        {postEmoji(post)} {categoryLabels[post.category]}
                       </span>
                       <span className="rounded-full bg-white/75 px-3 py-1 text-xs font-semibold text-[var(--primary-deep)] ring-1 ring-white/90">
                         {areaName(String(post.x), String(post.y))}
