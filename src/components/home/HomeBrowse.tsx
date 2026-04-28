@@ -11,7 +11,6 @@ import { Hero } from "@/components/home/Hero";
 import { SearchBar } from "@/components/home/SearchBar";
 import { CatCardsIcon } from "@/components/icons/CatCardsIcon";
 import { CatExploreIcon } from "@/components/icons/CatExploreIcon";
-import { CatHeartIcon } from "@/components/icons/CatDecorations";
 import { CatHomeIcon } from "@/components/icons/CatHomeIcon";
 import { CatMapIcon } from "@/components/icons/CatMapIcon";
 import { mockCards } from "@/data/mockCards";
@@ -33,47 +32,37 @@ export function HomeBrowse() {
     {
       href: "/map",
       label: locale === "en" ? "Map" : "Mapを見る",
-      hint: locale === "en" ? "Find Japan favorites" : "日本の好きへ",
-      icon: <CatMapIcon className="h-12 w-12" />,
-      card: "from-[#eef7ff] via-white to-[#eaf8ef]",
+      icon: <CatMapIcon className="h-10 w-10" />,
+      card: "from-[#f6fbff] to-white",
     },
     {
       href: "#cards",
       label: locale === "en" ? "Cards" : "カード",
-      hint: locale === "en" ? "Choose a feeling" : "気持ちを選ぶ",
-      icon: <CatCardsIcon className="h-12 w-12" />,
-      card: "from-[#fff7ef] via-white to-[#fff0ee]",
+      icon: <CatCardsIcon className="h-10 w-10" />,
+      card: "from-[#fff9f5] to-white",
     },
     {
       href: "/create/1",
       label: locale === "en" ? "Write" : "書く",
-      hint: locale === "en" ? "Make it personal" : "ことばを添える",
-      icon: <CatHomeIcon className="h-12 w-12" />,
-      card: "from-[#fff0f7] via-white to-[#f7f1ff]",
-    },
-    {
-      href: "#cards",
-      label: "Explore",
-      hint: locale === "en" ? "Swipe and browse" : "楽しく探す",
-      icon: <CatExploreIcon className="h-12 w-12" />,
-      card: "from-[#f6efff] via-white to-[#eef7ff]",
+      icon: <CatHomeIcon className="h-10 w-10" />,
+      card: "from-[#fbf7ff] to-white",
     },
   ];
   const whySymbols = ["✉️", "🌸", "💛"];
   const stepSymbols = ["🎴", "💌", "🚀"];
   const mobileStepCards = [
     {
-      art: <CatCardsIcon className="h-24 w-24" />,
+      art: <CatCardsIcon className="h-20 w-20" />,
       accent: "bg-[#fff1ee] text-[#b65f66]",
       card: "from-[#fff9f5] via-[#fff1ee] to-white",
     },
     {
-      art: <CatExploreIcon className="h-24 w-24" />,
+      art: <CatExploreIcon className="h-20 w-20" />,
       accent: "bg-[#f6efff] text-[#8060b5]",
       card: "from-[#fbf7ff] via-[#f2ebff] to-white",
     },
     {
-      art: <CatHomeIcon className="h-24 w-24" />,
+      art: <CatHomeIcon className="h-20 w-20" />,
       accent: "bg-[#fff0f7] text-[#b95786]",
       card: "from-[#fff7fb] via-[#ffeef6] to-white",
     },
@@ -102,42 +91,36 @@ export function HomeBrowse() {
     <AppShell locale={locale} onLocaleChange={setLocale}>
       <div className="mx-auto max-w-6xl">
         <Hero locale={locale} />
-        <section className="-mx-4 mb-7 md:hidden" aria-label="Quick actions">
-          <div className="mb-3 flex items-end justify-between px-4">
+        <section className="-mx-4 mb-6 md:hidden" aria-label="Quick actions">
+          <div className="mb-3 px-4">
             <div>
               <p className="text-[0.65rem] font-bold uppercase tracking-[0.22em] text-[var(--primary-deep)]/70">
                 {locale === "en" ? "Quick pick" : "クイック選択"}
               </p>
-              <h2 className="mt-1 text-xl font-semibold tracking-[-0.02em] text-[var(--text)]">
+              <h2 className="mt-1 text-lg font-semibold tracking-[-0.02em] text-[var(--text)]">
                 {locale === "en" ? "What do you want to do?" : "何から始める？"}
               </h2>
             </div>
-            <span className="rounded-full bg-white/75 px-3 py-1 text-[0.68rem] font-semibold text-[var(--text-muted)] shadow-sm">
-              {locale === "en" ? "Swipe" : "スワイプ"}
-            </span>
           </div>
-          <div className="grid snap-x snap-mandatory grid-flow-col gap-3 overflow-x-auto px-4 pb-2 [grid-auto-columns:42%] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <div className="grid snap-x snap-mandatory grid-flow-col gap-3 overflow-x-auto px-4 pb-2 [grid-auto-columns:34%] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             {quickActions.map((action, index) => (
               <Link
                 key={action.label}
                 href={action.href}
-                className={`animate-card-rise snap-start rounded-3xl border border-white/80 bg-gradient-to-br p-3.5 shadow-[0_14px_34px_rgba(54,47,61,0.10)] ring-1 ring-white/80 transition active:scale-95 ${action.card}`}
+                className={`animate-card-rise snap-start rounded-3xl border border-white/80 bg-gradient-to-br p-3 shadow-[0_10px_24px_rgba(54,47,61,0.08)] ring-1 ring-white/80 transition active:scale-95 ${action.card}`}
                 style={{ animationDelay: `${index * 70}ms` }}
               >
-                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/70 shadow-sm">
+                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/70">
                   {action.icon}
                 </div>
-                <p className="mt-3 text-sm font-bold text-[var(--text)]">{action.label}</p>
-                <p className="mt-1 text-[0.72rem] leading-snug text-[var(--text-muted)]">
-                  {action.hint}
-                </p>
+                <p className="mt-2 text-sm font-bold text-[var(--text)]">{action.label}</p>
               </Link>
             ))}
           </div>
         </section>
         <WavyDivider className="-mt-2 mb-8 md:-mt-4 md:mb-12" />
 
-        <section className="relative overflow-hidden rounded-3xl border border-white/75 bg-gradient-to-br from-white/80 via-[#fff9f5]/80 to-[#f6efff]/65 p-6 shadow-[0_18px_45px_rgba(54,47,61,0.10)] backdrop-blur-md md:rounded-[var(--radius-xl)] md:bg-white/55 md:bg-none md:p-8 md:shadow-[var(--shadow-soft)]">
+        <section className="relative overflow-hidden rounded-3xl border border-white/75 bg-white/68 p-6 shadow-[0_14px_34px_rgba(54,47,61,0.08)] backdrop-blur-md md:rounded-[var(--radius-xl)] md:bg-white/55 md:p-8 md:shadow-[var(--shadow-soft)]">
           <DecorativeBubble className="-right-8 -top-8 h-24 w-24 bg-[var(--accent-peach)]/35" />
           <DecorativeBubble className="bottom-5 right-20 h-12 w-12 bg-[var(--accent-mint)]/45" />
           <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[var(--primary-deep)]/80">
@@ -152,7 +135,7 @@ export function HomeBrowse() {
                 {home.whyBody}
               </p>
             </div>
-            <div className="grid grid-cols-3 gap-3 text-center">
+            <div className="hidden grid-cols-3 gap-3 text-center md:grid">
               {whySymbols.map((symbol, index) => (
                 <div
                   key={symbol}
@@ -186,7 +169,7 @@ export function HomeBrowse() {
             {home.steps.map((step, index) => (
               <article
                 key={step.title}
-                className={`relative min-h-[270px] snap-start overflow-hidden rounded-3xl border border-white/80 bg-gradient-to-br p-5 shadow-[0_18px_45px_rgba(54,47,61,0.10)] ring-1 ring-white/80 ${mobileStepCards[index].card}`}
+                className={`relative min-h-[250px] snap-start overflow-hidden rounded-3xl border border-white/80 bg-gradient-to-br p-5 shadow-[0_14px_34px_rgba(54,47,61,0.08)] ring-1 ring-white/80 ${mobileStepCards[index].card}`}
               >
                 <div
                   className="pointer-events-none absolute -right-8 -top-8 h-28 w-28 rounded-full bg-white/65 blur-xl"
@@ -203,16 +186,13 @@ export function HomeBrowse() {
                       {step.title}
                     </h3>
                   </div>
-                  <div className="flex h-24 w-24 shrink-0 items-center justify-center rounded-[1.6rem] bg-white/70 shadow-[var(--shadow-soft)] ring-1 ring-white/80">
+                  <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-[1.35rem] bg-white/68 ring-1 ring-white/80">
                     {mobileStepCards[index].art}
                   </div>
                 </div>
                 <p className="relative mt-5 text-sm leading-relaxed text-[var(--text-muted)]">
                   {step.body}
                 </p>
-                {index === 2 ? (
-                  <CatHeartIcon className="absolute bottom-4 right-5 h-10 w-10 opacity-80" />
-                ) : null}
               </article>
             ))}
           </div>
@@ -260,7 +240,7 @@ export function HomeBrowse() {
             </div>
           </div>
 
-          <div className="relative mb-6 overflow-hidden rounded-3xl border border-white/70 bg-gradient-to-br from-white/80 via-[#fff8f0]/70 to-[#eef7ff]/60 p-4 shadow-[0_16px_40px_rgba(54,47,61,0.10)] backdrop-blur-md md:mb-8 md:rounded-[var(--radius-xl)] md:bg-white/45 md:bg-none md:p-8 md:shadow-[var(--shadow-soft)]">
+          <div className="relative mb-6 overflow-hidden rounded-3xl border border-white/70 bg-white/64 p-4 shadow-[0_12px_30px_rgba(54,47,61,0.08)] backdrop-blur-md md:mb-8 md:rounded-[var(--radius-xl)] md:bg-white/45 md:p-8 md:shadow-[var(--shadow-soft)]">
             <PopSticker className="right-4 top-3 rotate-6 hidden lg:flex">🔎</PopSticker>
             <PopSticker className="bottom-3 right-6 -rotate-3 hidden lg:flex">✨</PopSticker>
             <SearchBar locale={locale} value={query} onChange={setQuery} />
@@ -272,7 +252,7 @@ export function HomeBrowse() {
 
         <WavyDivider className="my-8 rotate-180 md:my-12" />
 
-        <section className="relative overflow-hidden rounded-3xl border border-white/75 bg-gradient-to-br from-[#fff8f0] via-white to-[#eef7ff] p-6 shadow-[0_18px_45px_rgba(54,47,61,0.10)] md:rounded-[var(--radius-xl)] md:p-8 md:shadow-[var(--shadow-soft)]">
+        <section className="relative overflow-hidden rounded-3xl border border-white/75 bg-gradient-to-br from-[#fffaf6] via-white to-[#f4f9ff] p-6 shadow-[0_14px_34px_rgba(54,47,61,0.08)] md:rounded-[var(--radius-xl)] md:p-8 md:shadow-[var(--shadow-soft)]">
           <DecorativeBubble className="-right-10 top-10 h-28 w-28 bg-[var(--accent-sky)]/35" />
           <DecorativeBubble className="bottom-12 left-10 h-20 w-20 bg-[var(--accent-peach)]/30" />
           <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
@@ -286,11 +266,13 @@ export function HomeBrowse() {
               <p className="mt-3 max-w-2xl text-sm leading-[1.8] text-[var(--text-muted)] md:leading-relaxed">
                 {home.japanBody}
               </p>
-              <div className="mt-4 flex flex-wrap gap-2">
-                {japanVibes.map((symbol) => (
+              <div className="mt-4 flex flex-nowrap gap-2 overflow-hidden md:flex-wrap">
+                {japanVibes.map((symbol, index) => (
                   <span
                     key={symbol}
-                    className="flex h-9 w-9 items-center justify-center text-2xl drop-shadow-sm"
+                    className={`h-9 w-9 items-center justify-center text-2xl drop-shadow-sm ${
+                      index > 4 ? "hidden md:flex" : "flex"
+                    }`}
                     aria-hidden
                   >
                     {symbol}
@@ -319,7 +301,7 @@ export function HomeBrowse() {
           </div>
         </section>
 
-        <section className="relative mt-8 overflow-hidden rounded-3xl border border-white/75 bg-gradient-to-br from-white/80 via-[#f8fbff]/80 to-[#fff3ed]/60 p-6 shadow-[0_18px_45px_rgba(54,47,61,0.10)] md:mt-12 md:rounded-[var(--radius-xl)] md:bg-white/60 md:bg-none md:p-8 md:shadow-[var(--shadow-soft)]">
+        <section className="relative mt-8 overflow-hidden rounded-3xl border border-white/75 bg-white/68 p-6 shadow-[0_14px_34px_rgba(54,47,61,0.08)] md:mt-12 md:rounded-[var(--radius-xl)] md:bg-white/60 md:p-8 md:shadow-[var(--shadow-soft)]">
           <DecorativeBubble className="left-10 top-8 h-16 w-16 bg-[var(--accent-sky)]/35" />
           <PopSticker className="right-6 top-5 rotate-6 hidden lg:flex">🗻</PopSticker>
           <PopSticker className="bottom-5 right-16 -rotate-6 hidden lg:flex">🍜</PopSticker>
@@ -341,7 +323,7 @@ export function HomeBrowse() {
           </div>
         </section>
 
-        <section className="relative mt-8 overflow-hidden rounded-3xl border border-white/75 bg-gradient-to-br from-[var(--primary-soft)] via-white to-[var(--accent-peach)]/35 p-7 text-center shadow-[0_20px_50px_rgba(54,47,61,0.13)] md:mt-12 md:rounded-[var(--radius-xl)] md:p-12 md:shadow-[var(--shadow-hover)]">
+        <section className="relative mt-8 overflow-hidden rounded-3xl border border-white/75 bg-gradient-to-br from-[var(--primary-soft)]/80 via-white to-[var(--accent-peach)]/25 p-7 text-center shadow-[0_16px_38px_rgba(54,47,61,0.10)] md:mt-12 md:rounded-[var(--radius-xl)] md:p-12 md:shadow-[var(--shadow-hover)]">
           <PopSticker className="left-6 top-6 -rotate-6 hidden md:flex">💌</PopSticker>
           <PopSticker className="right-6 top-6 rotate-6 hidden md:flex">🇯🇵</PopSticker>
           <PopSticker className="bottom-6 left-10 rotate-3 hidden lg:flex">❤️</PopSticker>
