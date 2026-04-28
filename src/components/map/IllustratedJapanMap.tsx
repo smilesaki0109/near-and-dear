@@ -76,7 +76,7 @@ export function IllustratedJapanMap({
 
       <div
         onClick={pick}
-        className="relative mx-auto w-[200%] max-w-4xl -translate-x-[25%] cursor-pointer overflow-hidden md:w-full md:translate-x-0"
+        className="relative mx-auto w-[150%] max-w-4xl -translate-x-[16.5%] cursor-pointer overflow-hidden md:w-full md:translate-x-0"
         aria-label="Japan map image. Click to choose a post position."
       >
         {/* eslint-disable-next-line @next/next/no-img-element -- local map asset used as an interactive coordinate plane */}
@@ -89,7 +89,7 @@ export function IllustratedJapanMap({
 
         <div className="pointer-events-none absolute inset-0 z-10" aria-hidden>
           <MapBubble
-            className="left-[31%] top-[6%] max-w-[136px] px-3 py-2 text-xs leading-relaxed sm:max-w-[230px] sm:px-5 sm:py-3 sm:text-base md:left-[7%] md:top-[8%]"
+            className="left-[31%] top-[18%] max-w-[136px] px-3 py-2 text-xs leading-relaxed sm:max-w-[230px] sm:px-5 sm:py-3 sm:text-base md:left-[7%] md:top-[8%]"
             delay="0s"
           >
             <span className="block font-bold text-[var(--primary-deep)]">
