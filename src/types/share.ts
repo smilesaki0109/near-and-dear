@@ -4,6 +4,6 @@
 export type ShareRecord = {
   cardId: string;
   message: string;
-  locale: "en" | "ja";
+  locale: "en" | "ja" | "tl";
   photoUrl: string | null;
 };

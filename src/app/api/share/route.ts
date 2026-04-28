@@ -11,7 +11,7 @@ type Body = {
   message?: string;
   imageBase64?: string | null;
   imageMimeType?: string | null;
-  locale?: "en" | "ja";
+  locale?: "en" | "ja" | "tl";
 };
 
 const MAX_MESSAGE = 12000;
@@ -72,11 +72,15 @@ export async function POST(req: Request) {
   if (
     typedBody.locale != null &&
     typedBody.locale !== "en" &&
-    typedBody.locale !== "ja"
+    typedBody.locale !== "ja" &&
+    typedBody.locale !== "tl"
   ) {
     return NextResponse.json({ error: "Invalid locale" }, { status: 400 });
   }
-  const locale = typedBody.locale === "ja" ? "ja" : "en";
+  const locale =
+    typedBody.locale === "ja" || typedBody.locale === "tl"
+      ? typedBody.locale
+      : "en";
 
   let imageBase64: string | null = null;
   let imageMimeType: string | null = null;

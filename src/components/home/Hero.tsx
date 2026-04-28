@@ -21,9 +21,11 @@ const fraunces = Fraunces({
 export function Hero({ locale }: Props) {
   const t = ui[locale];
   const moodChips =
-    locale === "en"
-      ? ["🇯🇵 Japan days", "❤️ tiny care", "🌸 soft moments"]
-      : ["🇯🇵 日本の毎日", "❤️ 小さな想い", "🌸 やさしい時間"];
+    locale === "ja"
+      ? ["🇯🇵 日本の毎日", "❤️ 小さな想い", "🌸 やさしい時間"]
+      : locale === "tl"
+        ? ["🇯🇵 Japan days", "❤️ munting care", "🌸 soft moments"]
+        : ["🇯🇵 Japan days", "❤️ tiny care", "🌸 soft moments"];
   const mobileChipStyles = [
     "from-[#fff0ee] via-[#ffe2e1] to-[#fff7ef] text-[#b65f66] shadow-[0_10px_24px_rgba(242,190,180,0.28)]",
     "from-[#fff0f7] via-[#ffe0ee] to-[#fff5fa] text-[#b95786] shadow-[0_10px_24px_rgba(236,133,176,0.24)]",

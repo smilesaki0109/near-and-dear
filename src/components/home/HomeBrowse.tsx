@@ -31,19 +31,19 @@ export function HomeBrowse() {
   const quickActions = [
     {
       href: "/map",
-      label: locale === "en" ? "Map" : "Mapを見る",
+      label: locale === "ja" ? "Mapを見る" : "Map",
       icon: <CatMapIcon className="h-10 w-10" />,
       card: "from-[#f6fbff] to-white",
     },
     {
       href: "#cards",
-      label: locale === "en" ? "Cards" : "カード",
+      label: locale === "ja" ? "カード" : "Cards",
       icon: <CatCardsIcon className="h-10 w-10" />,
       card: "from-[#fff9f5] to-white",
     },
     {
       href: "/create/1",
-      label: locale === "en" ? "Write" : "書く",
+      label: locale === "ja" ? "書く" : locale === "tl" ? "Sulatan" : "Write",
       icon: <CatHomeIcon className="h-10 w-10" />,
       card: "from-[#fbf7ff] to-white",
     },
@@ -95,10 +95,14 @@ export function HomeBrowse() {
           <div className="mb-3 px-4">
             <div>
               <p className="text-[0.65rem] font-bold uppercase tracking-[0.22em] text-[var(--primary-deep)]/70">
-                {locale === "en" ? "Quick pick" : "クイック選択"}
+                {locale === "ja" ? "クイック選択" : "Quick pick"}
               </p>
               <h2 className="mt-1 text-lg font-semibold tracking-[-0.02em] text-[var(--text)]">
-                {locale === "en" ? "What do you want to do?" : "何から始める？"}
+                {locale === "ja"
+                  ? "何から始める？"
+                  : locale === "tl"
+                    ? "Ano ang gusto mong gawin?"
+                    : "What do you want to do?"}
               </h2>
             </div>
           </div>
@@ -464,6 +468,42 @@ const homeStoryCopy = {
     ctaTitle: "今日、小さなぬくもりを送る",
     ctaBody:
       "カードをひとつ選んで、正直な一文を添えるだけで、想いはちゃんと届きます。",
+    createButton: "Create a card",
+  },
+  tl: {
+    whyKicker: "Bakit mahalaga",
+    whyTitle: "Magpadala ng feeling, hindi lang message.",
+    whyBody:
+      "Tinutulungan ka ng Near & Dear gawing warm, visual, at madaling i-share ang maliit na thought kapag mahirap ang words.",
+    howKicker: "Paano gamitin",
+    howTitle: "Three soft steps",
+    steps: [
+      {
+        title: "Pumili ng card",
+        body: "Pumili ng mood, kulay, o maliit na scene na bagay sa taong iniisip mo.",
+      },
+      {
+        title: "Isulat ang message",
+        body: "Magdagdag ng simpleng words, photo, o isang quiet sentence na sapat na.",
+      },
+      {
+        title: "I-share sa mahalaga sa iyo",
+        body: "Gumawa ng link at ipadala sa LINE, X, Instagram, o message app.",
+      },
+    ],
+    cardsBody:
+      "Mag-browse ng warm cards para sa birthdays, homesick days, encouragement, gratitude, at new beginnings.",
+    japanTitle: "Mga paborito ng tao sa Japan 🇯🇵",
+    japanBody:
+      "Pop, peaceful, nostalgic cards na inspired ng maliliit na moments sa Japan.",
+    mapButton: "View map",
+    mapTitle: "Discover Japan through others",
+    mapBody:
+      "Kinokolekta ng Japan Map ang food, places, culture, at daily-life favorites ng mga taong gumagawa ng buhay dito.",
+    exploreMap: "Explore the map",
+    ctaTitle: "Magpadala ng munting warmth today",
+    ctaBody:
+      "Pumili ng isang card, magsulat ng isang honest line, at ipaalam na naaalala mo sila.",
     createButton: "Create a card",
   },
 } as const;

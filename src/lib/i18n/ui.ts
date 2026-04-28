@@ -3,7 +3,7 @@
  * Phase 1: home + browse only. Expand when create/share ships.
  */
 
-export type Locale = "en" | "ja";
+export type Locale = "en" | "ja" | "tl";
 
 export const ui = {
   en: {
@@ -142,5 +142,73 @@ export const ui = {
     shareNotFoundTitle: "このカードは見つかりませんでした",
     shareNotFoundBody:
       "リンクが正しくないか、カードを読み込めませんでした。送り直してもらうか、新しいカードをつくってみてください。",
+  },
+  tl: {
+    brand: "Near & Dear",
+    navHome: "Home",
+    navMap: "Japan Map",
+    navCreateHint: "Pumili ng card para magsimula",
+    heroTitle: "Munumaning init para sa layo ninyo",
+    heroSubtitle:
+      "Pumili ng gentle cards para sa special days at mahihirap na araw, lalo na kung malayo sa tahanan.",
+    searchPlaceholder: "Maghanap ng card sa title…",
+    categoryAll: "Lahat",
+    categoryEncouragement: "Encouragement",
+    categoryBirthday: "Birthday",
+    categoryGratitude: "Salamat",
+    categoryMissingHome: "Miss ang home",
+    categoryNewChapter: "Bagong chapter",
+    categoryJapan: "Japan 🇯🇵",
+    cardsHeading: "Cards for your heart",
+    cardsEmpty: "Walang tugmang card. Subukan ang ibang salita o category.",
+    chipHint: "Filter by feeling",
+    footerNote: "Hindi ka nag-iisa dito.",
+    createBack: "Bumalik sa cards",
+    createHeading: "Idagdag ang message mo",
+    createSub:
+      "Dahan-dahan lang. Kapag na-save, gagawa kami ng link na puwede mong i-share.",
+    createSelectedLabel: "Pinili mo",
+    createMessageLabel: "Message mo",
+    createMessagePlaceholder:
+      "Isulat ang totoo mong nararamdaman, kahit simple lang…",
+    createTemplatesHint: "Gentle starters — tap para idagdag",
+    createPhotoLabel: "Isang photo",
+    createPhotoButton: "Pumili ng photo",
+    createPhotoReplace: "Palitan",
+    createPhotoRemove: "Tanggalin ang photo",
+    createPhotoHint: "JPG o PNG, isang image.",
+    createPreviewLabel: "Ganito mararamdaman ang card",
+    createPreviewEmpty:
+      "Dito lalabas ang message mo…",
+    createSave: "Save card",
+    createSaveNote:
+      "Gumagawa ng shareable link at sine-save para mabuksan ulit.",
+    createSavedAck:
+      "Na-save sa device na ito para sa preview. Tutulungan ka naming i-share sa next step.",
+    createSaving: "Sine-save…",
+    createShareError: "Hindi namin ma-save. Subukan ulit.",
+    shareKicker: "Isang card para sa iyo",
+    shareCopyLink: "Copy link",
+    shareCopyShort: "Copy",
+    shareCopied: "Copied!",
+    shareCopyFailed:
+      "Hindi ma-copy. Maaari mong kopyahin ang address mula sa browser bar.",
+    shareNative: "Share",
+    shareSending: "Sending...",
+    shareSent: "Sent with care",
+    shareAfterglow: "Papunta na ang card mo.",
+    shareUnable: "Hindi ma-share",
+    shareLine: "LINE",
+    shareTwitter: "X",
+    shareInstagram: "Instagram",
+    shareInstagramCopied: "Na-copy ang link. I-paste ito sa Instagram.",
+    shareSocialText: "May nagpadala sa iyo ng card sa Near & Dear.",
+    shareFooterNote:
+      "Pinili ng nagpadala ang words at colors na ito habang iniisip ka.",
+    shareBrowseMore: "Tumingin pa ng cards",
+    shareMessageEmpty: "Minsan mahirap ang words. Yakap pa rin ang space na ito.",
+    shareNotFoundTitle: "Wala na rito ang card na ito",
+    shareNotFoundBody:
+      "Maaaring mali ang link o hindi ma-load ang card. Paki-send ulit, o gumawa ng bagong card.",
   },
 } as const;

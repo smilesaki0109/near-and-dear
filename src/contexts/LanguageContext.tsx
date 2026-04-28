@@ -23,10 +23,19 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 
   const setLocale = useCallback((next: Locale) => {
     setLocaleState(next);
+    window.localStorage.setItem("near-dear-locale", next);
   }, []);
 
   useEffect(() => {
-    document.documentElement.lang = locale === "ja" ? "ja" : "en";
+    const saved = window.localStorage.getItem("near-dear-locale");
+    if (saved === "en" || saved === "ja" || saved === "tl") {
+      setLocaleState(saved);
+    }
+  }, []);
+
+  useEffect(() => {
+    document.documentElement.lang =
+      locale === "ja" ? "ja" : locale === "tl" ? "tl" : "en";
   }, [locale]);
 
   const value = useMemo(

@@ -12,10 +12,13 @@ type SharedCardRow = {
 };
 
 function rowToShareRecord(row: SharedCardRow): ShareRecord {
+  const locale =
+    row.locale === "ja" || row.locale === "tl" ? row.locale : "en";
+
   return {
     cardId: row.card_id,
     message: row.message ?? "",
-    locale: row.locale === "ja" ? "ja" : "en",
+    locale,
     photoUrl: row.photo_url,
   };
 }
@@ -101,7 +104,7 @@ export async function insertSharedCard(params: {
   token: string;
   cardId: string;
   message: string;
-  locale: "en" | "ja";
+  locale: "en" | "ja" | "tl";
   photoUrl: string | null;
 }): Promise<{ error: string | null }> {
   const supabase = createSupabaseAdmin();

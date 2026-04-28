@@ -39,15 +39,19 @@ function absoluteUrl(pathOrUrl: string, origin: string): string {
   return `${origin}${path}`;
 }
 
-function buildDescription(message: string, locale: "en" | "ja"): string {
+function buildDescription(message: string, locale: "en" | "ja" | "tl"): string {
   const compact = message.replace(/\s+/g, " ").trim();
   if (compact) {
     return compact.length > 100 ? `${compact.slice(0, 100)}…` : compact;
   }
 
-  return locale === "ja"
-    ? "Near & Dearから、あなたへのカードが届きました。"
-    : "A thoughtful card was shared with you on Near & Dear.";
+  if (locale === "ja") {
+    return "Near & Dearから、あなたへのカードが届きました。";
+  }
+  if (locale === "tl") {
+    return "May thoughtful card na na-share sa iyo sa Near & Dear.";
+  }
+  return "A thoughtful card was shared with you on Near & Dear.";
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

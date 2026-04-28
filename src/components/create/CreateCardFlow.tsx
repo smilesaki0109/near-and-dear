@@ -228,13 +228,24 @@ export function CreateCardFlow({ card }: Props) {
               </p>
               <div className="mt-3 flex flex-wrap gap-2">
                 {messageTemplates.map((tpl) => {
-                  const label = locale === "ja" ? tpl.textJa : tpl.textEn;
+                  const label =
+                    locale === "ja"
+                      ? tpl.textJa
+                      : locale === "tl"
+                        ? tpl.textTl
+                        : tpl.textEn;
                   return (
                     <button
                       key={tpl.id}
                       type="button"
                       onClick={() =>
-                        insertTemplate(locale === "ja" ? tpl.textJa : tpl.textEn)
+                        insertTemplate(
+                          locale === "ja"
+                            ? tpl.textJa
+                            : locale === "tl"
+                              ? tpl.textTl
+                              : tpl.textEn,
+                        )
                       }
                       className="max-w-full rounded-full border border-[var(--line)]/90 bg-white/80 px-3 py-2 text-left text-sm leading-snug text-[var(--text)] shadow-[var(--shadow-soft)] transition hover:border-[var(--primary)]/30 hover:bg-white hover:shadow-[var(--shadow-hover)]"
                       title={label}

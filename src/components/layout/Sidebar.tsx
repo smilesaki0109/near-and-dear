@@ -42,14 +42,14 @@ export function Sidebar({ locale, onLocaleChange }: Props) {
     },
     {
       href: "/#cards",
-      label: locale === "en" ? "Cards" : "カード",
+      label: locale === "ja" ? "カード" : "Cards",
       icon: <CatCardsIcon className="h-10 w-10" />,
       color: "from-[#f6f0ff] to-[#ebe3f7]",
       active: isCreate,
     },
     {
       href: "/#cards",
-      label: locale === "en" ? "Explore" : "さがす",
+      label: locale === "ja" ? "さがす" : "Explore",
       icon: <CatExploreIcon className="h-10 w-10" />,
       color: "from-[#f0fbf5] to-[#ddf4e8]",
       active: false,
@@ -84,7 +84,11 @@ export function Sidebar({ locale, onLocaleChange }: Props) {
               {t.brand}
             </p>
             <p className="mt-1 text-xs font-semibold leading-snug text-[var(--text-muted)]">
-              {locale === "en" ? "Emotional support cards" : "心に寄り添うカード"}
+              {locale === "ja"
+                ? "心に寄り添うカード"
+                : locale === "tl"
+                  ? "Cards na kumakalinga"
+                  : "Emotional support cards"}
             </p>
           </div>
         </div>
@@ -115,7 +119,7 @@ export function Sidebar({ locale, onLocaleChange }: Props) {
 
       <div className="relative mt-6 space-y-2 border-t border-white/65 pt-6 md:mt-auto">
         <p className="text-center text-xs font-semibold text-[var(--text-muted)]">
-          {locale === "en" ? "Language" : "言語"}
+          {locale === "ja" ? "言語" : locale === "tl" ? "Wika" : "Language"}
         </p>
         <div className="flex justify-center gap-2">
           <button
@@ -139,6 +143,17 @@ export function Sidebar({ locale, onLocaleChange }: Props) {
             }`}
           >
             日本語
+          </button>
+          <button
+            type="button"
+            onClick={() => onLocaleChange("tl")}
+            className={`rounded-full px-3 py-1 text-xs font-medium transition ${
+              locale === "tl"
+                ? "bg-[var(--primary-soft)] text-[var(--text)]"
+                : "bg-white/60 text-[var(--text-muted)] hover:bg-white"
+            }`}
+          >
+            Tagalog
           </button>
         </div>
       </div>

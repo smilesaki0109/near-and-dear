@@ -2,11 +2,13 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import type { ReactNode, SVGProps } from "react";
 import { NearDearMascot } from "@/components/icons/NearDearMascot";
 import { Sidebar } from "@/components/layout/Sidebar";
 import type { Locale } from "@/lib/i18n/ui";
+
+let splashShownForCurrentPageLoad = false;
 
 type Props = {
   children: ReactNode;
@@ -16,33 +18,85 @@ type Props = {
 
 /** App frame: soft sidebar + scrollable main area (Givingli-like calm shell). */
 export function AppShell({ children, locale, onLocaleChange }: Props) {
+  const [splashDone, setSplashDone] = useState(false);
+  const completeSplash = useCallback(() => setSplashDone(true), []);
+
   return (
     <div className="flex min-h-screen flex-col md:flex-row">
-      <SplashScreen />
+      <SplashScreen onComplete={completeSplash} />
+      {splashDone ? (
+        <FloatingLanguageSwitch locale={locale} onLocaleChange={onLocaleChange} />
+      ) : null}
       <Sidebar locale={locale} onLocaleChange={onLocaleChange} />
       <main className="min-w-0 flex-1 px-4 pb-28 pt-4 sm:px-6 md:px-12 md:py-12 lg:px-16">
         {children}
       </main>
-      <MobileTabBar />
+      <MobileTabBar locale={locale} />
     </div>
   );
 }
 
-function SplashScreen() {
+function FloatingLanguageSwitch({
+  locale,
+  onLocaleChange,
+}: {
+  locale: Locale;
+  onLocaleChange: (locale: Locale) => void;
+}) {
+  const languages: { locale: Locale; label: string }[] = [
+    { locale: "en", label: "EN" },
+    { locale: "ja", label: "JP" },
+    { locale: "tl", label: "TL" },
+  ];
+
+  return (
+    <div
+      className="fixed right-4 top-[calc(env(safe-area-inset-top)+0.9rem)] z-40 flex rounded-full border border-white/75 bg-white/82 p-1 shadow-[0_12px_32px_rgba(54,47,61,0.12)] ring-1 ring-white/80 backdrop-blur-xl md:right-6 md:top-5"
+      aria-label="Language selector"
+    >
+      {languages.map((item) => (
+        <button
+          key={item.locale}
+          type="button"
+          onClick={() => onLocaleChange(item.locale)}
+          className={`rounded-full px-3 py-1.5 text-[0.68rem] font-bold transition active:scale-95 ${
+            locale === item.locale
+              ? "bg-gradient-to-br from-[var(--primary-soft)] to-[#fff0f7] text-[var(--primary-deep)] shadow-sm"
+              : "text-[var(--text-muted)] hover:bg-white/75"
+          }`}
+          aria-pressed={locale === item.locale}
+        >
+          {item.label}
+        </button>
+      ))}
+    </div>
+  );
+}
+
+function SplashScreen({ onComplete }: { onComplete: () => void }) {
   const [visible, setVisible] = useState(false);
   const [leaving, setLeaving] = useState(false);
 
   useEffect(() => {
+    if (splashShownForCurrentPageLoad) {
+      onComplete();
+      return;
+    }
+
+    splashShownForCurrentPageLoad = true;
     setVisible(true);
 
     const fadeTimer = window.setTimeout(() => setLeaving(true), 5000);
-    const removeTimer = window.setTimeout(() => setVisible(false), 5700);
+    const removeTimer = window.setTimeout(() => {
+      setVisible(false);
+      onComplete();
+    }, 5700);
 
     return () => {
       window.clearTimeout(fadeTimer);
       window.clearTimeout(removeTimer);
     };
-  }, []);
+  }, [onComplete]);
 
   if (!visible) return null;
 
@@ -124,7 +178,7 @@ function CloudMark({ className }: { className: string }) {
   );
 }
 
-function MobileTabBar() {
+function MobileTabBar({ locale }: { locale: Locale }) {
   const pathname = usePathname();
   const isCreate = pathname.startsWith("/create");
   const isMap = pathname === "/map";
@@ -133,7 +187,7 @@ function MobileTabBar() {
   const items = [
     {
       href: "/",
-      label: "Cards",
+      label: locale === "ja" ? "カード" : "Cards",
       icon: CardsTabIcon,
       active: isHome,
     },
@@ -145,13 +199,13 @@ function MobileTabBar() {
     },
     {
       href: "/",
-      label: "Create",
+      label: locale === "ja" ? "作る" : locale === "tl" ? "Gawa" : "Create",
       icon: PlusTabIcon,
       active: isCreate,
     },
     {
       href: "/#cards",
-      label: "Explore",
+      label: locale === "ja" ? "さがす" : "Explore",
       icon: SearchTabIcon,
       active: false,
     },

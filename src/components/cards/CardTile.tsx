@@ -49,7 +49,7 @@ export function CardTile({ card, locale }: Props) {
             {title}
           </h2>
           <p className="mt-3 text-xs font-medium text-[var(--text-muted)]">
-            {locale === "en" ? "Preview" : "プレビュー"}
+            {locale === "ja" ? "プレビュー" : "Preview"}
           </p>
         </div>
       </div>

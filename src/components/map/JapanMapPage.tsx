@@ -196,6 +196,28 @@ const copy = {
     success: "Japan Mapに追加しました。",
     error: "保存できませんでした。もう一度お試しください。",
   },
+  tl: {
+    eyebrow: "Japan Map",
+    title: "Mga totoong paborito ng foreigners sa Japan",
+    subtitle:
+      "Isang playful map para sa pagkain, lugar, culture, at maliliit na saya habang naninirahan dito.",
+    mapHint: "I-tap ang illustrated map para pumili ng spot.",
+    selectedPoint: "Napiling spot",
+    formTitle: "I-share ang gusto mo sa Japan!",
+    formBody: "Magdagdag ng place, food, culture, o kahit anong nagpapasaya sa iyo.",
+    titleLabel: "Title",
+    category: "Category",
+    description: "Kuwento pa",
+    x: "Map X",
+    y: "Map Y",
+    imageUrl: "Image URL (optional)",
+    submit: "Post",
+    saving: "Saving...",
+    emptyNote: "Sample pins muna ang makikita hanggang may unang real post.",
+    recent: "Map posts",
+    success: "Naidagdag sa Japan Map.",
+    error: "Hindi namin ma-save. Subukan ulit.",
+  },
 } as const;
 
 function cleanForm(): FormState {
@@ -224,13 +246,23 @@ export function JapanMapPage({ initialPosts }: Props) {
   const { locale, setLocale } = useLanguage();
   const t = copy[locale];
   const mobileTitle =
-    locale === "en" ? "Japan, through tiny loves" : "小さな好きで見る日本";
+    locale === "ja"
+      ? "小さな好きで見る日本"
+      : locale === "tl"
+        ? "Japan sa maliliit na paborito"
+        : "Japan, through tiny loves";
   const mobileSubtitle =
-    locale === "en"
-      ? "Tap the map and share one thing you love."
-      : "地図をタップして、好きな瞬間をひとつだけ。";
+    locale === "ja"
+      ? "地図をタップして、好きな瞬間をひとつだけ。"
+      : locale === "tl"
+        ? "I-tap ang map at mag-share ng isang paborito."
+        : "Tap the map and share one thing you love.";
   const mobileFormTitle =
-    locale === "en" ? "Add your moment" : "好きな瞬間を追加";
+    locale === "ja"
+      ? "好きな瞬間を追加"
+      : locale === "tl"
+        ? "Idagdag ang moment mo"
+        : "Add your moment";
 
   const [posts, setPosts] = useState<JapanMapPost[]>(initialPosts);
   const [form, setForm] = useState<FormState>(() => cleanForm());
@@ -357,7 +389,9 @@ export function JapanMapPage({ initialPosts }: Props) {
               <p className="text-sm leading-relaxed text-[var(--text-muted)]">
                 {locale === "en"
                   ? "A short title is enough."
-                  : "短いタイトルだけでも大丈夫です。"}
+                  : locale === "tl"
+                    ? "Kahit maikling title lang, okay na."
+                    : "短いタイトルだけでも大丈夫です。"}
               </p>
             </div>
 
@@ -427,9 +461,7 @@ export function JapanMapPage({ initialPosts }: Props) {
             >
               {isSaving
                 ? t.saving
-                : locale === "en"
-                  ? "Add your moment"
-                  : "投稿する"}
+                : mobileFormTitle}
             </button>
 
             {message ? (
