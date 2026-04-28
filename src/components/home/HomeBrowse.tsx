@@ -115,11 +115,14 @@ export function HomeBrowse() {
               {home.howTitle}
             </h2>
           </div>
-          <div className="-mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-3 md:hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <div
+            className="-mx-5 grid grid-flow-col snap-x snap-mandatory gap-4 overflow-x-auto overflow-y-hidden px-5 pb-3 md:hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            style={{ gridAutoColumns: "84%" }}
+          >
             {home.steps.map((step, index) => (
               <article
                 key={step.title}
-                className={`relative min-h-[270px] w-[84vw] max-w-[320px] shrink-0 snap-start overflow-hidden rounded-3xl border border-white/80 bg-gradient-to-br p-5 shadow-[0_18px_45px_rgba(54,47,61,0.10)] ring-1 ring-white/80 ${mobileStepCards[index].card}`}
+                className={`relative min-h-[270px] snap-start overflow-hidden rounded-3xl border border-white/80 bg-gradient-to-br p-5 shadow-[0_18px_45px_rgba(54,47,61,0.10)] ring-1 ring-white/80 ${mobileStepCards[index].card}`}
               >
                 <div
                   className="pointer-events-none absolute -right-8 -top-8 h-28 w-28 rounded-full bg-white/65 blur-xl"
