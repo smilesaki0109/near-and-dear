@@ -183,6 +183,7 @@ function MobileTabBar({ locale }: { locale: Locale }) {
   const isCreate = pathname.startsWith("/create");
   const isMap = pathname === "/map";
   const isHome = pathname === "/";
+  const isVision = pathname === "/vision";
 
   const items = [
     {
@@ -202,6 +203,12 @@ function MobileTabBar({ locale }: { locale: Locale }) {
       label: locale === "ja" ? "作る" : locale === "tl" ? "Gawa" : "Create",
       icon: PlusTabIcon,
       active: isCreate,
+    },
+    {
+      href: "/vision",
+      label: "Vision",
+      icon: HeartTabIcon,
+      active: isVision,
     },
     {
       href: "/#cards",
@@ -272,6 +279,20 @@ function SearchTabIcon(props: SVGProps<SVGSVGElement>) {
     <svg viewBox="0 0 24 24" fill="none" aria-hidden {...props}>
       <circle cx="11" cy="11" r="6" stroke="currentColor" strokeWidth="2" />
       <path d="m16 16 4 4" stroke="currentColor" strokeLinecap="round" strokeWidth="2" />
+    </svg>
+  );
+}
+
+function HeartTabIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden {...props}>
+      <path
+        d="M12 20s-7-4.4-7-10a4.2 4.2 0 0 1 7-3.1A4.2 4.2 0 0 1 19 10c0 5.6-7 10-7 10Z"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+      />
     </svg>
   );
 }

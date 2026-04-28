@@ -25,6 +25,7 @@ export function Sidebar({ locale, onLocaleChange }: Props) {
   const isHome = pathname === "/";
   const isMap = pathname === "/map";
   const isCreate = pathname.startsWith("/create");
+  const isVision = pathname === "/vision";
   const navItems = [
     {
       href: "/",
@@ -39,6 +40,13 @@ export function Sidebar({ locale, onLocaleChange }: Props) {
       icon: <CatMapIcon className="h-10 w-10" />,
       color: "from-[#eef7ff] to-[#dff0ff]",
       active: isMap,
+    },
+    {
+      href: "/vision",
+      label: "Vision",
+      icon: <CatHeartIcon className="h-10 w-10" />,
+      color: "from-[#fff0f7] to-[#f7edff]",
+      active: isVision,
     },
     {
       href: "/#cards",
