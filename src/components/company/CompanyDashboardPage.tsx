@@ -191,10 +191,10 @@ export function CompanyDashboardPage({ initialSpots, initialEvents }: Props) {
               <p className="text-[0.68rem] font-bold uppercase tracking-[0.24em] text-[var(--primary-deep)]/70">
                 {t.eyebrow}
               </p>
-              <h1 className="mt-2 text-2xl font-semibold tracking-[-0.035em] text-[var(--text)] md:text-4xl">
+              <h1 className="mt-2 text-2xl font-semibold tracking-[-0.035em] text-[var(--text)] max-md:text-xl max-md:leading-tight md:text-4xl">
                 {t.title}
               </h1>
-              <p className="mt-3 max-w-3xl text-sm leading-relaxed text-[var(--text-muted)] md:text-base">
+              <p className="mt-3 max-w-3xl text-sm leading-relaxed text-[var(--text-muted)] max-md:max-w-md max-md:leading-7 md:text-base">
                 {t.subtitle}
               </p>
             </div>

@@ -10,14 +10,14 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import type { ReactNode } from "react";
 
 const problemJa = [
-  "現在、技能実習生向けの感情サポートサービスを開発しています。",
+  "つながりは、私たちが愛する場所から始まります。\n\nその小さな出発点が孤独をやわらげ、日本への理解と愛着を深め、ともに働き、ともに暮らす関係へと育っていきます。",
   "きっかけは、約50名のフィリピン人技能実習生へのヒアリングでした。\n彼女たちから繰り返し出てきたのは、「困っているのに言葉にできない」「本当は誰かとつながりたい」という声です。",
   "日本で生活しているにもかかわらず、日本人や文化と十分に関われていない。\nこれは「支援が足りない」というよりも、助けを求める“きっかけと言葉”がない構造的な問題だと感じました。",
   "さらに深刻なのが孤独です。\n多くの実習生は、家族や子どもを母国に残して来日しています。\n誕生日や記念日といった大切な瞬間に、「そばにいられない」という体験が積み重なっています。\n実際に、ヒアリングでは85%以上が孤独を感じていると回答しました。",
 ];
 
 const problemEn = [
-  "We are developing an emotional support service for technical intern trainees in Japan.",
+  "Connections begin from the places we love.\n\nThat small starting point helps ease loneliness, deepen understanding and appreciation for Japan, and grow into relationships where people work and live together.",
   "This idea originated from interviews with around 50 Filipino trainees.\nA recurring theme in their voices was:\n“I don’t know how to express that I’m struggling”\n“I actually want to connect with others”",
   "Despite living in Japan, many are not fully engaging with Japanese people or culture.\nWe realized that the issue is not the lack of support,\nbut the lack of “language and opportunities to ask for help.”",
   "Another critical issue is loneliness.\nMany trainees come to Japan leaving behind their families and even children.\nThey repeatedly experience moments where they cannot be present for important occasions like birthdays or celebrations.",
@@ -78,34 +78,37 @@ export function VisionPage() {
   return (
     <AppShell locale={locale} onLocaleChange={setLocale}>
       <div className="mx-auto max-w-4xl pb-16 md:pb-20">
-        <header className="relative mb-6 overflow-hidden rounded-[2rem] border border-white/75 bg-gradient-to-br from-white/86 via-[#fff7fb]/78 to-[#f2f8ff]/82 p-5 shadow-[0_18px_42px_rgba(54,47,61,0.08)] ring-1 ring-white/80 backdrop-blur-md md:mb-8 md:p-8">
+        <header className="relative mb-6 overflow-hidden rounded-[2rem] border border-white/75 bg-gradient-to-br from-white/86 via-[#fff7fb]/78 to-[#f2f8ff]/82 p-6 shadow-[0_18px_42px_rgba(54,47,61,0.08)] ring-1 ring-white/80 backdrop-blur-md md:mb-8 md:p-8">
           <span className="pointer-events-none absolute -right-5 -top-4 h-28 w-28 rounded-full bg-[#f7ddff]/45 blur-2xl" aria-hidden />
           <span className="pointer-events-none absolute -bottom-8 left-8 h-24 w-24 rounded-full bg-[#dff4ff]/50 blur-2xl" aria-hidden />
           <div className="relative flex items-center gap-4">
             <div className="near-dear-mascot-glow flex h-20 w-20 shrink-0 items-center justify-center rounded-[1.6rem] bg-white/58 shadow-[0_14px_34px_rgba(149,120,198,0.13)] ring-1 ring-white/85 md:h-24 md:w-24">
               <NearDearMascot className="h-20 w-20 md:h-24 md:w-24" />
             </div>
-            <div className="min-w-0">
+            <div className="min-w-0 max-md:max-w-[min(100%,18rem)]">
               <p className="text-[0.66rem] font-bold uppercase tracking-[0.24em] text-[var(--primary-deep)]/70">
                 Near & Dear
               </p>
-              <h1 className="mt-2 text-2xl font-semibold tracking-[-0.035em] text-[var(--text)] md:text-3xl">
+              <h1 className="mt-2 text-xl font-semibold tracking-[-0.035em] text-[var(--text)] max-md:leading-tight md:text-3xl">
                 {isJapanese ? "ビジョン" : "Vision"}
               </h1>
-              <p className="mt-2 text-sm leading-relaxed text-[var(--text-muted)]">
+              <p className="mt-3 text-xs leading-relaxed text-[var(--text-muted)] max-md:mt-2 md:text-sm">
                 {isJapanese ? "やさしい未来のコンセプト" : "A gentle product concept"}
               </p>
             </div>
           </div>
         </header>
 
-        <div className="space-y-6 md:space-y-8">
+        <div className="space-y-7 max-md:space-y-8 md:space-y-8">
           <VisionSection
             emoji="🌧️"
             icon={<CatPawIcon className="h-7 w-7" />}
             title={isJapanese ? "課題" : "Problem"}
           >
-            <ContentBlock paragraphs={isJapanese ? problemJa : problemEn} />
+            <ContentBlock
+              paragraphs={isJapanese ? problemJa : problemEn}
+              desktopLeadCount={2}
+            />
           </VisionSection>
 
           <VisionSection
@@ -151,10 +154,10 @@ export function VisionPage() {
           </VisionSection>
         </div>
 
-        <footer className="mt-8 overflow-hidden rounded-[2rem] border border-white/75 bg-gradient-to-br from-[#fff5fb]/88 via-white/78 to-[#f2fbff]/86 p-5 text-center shadow-[0_16px_36px_rgba(54,47,61,0.08)] ring-1 ring-white/80 md:mt-10 md:p-7">
-          <div className="mx-auto flex w-fit items-center gap-3 rounded-full bg-white/72 px-5 py-3 shadow-[var(--shadow-soft)] ring-1 ring-white/85">
+        <footer className="mt-8 overflow-hidden rounded-[2rem] border border-white/75 bg-gradient-to-br from-[#fff5fb]/88 via-white/78 to-[#f2fbff]/86 p-6 text-center shadow-[0_16px_36px_rgba(54,47,61,0.08)] ring-1 ring-white/80 md:mt-10 md:p-7">
+          <div className="mx-auto flex w-fit max-w-[90%] flex-wrap items-center justify-center gap-3 rounded-full bg-white/72 px-5 py-3 shadow-[var(--shadow-soft)] ring-1 ring-white/85">
             <CatHeartIcon className="h-8 w-8" />
-            <p className="text-base font-extrabold tracking-[-0.02em] text-[var(--primary-deep)] md:text-lg">
+            <p className="text-sm font-extrabold leading-relaxed tracking-[-0.02em] text-[var(--primary-deep)] max-md:text-sm md:text-lg">
               Create by Saki 😊✌️
             </p>
             <CatCloudIcon className="h-8 w-10" />
@@ -177,7 +180,7 @@ function VisionSection({
   children: ReactNode;
 }) {
   return (
-    <section className="relative overflow-hidden rounded-[2rem] border border-white/75 bg-white/76 p-5 shadow-[0_16px_38px_rgba(54,47,61,0.075)] ring-1 ring-white/75 backdrop-blur-md md:p-7">
+    <section className="relative overflow-hidden rounded-[2rem] border border-white/75 bg-white/76 p-6 shadow-[0_16px_38px_rgba(54,47,61,0.075)] ring-1 ring-white/75 backdrop-blur-md md:p-7">
       <span className="pointer-events-none absolute right-5 top-5 text-3xl opacity-20 md:text-4xl" aria-hidden>
         {emoji}
       </span>
@@ -185,28 +188,85 @@ function VisionSection({
         <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-white to-[var(--primary-soft)]/55 shadow-[var(--shadow-soft)] ring-1 ring-white/85">
           {icon}
         </div>
-        <h2 className="text-lg font-semibold tracking-[-0.025em] text-[var(--text)] md:text-2xl">
+        <h2 className="text-lg font-semibold tracking-[-0.025em] text-[var(--text)] max-md:leading-snug md:text-2xl">
           {title}
         </h2>
       </div>
-      <div className="relative mt-5 space-y-5 md:mt-6">{children}</div>
+      <div className="relative mt-6 space-y-6 md:mx-auto md:max-w-[51rem]">
+        {children}
+      </div>
     </section>
   );
 }
 
+/** Desktop: merge soft line breaks into flowing prose; keep list-like blocks as pre-line. */
+function formatDesktopChunk(chunk: string): { text: string; preserveBreaks: boolean } {
+  const raw = chunk.trim();
+  if (!raw) return { text: "", preserveBreaks: false };
+  if (/\n\s*[・•\-*❖◦]/.test(raw) || /\n-\s/.test(raw)) {
+    return { text: raw, preserveBreaks: true };
+  }
+  return {
+    text: raw.replace(/\n+/g, " ").replace(/\s+/g, " ").trim(),
+    preserveBreaks: false,
+  };
+}
+
+function buildDesktopChunks(paragraphs: string[]): string[] {
+  return paragraphs
+    .flatMap((block) => block.split(/\n\n+/))
+    .map((s) => s.trim())
+    .filter(Boolean);
+}
+
 function ContentBlock({
   paragraphs,
+  desktopLeadCount = 0,
 }: {
   paragraphs: string[];
+  /** First N desktop paragraphs get emphasis (e.g. Problem opening lines). */
+  desktopLeadCount?: number;
 }) {
+  const linesMobile = paragraphs.flatMap((block) => block.split(/\n+/).filter(Boolean));
+  const chunksDesktopRaw = buildDesktopChunks(paragraphs);
+
   return (
-    <div className="space-y-4 text-[0.92rem] leading-[1.9] tracking-[0.005em] text-[var(--text)] md:text-[1rem] md:leading-[1.85]">
-      {paragraphs.map((paragraph) => (
-        <p key={paragraph} className="whitespace-pre-line rounded-[1.25rem] bg-white/45 px-4 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.55)] ring-1 ring-white/50 md:px-5">
-          {paragraph}
-        </p>
-      ))}
-    </div>
+    <>
+      {/* Mobile: unchanged layout & typography */}
+      <div className="max-md:mx-auto max-md:max-w-[min(100%,24rem)] space-y-4 text-[var(--text)] max-md:space-y-5 max-md:text-base max-md:leading-7 max-md:tracking-normal md:hidden">
+        {linesMobile.map((text, index) => (
+          <p
+            key={`m-${index}`}
+            className="break-words rounded-[1.25rem] bg-white/45 px-5 py-3.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.55)] ring-1 ring-white/50"
+          >
+            {text}
+          </p>
+        ))}
+      </div>
+
+      {/* Desktop: narrower measure, fewer boxes, relaxed type */}
+      <div className="hidden md:block md:w-full md:max-w-[51rem] md:mx-auto md:space-y-5 md:text-[var(--text)]">
+        {chunksDesktopRaw.map((rawChunk, index) => {
+          const { text, preserveBreaks } = formatDesktopChunk(rawChunk);
+          if (!text) return null;
+          const isLead = index < desktopLeadCount;
+          return (
+            <p
+              key={`d-${index}`}
+              className={`break-words rounded-[1.35rem] bg-white/38 px-7 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.5)] ring-1 ring-white/55 md:text-lg md:leading-8 ${
+                preserveBreaks ? "whitespace-pre-line" : ""
+              } ${
+                isLead
+                  ? "md:text-xl md:font-semibold md:leading-snug md:text-[var(--text)] md:ring-[var(--primary-soft)]/50 md:bg-gradient-to-br md:from-white/55 md:to-[var(--primary-soft)]/18"
+                  : ""
+              }`}
+            >
+              {text}
+            </p>
+          );
+        })}
+      </div>
+    </>
   );
 }
 
@@ -220,16 +280,16 @@ function SolutionCard({
   paragraphs: string[];
 }) {
   return (
-    <div className="rounded-[1.65rem] border border-[var(--primary-soft)]/80 bg-gradient-to-br from-white/82 via-[#fff9fd]/70 to-[var(--primary-soft)]/26 p-4 shadow-[0_12px_28px_rgba(149,120,198,0.08)] md:p-6">
+    <div className="rounded-[1.65rem] border border-[var(--primary-soft)]/80 bg-gradient-to-br from-white/82 via-[#fff9fd]/70 to-[var(--primary-soft)]/26 p-6 shadow-[0_12px_28px_rgba(149,120,198,0.08)]">
       <div className="flex items-start gap-3">
         <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/78 text-lg shadow-sm ring-1 ring-white/80" aria-hidden>
           {emoji}
         </span>
-        <h3 className="pt-1 text-base font-semibold leading-snug text-[var(--primary-deep)] md:text-lg">
+        <h3 className="pt-1 text-base font-semibold leading-snug text-[var(--primary-deep)] md:text-xl md:leading-snug">
           {title}
         </h3>
       </div>
-      <div className="mt-4">
+      <div className="mt-5 max-md:mt-5">
         <ContentBlock paragraphs={paragraphs} />
       </div>
     </div>

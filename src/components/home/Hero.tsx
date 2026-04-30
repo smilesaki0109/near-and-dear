@@ -76,11 +76,11 @@ export function Hero({ locale }: Props) {
 
         <div className="relative">
           <h1
-            className={`text-[1.45rem] font-semibold leading-[1.18] tracking-[-0.02em] text-[var(--text)] sm:text-4xl md:text-[2.35rem] ${fraunces.className}`}
+            className={`text-[1.45rem] font-semibold leading-[1.18] tracking-[-0.02em] text-[var(--text)] max-sm:leading-snug sm:text-4xl md:text-[2.35rem] ${fraunces.className}`}
           >
             {t.heroTitle}
           </h1>
-          <p className="mt-4 max-w-2xl text-sm leading-[1.7] text-[var(--text-muted)] md:mt-5 md:text-lg md:leading-relaxed">
+          <p className="mt-4 max-w-2xl text-sm leading-[1.7] text-[var(--text-muted)] max-md:max-w-md max-md:leading-7 md:mt-5 md:text-lg md:leading-relaxed">
             {t.heroSubtitle}
           </p>
           <div className="-mx-1 mt-5 flex flex-nowrap items-center gap-2 overflow-x-auto px-1 pb-2 md:hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">

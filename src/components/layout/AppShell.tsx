@@ -51,7 +51,7 @@ function FloatingLanguageSwitch({
 
   return (
     <div
-      className="fixed right-4 top-[calc(env(safe-area-inset-top)+0.9rem)] z-40 flex rounded-full border border-white/75 bg-white/82 p-1 shadow-[0_12px_32px_rgba(54,47,61,0.12)] ring-1 ring-white/80 backdrop-blur-xl md:right-6 md:top-5"
+      className="fixed right-3 top-[calc(env(safe-area-inset-top)+0.75rem)] z-40 flex items-center rounded-full border border-white/70 bg-white/78 p-0.5 shadow-[0_8px_24px_rgba(54,47,61,0.1)] ring-1 ring-white/75 backdrop-blur-xl md:right-6 md:top-5 md:bg-white/82 md:p-1 md:shadow-[0_12px_32px_rgba(54,47,61,0.12)]"
       aria-label="Language selector"
     >
       {languages.map((item) => (
@@ -59,7 +59,7 @@ function FloatingLanguageSwitch({
           key={item.locale}
           type="button"
           onClick={() => onLocaleChange(item.locale)}
-          className={`rounded-full px-3 py-1.5 text-[0.68rem] font-bold transition active:scale-95 ${
+          className={`rounded-full px-2 py-1 text-[0.62rem] font-semibold transition active:scale-95 md:px-3 md:py-1.5 md:text-[0.68rem] md:font-bold ${
             locale === item.locale
               ? "bg-gradient-to-br from-[var(--primary-soft)] to-[#fff0f7] text-[var(--primary-deep)] shadow-sm"
               : "text-[var(--text-muted)] hover:bg-white/75"

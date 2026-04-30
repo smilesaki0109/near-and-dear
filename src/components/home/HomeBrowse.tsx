@@ -97,7 +97,7 @@ export function HomeBrowse() {
               <p className="text-[0.65rem] font-bold uppercase tracking-[0.22em] text-[var(--primary-deep)]/70">
                 {locale === "ja" ? "クイック選択" : "Quick pick"}
               </p>
-              <h2 className="mt-1 text-lg font-semibold tracking-[-0.02em] text-[var(--text)]">
+              <h2 className="mt-1 text-lg font-semibold leading-snug tracking-[-0.02em] text-[var(--text)]">
                 {locale === "ja"
                   ? "何から始める？"
                   : locale === "tl"
@@ -132,10 +132,10 @@ export function HomeBrowse() {
           </p>
           <div className="mt-4 grid gap-6 md:grid-cols-[1fr_0.8fr] md:items-center">
             <div>
-              <h2 className="text-2xl font-semibold tracking-[-0.02em] text-[var(--text)] md:text-4xl">
+              <h2 className="text-2xl font-semibold tracking-[-0.02em] text-[var(--text)] max-md:text-xl max-md:leading-tight md:text-4xl">
                 {home.whyTitle}
               </h2>
-              <p className="mt-4 max-w-2xl text-sm leading-[1.8] text-[var(--text-muted)] md:text-base md:leading-relaxed">
+              <p className="mt-4 max-w-2xl text-sm leading-[1.8] text-[var(--text-muted)] max-md:mx-auto max-md:mt-5 max-md:max-w-md max-md:text-base max-md:leading-7 md:text-base md:leading-relaxed">
                 {home.whyBody}
               </p>
             </div>
@@ -162,7 +162,7 @@ export function HomeBrowse() {
             <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[var(--primary-deep)]/80">
               {home.howKicker}
             </p>
-            <h2 className="mt-3 text-2xl font-semibold tracking-[-0.02em] text-[var(--text)] md:text-4xl">
+            <h2 className="mt-3 text-2xl font-semibold tracking-[-0.02em] text-[var(--text)] max-md:text-xl max-md:leading-tight md:text-4xl">
               {home.howTitle}
             </h2>
           </div>
@@ -186,15 +186,15 @@ export function HomeBrowse() {
                     >
                       Step {index + 1}
                     </span>
-                    <h3 className="mt-4 text-xl font-semibold leading-tight tracking-[-0.02em] text-[var(--text)]">
-                      {step.title}
-                    </h3>
+                <h3 className="mt-4 text-xl font-semibold leading-snug tracking-[-0.02em] text-[var(--text)] max-md:text-lg">
+                  {step.title}
+                </h3>
                   </div>
                   <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-[1.35rem] bg-white/68 ring-1 ring-white/80">
                     {mobileStepCards[index].art}
                   </div>
                 </div>
-                <p className="relative mt-5 text-sm leading-relaxed text-[var(--text-muted)]">
+                <p className="relative mt-5 text-sm leading-relaxed text-[var(--text-muted)] max-md:text-base max-md:leading-7">
                   {step.body}
                 </p>
               </article>
@@ -230,11 +230,11 @@ export function HomeBrowse() {
             <div>
               <h2
                 id="cards-heading"
-                className="text-2xl font-semibold tracking-[-0.02em] text-[var(--text)] md:text-4xl"
+                className="text-2xl font-semibold tracking-[-0.02em] text-[var(--text)] max-md:text-xl max-md:leading-tight md:text-4xl"
               >
                 {t.cardsHeading}
               </h2>
-              <p className="mt-3 max-w-xl text-sm leading-[1.8] text-[var(--text-muted)] md:leading-relaxed">
+              <p className="mt-3 max-w-xl text-sm leading-[1.8] text-[var(--text-muted)] max-md:text-base max-md:leading-7 md:leading-relaxed">
                 {home.cardsBody}
               </p>
               <div
@@ -264,10 +264,10 @@ export function HomeBrowse() {
               <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[var(--primary-deep)]/80">
                 Japan
               </p>
-              <h2 className="mt-3 text-2xl font-semibold tracking-[-0.02em] text-[var(--text)] md:text-4xl">
+              <h2 className="mt-3 text-2xl font-semibold tracking-[-0.02em] text-[var(--text)] max-md:text-xl max-md:leading-tight md:text-4xl">
                 {home.japanTitle}
               </h2>
-              <p className="mt-3 max-w-2xl text-sm leading-[1.8] text-[var(--text-muted)] md:leading-relaxed">
+              <p className="mt-3 max-w-2xl text-sm leading-[1.8] text-[var(--text-muted)] max-md:text-base max-md:leading-7 md:leading-relaxed">
                 {home.japanBody}
               </p>
               <div className="mt-4 flex flex-nowrap gap-2 overflow-hidden md:flex-wrap">
@@ -311,10 +311,10 @@ export function HomeBrowse() {
           <PopSticker className="bottom-5 right-16 -rotate-6 hidden lg:flex">🍜</PopSticker>
           <div className="relative grid gap-6 md:grid-cols-[1fr_auto] md:items-center">
             <div>
-              <h2 className="text-2xl font-semibold tracking-[-0.02em] text-[var(--text)] md:text-4xl">
+              <h2 className="text-2xl font-semibold tracking-[-0.02em] text-[var(--text)] max-md:text-xl max-md:leading-tight md:text-4xl">
                 {home.mapTitle}
               </h2>
-              <p className="mt-4 max-w-2xl text-sm leading-[1.8] text-[var(--text-muted)] md:text-base md:leading-relaxed">
+              <p className="mt-4 max-w-2xl text-sm leading-[1.8] text-[var(--text-muted)] max-md:text-base max-md:leading-7 md:text-base md:leading-relaxed">
                 {home.mapBody}
               </p>
             </div>
@@ -335,10 +335,10 @@ export function HomeBrowse() {
           <p className="text-4xl" aria-hidden>
             ✨
           </p>
-          <h2 className="mt-4 text-2xl font-semibold tracking-[-0.02em] text-[var(--text)] md:text-4xl">
+          <h2 className="mt-4 text-2xl font-semibold tracking-[-0.02em] text-[var(--text)] max-md:text-xl max-md:leading-tight md:text-4xl">
             {home.ctaTitle}
           </h2>
-          <p className="mx-auto mt-4 max-w-xl text-sm leading-[1.8] text-[var(--text-muted)] md:text-base md:leading-relaxed">
+          <p className="mx-auto mt-4 max-w-xl text-sm leading-[1.8] text-[var(--text-muted)] max-md:text-base max-md:leading-7 md:text-base md:leading-relaxed">
             {home.ctaBody}
           </p>
           <Link
@@ -349,7 +349,7 @@ export function HomeBrowse() {
           </Link>
         </section>
 
-        <footer className="mt-12 border-t border-[var(--line)]/80 pt-8 text-center text-sm leading-relaxed text-[var(--text-muted)] md:mt-20 md:pt-10">
+        <footer className="mt-12 border-t border-[var(--line)]/80 pt-8 text-center text-xs leading-relaxed text-[var(--text-muted)] max-md:max-w-md max-md:mx-auto md:mt-20 md:pt-10 md:text-sm">
           {t.footerNote}
         </footer>
       </div>
