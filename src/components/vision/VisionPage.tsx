@@ -233,11 +233,11 @@ function ContentBlock({
   return (
     <>
       {/* Mobile: unchanged layout & typography */}
-      <div className="max-md:mx-auto max-md:max-w-[min(100%,24rem)] space-y-4 text-[var(--text)] max-md:space-y-5 max-md:text-base max-md:leading-7 max-md:tracking-normal md:hidden">
+      <div className="max-md:mx-auto max-md:max-w-[min(100%,24rem)] space-y-4 text-[var(--text)] max-md:space-y-5 max-md:text-base max-md:tracking-normal md:hidden">
         {linesMobile.map((text, index) => (
           <p
             key={`m-${index}`}
-            className="break-words rounded-[1.25rem] bg-white/45 px-5 py-3.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.55)] ring-1 ring-white/50"
+            className="break-words rounded-[1.25rem] bg-white/45 px-5 py-3.5 leading-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.55)] ring-1 ring-white/50"
           >
             {text}
           </p>
