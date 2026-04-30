@@ -189,4 +189,56 @@ body {
   animation: splash-text-in 0.9s ease-out 1.15s both;
 }
 
+/* Company Spots mobile leaderboard */
+@keyframes ranking-section-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-ranking-section {
+  animation: ranking-section-in 0.58s ease-out both;
+}
+
+@keyframes rank-row-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-rank-row {
+  animation: rank-row-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--rank-stagger, 0s);
+}
+
+@keyframes rank-first-glow {
+  0%,
+  100% {
+    box-shadow:
+      0 12px 36px rgba(149, 120, 198, 0.14),
+      0 0 0 1px rgba(255, 255, 255, 0.65),
+      0 0 22px rgba(255, 214, 165, 0.35);
+  }
+  50% {
+    box-shadow:
+      0 14px 40px rgba(149, 120, 198, 0.18),
+      0 0 0 1px rgba(255, 255, 255, 0.75),
+      0 0 36px rgba(255, 224, 180, 0.55);
+  }
+}
+
+.rank-first-glow {
+  animation: rank-first-glow 2.6s ease-in-out infinite;
+}
+
 
