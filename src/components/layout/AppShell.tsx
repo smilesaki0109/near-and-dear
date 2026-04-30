@@ -182,8 +182,10 @@ function MobileTabBar({ locale }: { locale: Locale }) {
   const pathname = usePathname();
   const isCreate = pathname.startsWith("/create");
   const isMap = pathname === "/map";
+  const isCompanySpots = pathname === "/company-spots";
   const isHome = pathname === "/";
   const isVision = pathname === "/vision";
+  const isCompany = pathname === "/company";
 
   const items = [
     {
@@ -199,10 +201,22 @@ function MobileTabBar({ locale }: { locale: Locale }) {
       active: isMap,
     },
     {
+      href: "/company-spots",
+      label: locale === "ja" ? "行きたい" : locale === "tl" ? "Lugar" : "Spots",
+      icon: PinTabIcon,
+      active: isCompanySpots,
+    },
+    {
       href: "/",
       label: locale === "ja" ? "作る" : locale === "tl" ? "Gawa" : "Create",
       icon: PlusTabIcon,
       active: isCreate,
+    },
+    {
+      href: "/company",
+      label: locale === "ja" ? "会社" : "Company",
+      icon: BuildingTabIcon,
+      active: isCompany,
     },
     {
       href: "/vision",
@@ -265,6 +279,15 @@ function MapTabIcon(props: SVGProps<SVGSVGElement>) {
   );
 }
 
+function PinTabIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden {...props}>
+      <path d="M12 21s6-5.2 6-11a6 6 0 0 0-12 0c0 5.8 6 11 6 11Z" stroke="currentColor" strokeWidth="2" />
+      <path d="M9.8 10.2h4.4M12 8v4.4" stroke="currentColor" strokeLinecap="round" strokeWidth="2" />
+    </svg>
+  );
+}
+
 function PlusTabIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg viewBox="0 0 24 24" fill="none" aria-hidden {...props}>
@@ -288,6 +311,20 @@ function HeartTabIcon(props: SVGProps<SVGSVGElement>) {
     <svg viewBox="0 0 24 24" fill="none" aria-hidden {...props}>
       <path
         d="M12 20s-7-4.4-7-10a4.2 4.2 0 0 1 7-3.1A4.2 4.2 0 0 1 19 10c0 5.6-7 10-7 10Z"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+      />
+    </svg>
+  );
+}
+
+function BuildingTabIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden {...props}>
+      <path
+        d="M5 20V6.8C5 5.8 5.8 5 6.8 5h5.4c1 0 1.8.8 1.8 1.8V20M14 10h3.2c1 0 1.8.8 1.8 1.8V20M8 9h3M8 13h3M8 17h3M16 14h1"
         stroke="currentColor"
         strokeLinecap="round"
         strokeLinejoin="round"

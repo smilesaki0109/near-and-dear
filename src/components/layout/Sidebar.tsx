@@ -24,8 +24,10 @@ export function Sidebar({ locale, onLocaleChange }: Props) {
   const pathname = usePathname();
   const isHome = pathname === "/";
   const isMap = pathname === "/map";
+  const isCompanySpots = pathname === "/company-spots";
   const isCreate = pathname.startsWith("/create");
   const isVision = pathname === "/vision";
+  const isCompany = pathname === "/company";
   const navItems = [
     {
       href: "/",
@@ -40,6 +42,25 @@ export function Sidebar({ locale, onLocaleChange }: Props) {
       icon: <CatMapIcon className="h-10 w-10" />,
       color: "from-[#eef7ff] to-[#dff0ff]",
       active: isMap,
+    },
+    {
+      href: "/company-spots",
+      label:
+        locale === "ja"
+          ? "行きたい場所"
+          : locale === "tl"
+            ? "Mga Lugar"
+            : "Company Spots",
+      icon: <CatPawIcon className="h-10 w-10" />,
+      color: "from-[#fff9f5] to-[#ffe9ef]",
+      active: isCompanySpots,
+    },
+    {
+      href: "/company",
+      label: locale === "ja" ? "会社向け" : "Company",
+      icon: <CatExploreIcon className="h-10 w-10" />,
+      color: "from-[#f0fbf5] to-[#ddf4e8]",
+      active: isCompany,
     },
     {
       href: "/vision",
@@ -58,7 +79,7 @@ export function Sidebar({ locale, onLocaleChange }: Props) {
     {
       href: "/#cards",
       label: locale === "ja" ? "さがす" : "Explore",
-      icon: <CatExploreIcon className="h-10 w-10" />,
+      icon: <CatCloudIcon className="h-10 w-10" />,
       color: "from-[#f0fbf5] to-[#ddf4e8]",
       active: false,
     },
