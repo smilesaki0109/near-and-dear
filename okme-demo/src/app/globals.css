@@ -1,0 +1,122 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f7f8fa;
+  --foreground: #111827;
+
+  /* OKme! refined palette */
+  --navy: #0b1f3a;
+  --blue: #2563eb;
+  --blue-strong: #1d4ed8;
+  --orange: #f97316;
+  --orange-strong: #ea670c;
+  --bluegrey: #e8eef5;
+  --ink: #111827;
+  --sub: #5b6472;
+  --line: #e6eaf0;
+  --card: #ffffff;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-navy: var(--navy);
+  --color-brand-blue: var(--blue);
+  --color-brand-blue-strong: var(--blue-strong);
+  --color-orange: var(--orange);
+  --color-orange-strong: var(--orange-strong);
+  --color-bluegrey: var(--bluegrey);
+  --color-ink: var(--ink);
+  --color-sub: var(--sub);
+  --color-line: var(--line);
+  --color-card: var(--card);
+  --font-sans: var(--font-inter);
+}
+
+body {
+  background: var(--background);
+  color: var(--ink);
+  font-family: var(--font-inter), var(--font-jp), system-ui, -apple-system,
+    "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+  font-feature-settings: "palt" 1;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  min-height: 100dvh;
+}
+
+button,
+a,
+input,
+textarea {
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease,
+    box-shadow 160ms ease,
+    opacity 160ms ease;
+}
+
+textarea {
+  resize: none;
+}
+
+/* Standard product card: white, hairline border, subtle shadow */
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  box-shadow:
+    0 1px 2px rgba(16, 24, 40, 0.04),
+    0 8px 20px -16px rgba(16, 24, 40, 0.18);
+}
+
+.card-flat {
+  background: var(--card);
+  border: 1px solid var(--line);
+}
+
+/* Glass panel used ONLY over the camera feed (dark context) */
+.glass-ar {
+  background: rgba(11, 31, 58, 0.5);
+  backdrop-filter: blur(8px) saturate(120%);
+  -webkit-backdrop-filter: blur(8px) saturate(120%);
+  border: 1px solid rgba(232, 238, 245, 0.22);
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-fade-up {
+  animation: fade-up 500ms ease both;
+}
+
+@keyframes scan {
+  0% {
+    transform: translateY(0%);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateY(900%);
+    opacity: 0;
+  }
+}
+.animate-scan {
+  animation: scan 5s linear infinite;
+}

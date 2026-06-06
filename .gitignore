@@ -1,6 +1,9 @@
 # Dependencies
 node_modules
 
+# Local Python tooling (image processing)
+.pytools/
+
 # Next.js
 .next/
 out/
