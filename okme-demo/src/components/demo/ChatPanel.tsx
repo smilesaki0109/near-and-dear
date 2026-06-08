@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { OkmeImage } from "@/components/brand";
 import { SendIcon, MicIcon } from "@/components/icons";
+import { timelineScenes } from "@/lib/timeline";
 
 type Role = "ai" | "user";
 type Message = { id: number; role: Role; text: string };
@@ -29,16 +30,35 @@ const MOCK_REPLIES = [
 
 const SUGGESTIONS = ["今日の予定は？", "疲れたかも", "おすすめの休憩は？"];
 
-export function ChatPanel() {
+export function ChatPanel({
+  injectedSceneId,
+}: {
+  /** オフィスデモのタイムラインから連動して追記するシーンID */
+  injectedSceneId?: string | null;
+}) {
   const [messages, setMessages] = useState<Message[]>(INITIAL);
   const [input, setInput] = useState("");
   const [typing, setTyping] = useState(false);
   const scrollRef = useRef<HTMLDivElement | null>(null);
   const replyIdx = useRef(0);
+  const injected = useRef<Set<string>>(new Set());
 
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
   }, [messages, typing]);
+
+  // タイムラインのシーンに合わせて、OKme! のメッセージをチャットへ追記する。
+  // 1シーンにつき1回だけ（ループしても重複追記しない）。
+  useEffect(() => {
+    if (!injectedSceneId || injected.current.has(injectedSceneId)) return;
+    const scene = timelineScenes.find((s) => s.id === injectedSceneId);
+    if (!scene?.chatMessage) return;
+    injected.current.add(injectedSceneId);
+    setMessages((m) => [
+      ...m,
+      { id: Date.now() + Math.floor(Math.random() * 1000), role: "ai", text: scene.chatMessage! },
+    ]);
+  }, [injectedSceneId]);
 
   const send = (text: string) => {
     const trimmed = text.trim();
