@@ -5,7 +5,17 @@ import { CameraIcon } from "@/components/icons";
 
 type CamStatus = "idle" | "requesting" | "live" | "denied" | "unsupported";
 
-export function CameraStage({ children }: { children: React.ReactNode }) {
+export function CameraStage({
+  children,
+  facingMode = "environment",
+  autoStart = false,
+}: {
+  children: React.ReactNode;
+  /** 使用するカメラ（前面=user / 背面=environment） */
+  facingMode?: "user" | "environment";
+  /** マウント時に自動でカメラを起動する */
+  autoStart?: boolean;
+}) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const [status, setStatus] = useState<CamStatus>("idle");
@@ -21,11 +31,19 @@ export function CameraStage({ children }: { children: React.ReactNode }) {
       return;
     }
     setStatus("requesting");
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({
-        video: { facingMode: "environment", width: { ideal: 1280 } },
+    const tryGet = (mode: "user" | "environment") =>
+      navigator.mediaDevices.getUserMedia({
+        video: { facingMode: mode, width: { ideal: 1280 } },
         audio: false,
       });
+    try {
+      let stream: MediaStream;
+      try {
+        stream = await tryGet(facingMode);
+      } catch {
+        // 指定カメラが使えない場合（PCに背面カメラが無い等）は反対側へフォールバック
+        stream = await tryGet(facingMode === "environment" ? "user" : "environment");
+      }
       streamRef.current = stream;
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
@@ -35,7 +53,11 @@ export function CameraStage({ children }: { children: React.ReactNode }) {
     } catch {
       setStatus("denied");
     }
-  }, []);
+  }, [facingMode]);
+
+  useEffect(() => {
+    if (autoStart) start();
+  }, [autoStart, start]);
 
   useEffect(() => () => stop(), [stop]);
 

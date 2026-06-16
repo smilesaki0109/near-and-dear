@@ -2,14 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 
-/** 再生して静止に入るまでの長さ（秒）。 */
-const TIMELINE_LENGTH = 50;
-
-/** 50秒フレームで静止して待機する時間（ミリ秒）。経過後に先頭から再開。 */
-const HOLD_MS = 10000;
-
 /** 歩行シーン（一人称視点・AI生成）。順番に廊下→執務室→会議室前へ。 */
-const WALK_SCENES = [
+const OFFICE_WALK_SCENES = [
   { src: "/images/office/office-walk-1.png", anim: "animate-office-scene-a" },
   { src: "/images/office/office-walk-2.png", anim: "animate-office-scene-b" },
   { src: "/images/office/office-walk-3.png", anim: "animate-office-scene-c" },
@@ -24,18 +18,63 @@ const WALK_SCENES = [
  */
 export function OfficeStage({
   children,
+  volume = 70,
+  videoSrc = "/videos/download (2).mp4",
+  timelineLength = 55,
+  holdMs = 3500,
+  label = "オフィスデモ映像",
+  showWalkFallback = true,
 }: {
-  /** 現在の再生秒数（0〜50）を受け取ってオーバーレイを描画する render-prop */
+  /** 現在の再生秒数を受け取ってオーバーレイを描画する render-prop */
   children: (currentTime: number) => React.ReactNode;
+  /** 動画音声の音量（0〜100） */
+  volume?: number;
+  /** 再生する動画ファイルのパス */
+  videoSrc?: string;
+  /** 再生して静止に入るまでの長さ（秒） */
+  timelineLength?: number;
+  /** 終端で静止して待機する時間（ミリ秒）。経過後に先頭から再開 */
+  holdMs?: number;
+  /** 右下に出すモードラベル */
+  label?: string;
+  /** AI生成オフィス画像のフォールバックを表示するか（life等では非表示） */
+  showWalkFallback?: boolean;
 }) {
+  const TIMELINE_LENGTH = timelineLength;
+  const HOLD_MS = holdMs;
   const [playable, setPlayable] = useState(false);
-  const [muted, setMuted] = useState(true);
+  const [muted, setMuted] = useState(false);
+  const [started, setStarted] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const videoRef = useRef<HTMLVideoElement>(null);
 
+  // 音量をvideo要素へ反映
+  useEffect(() => {
+    if (videoRef.current) videoRef.current.volume = Math.max(0, Math.min(1, volume / 100));
+  }, [volume, playable]);
+
+  // 「デモを再生」ボタンで開始。ここがユーザー操作なので音声/自動再生も許可される。
+  const beginDemo = () => {
+    setStarted(true);
+    const v = videoRef.current;
+    if (v) {
+      try {
+        v.currentTime = 0;
+      } catch {
+        /* ignore */
+      }
+      v.play().catch(() => {});
+    }
+  };
+
   // video.currentTime を監視してオーバーレイへ渡す。
   // 動画が無い／再生できない場合は合成タイマーで 0〜50 秒をループさせる。
+  // started が true になるまではタイムラインを進めない（0秒で待機）。
   useEffect(() => {
+    if (!started) {
+      setCurrentTime(0);
+      return;
+    }
     let raf = 0;
     let last = performance.now();
     let synthetic = 0;
@@ -89,7 +128,7 @@ export function OfficeStage({
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, [playable]);
+  }, [playable, started, TIMELINE_LENGTH, HOLD_MS]);
 
   const toggleSound = () => {
     const v = videoRef.current;
@@ -104,33 +143,35 @@ export function OfficeStage({
   };
 
   return (
-    <div className="relative aspect-video max-h-[72vh] w-full overflow-hidden rounded-2xl border border-line bg-navy shadow-sm">
+    <div className="relative aspect-video max-h-[86vh] w-full overflow-hidden rounded-xl bg-black ring-1 ring-sky-300/20 shadow-[0_0_0_1px_rgba(125,211,252,0.12),0_0_60px_-8px_rgba(56,130,246,0.55)]">
       {/* CSS fallback (deepest layer, only seen if images fail) */}
       <OfficeFallback />
 
-      {/* AI生成オフィス画像の歩行スライドショー */}
-      <div className="absolute inset-0">
-        {WALK_SCENES.map((scene) => (
-          <div
-            key={scene.src}
-            className={`absolute inset-0 ${scene.anim}`}
-            style={{ willChange: "opacity" }}
-          >
+      {/* AI生成オフィス画像の歩行スライドショー（officeのフォールバックのみ） */}
+      {showWalkFallback && (
+        <div className="absolute inset-0">
+          {OFFICE_WALK_SCENES.map((scene) => (
             <div
-              className="absolute inset-0 animate-office-zoom bg-cover bg-center"
-              style={{ backgroundImage: `url('${scene.src}')`, willChange: "transform" }}
-            />
-          </div>
-        ))}
-      </div>
+              key={scene.src}
+              className={`absolute inset-0 ${scene.anim}`}
+              style={{ willChange: "opacity" }}
+            >
+              <div
+                className="absolute inset-0 animate-office-zoom bg-cover bg-center"
+                style={{ backgroundImage: `url('${scene.src}')`, willChange: "transform" }}
+              />
+            </div>
+          ))}
+        </div>
+      )}
 
-      {/* 任意: 実写動画を配置した場合は最優先で再生 */}
+      {/* 実写動画を最優先で再生（再生開始はボタン押下後） */}
       <video
         ref={videoRef}
-        src="/videos/office-walk-demo.mp4"
-        autoPlay
+        src={videoSrc}
         muted={muted}
         playsInline
+        preload="auto"
         onCanPlay={() => setPlayable(true)}
         onError={() => setPlayable(false)}
         className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ${
@@ -138,20 +179,46 @@ export function OfficeStage({
         }`}
       />
 
-      {/* slight darken for AR readability */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/15 via-transparent to-black/40" />
+      {/* lens vignette + slight darken for AR readability */}
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(125%_125%_at_50%_50%,transparent_52%,rgba(0,0,0,0.6)_100%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/35" />
+      {/* faint sky tint to feel like an AR lens */}
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(80%_60%_at_50%_0%,rgba(56,130,246,0.10),transparent_60%)]" />
 
       {/* AR HUD frame */}
       <div className="pointer-events-none absolute inset-0 z-20">
         <CornerBrackets />
-        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent animate-scan" />
+        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-sky-300/50 to-transparent animate-scan" />
+        <div className="absolute inset-x-10 bottom-9 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
       </div>
 
-      {/* Overlays (time-synced) */}
-      <div className="absolute inset-0 z-30">{children(currentTime)}</div>
+      {/* Overlays (time-synced) — 再生開始後のみ表示 */}
+      {started && <div className="absolute inset-0 z-30">{children(currentTime)}</div>}
 
-      {/* sound toggle (動画があるときだけ表示) */}
-      {playable && (
+      {/* 開始前：再生ボタンのオーバーレイ */}
+      {!started && (
+        <button
+          type="button"
+          onClick={beginDemo}
+          className="group absolute inset-0 z-50 flex flex-col items-center justify-center gap-5 bg-black/55 backdrop-blur-[2px] transition"
+          aria-label="デモを再生"
+        >
+          <span className="flex h-20 w-20 items-center justify-center rounded-full bg-white/10 ring-1 ring-white/40 shadow-[0_0_40px_-6px_rgba(125,211,252,0.6)] transition group-hover:scale-105 group-hover:bg-white/15">
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="white" className="ml-1">
+              <path d="M8 5v14l11-7z" />
+            </svg>
+          </span>
+          <span className="text-lg font-semibold tracking-wide text-white">
+            デモを再生
+          </span>
+          <span className="text-[12px] tracking-[0.2em] text-white/55">
+            TAP TO START AR DEMO
+          </span>
+        </button>
+      )}
+
+      {/* sound toggle (再生中・動画があるときだけ表示) */}
+      {started && playable && (
         <button
           type="button"
           onClick={toggleSound}
@@ -164,9 +231,15 @@ export function OfficeStage({
       )}
 
       {/* mode label */}
-      <div className="absolute bottom-3 right-3 z-40 rounded-full bg-black/40 px-3 py-1 text-[10px] text-white/80 backdrop-blur">
-        {playable ? "オフィスデモ映像" : "オフィスウォーク（AI生成・3シーン）"}
-      </div>
+      {started && (
+        <div className="absolute bottom-3 right-3 z-40 rounded-full bg-black/40 px-3 py-1 text-[10px] text-white/80 backdrop-blur">
+          {playable
+            ? label
+            : showWalkFallback
+              ? "オフィスウォーク（AI生成・3シーン）"
+              : label}
+        </div>
+      )}
     </div>
   );
 }
@@ -225,13 +298,13 @@ function SoundOffIcon() {
 }
 
 function CornerBrackets() {
-  const corner = "absolute h-7 w-7 border-white/45";
+  const corner = "absolute h-9 w-9 border-sky-300/55";
   return (
     <>
-      <div className={`${corner} left-3.5 top-3.5 border-l border-t rounded-tl`} />
-      <div className={`${corner} right-3.5 top-3.5 border-r border-t rounded-tr`} />
-      <div className={`${corner} bottom-3.5 left-3.5 border-b border-l rounded-bl`} />
-      <div className={`${corner} bottom-3.5 right-3.5 border-b border-r rounded-br`} />
+      <div className={`${corner} left-3 top-3 border-l-2 border-t-2 rounded-tl-md`} />
+      <div className={`${corner} right-3 top-3 border-r-2 border-t-2 rounded-tr-md`} />
+      <div className={`${corner} bottom-3 left-3 border-b-2 border-l-2 rounded-bl-md`} />
+      <div className={`${corner} bottom-3 right-3 border-b-2 border-r-2 rounded-br-md`} />
     </>
   );
 }

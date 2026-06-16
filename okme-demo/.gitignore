@@ -31,8 +31,7 @@ yarn-error.log*
 # vercel
 .vercel
 
-# large demo videos (exceeds GitHub 100MB limit; keep locally only)
-/public/videos/*.mp4
+# demo videos are committed for deployment (each under GitHub's 100MB limit)
 
 # typescript
 *.tsbuildinfo
