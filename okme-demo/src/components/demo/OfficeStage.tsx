@@ -192,8 +192,14 @@ export function OfficeStage({
         <div className="absolute inset-x-10 bottom-9 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
       </div>
 
-      {/* Overlays (time-synced) — 再生開始後のみ表示 */}
-      {started && <div className="absolute inset-0 z-30">{children(currentTime)}</div>}
+      {/* Overlays (time-synced) — 再生開始後のみ表示。
+          画面幅に合わせてオーバーレイ全体を等比スケールし、
+          大画面でもカードがMac同様の比率で表示されるようにする。 */}
+      {started && (
+        <div className="absolute inset-0 z-30 overflow-hidden">
+          <ScaledOverlay>{children(currentTime)}</ScaledOverlay>
+        </div>
+      )}
 
       {/* 開始前：再生ボタンのオーバーレイ */}
       {!started && (
@@ -240,6 +246,44 @@ export function OfficeStage({
               : label}
         </div>
       )}
+    </div>
+  );
+}
+
+/** 16:9のデザイン基準サイズ。これを基準に画面幅へ等比スケールする。 */
+const OVERLAY_BASE_W = 1024;
+const OVERLAY_BASE_H = 576;
+
+/**
+ * オーバーレイを基準サイズ(1024x576)で描画し、コンテナ幅に合わせて等比スケールする。
+ * これにより、Mac でも大型モニターでもカード類が同じ比率で表示される。
+ */
+function ScaledOverlay({ children }: { children: React.ReactNode }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [scale, setScale] = useState(1);
+
+  useEffect(() => {
+    const inner = ref.current;
+    const parent = inner?.parentElement;
+    if (!parent) return;
+    const update = () => setScale(parent.clientWidth / OVERLAY_BASE_W);
+    update();
+    const ro = new ResizeObserver(update);
+    ro.observe(parent);
+    return () => ro.disconnect();
+  }, []);
+
+  return (
+    <div
+      ref={ref}
+      style={{
+        width: OVERLAY_BASE_W,
+        height: OVERLAY_BASE_H,
+        transform: `scale(${scale})`,
+        transformOrigin: "top left",
+      }}
+    >
+      {children}
     </div>
   );
 }
