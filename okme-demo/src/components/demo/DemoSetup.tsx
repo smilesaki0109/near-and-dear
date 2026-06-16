@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { OkmeImage, OkmeLogo } from "@/components/brand";
 import type { PartnerMode } from "@/components/demo/OfficeTimelineOverlay";
+import { speakJa } from "@/lib/voice";
 
 export type Mood = "energetic" | "tired" | "focus" | "anxious";
 export type CameraMode = "office" | "front" | "back" | "life";
@@ -32,7 +33,7 @@ export const MOODS: {
     emoji: "☀️",
     image: "/images/moods/mood-energetic.png",
     message: "いいですね。今日はテンポよく進めましょう。",
-    voice: { label: "元気な声・少し高め", sample: "イェーイ！今日も頑張ろう！", pitch: 1.6, rate: 1.15 },
+    voice: { label: "元気な声・少し高め", sample: "イェーイ！今日も頑張ろう！", pitch: 1.25, rate: 1.08 },
   },
   {
     id: "tired",
@@ -40,7 +41,7 @@ export const MOODS: {
     emoji: "🍵",
     image: "/images/moods/mood-tired.png",
     message: "無理しすぎず、休憩のタイミングも一緒に見ていきます。",
-    voice: { label: "少し暗めの声", sample: "ふぅ…ゆっくりいきましょう。", pitch: 0.85, rate: 0.9 },
+    voice: { label: "少し暗めの声", sample: "ふぅ…ゆっくりいきましょう。", pitch: 0.92, rate: 0.92 },
   },
   {
     id: "focus",
@@ -48,7 +49,7 @@ export const MOODS: {
     emoji: "🎯",
     image: "/images/moods/mood-focus.png",
     message: "集中を妨げないよう、必要な情報だけを表示します。",
-    voice: { label: "ノーマルな声", sample: "集中していきましょう。", pitch: 1.0, rate: 1.0 },
+    voice: { label: "ノーマルな声", sample: "集中していきましょう。", pitch: 1.05, rate: 1.0 },
   },
   {
     id: "anxious",
@@ -56,7 +57,7 @@ export const MOODS: {
     emoji: "🌱",
     image: "/images/moods/mood-anxious.png",
     message: "大丈夫です。今日の予定と準備を一緒に整理しましょう。",
-    voice: { label: "少し悲しい声", sample: "だいじょうぶ、そばにいますよ。", pitch: 0.9, rate: 0.92 },
+    voice: { label: "少し悲しい声", sample: "だいじょうぶ、そばにいますよ。", pitch: 0.97, rate: 0.94 },
   },
 ];
 
@@ -99,25 +100,11 @@ export function DemoSetup({
   const selectedMoodObj = MOODS.find((m) => m.id === selectedMood);
   const moodMessage = selectedMoodObj?.message;
 
-  // 気分に応じた声を読み上げる（Web Speech API）。ピッチ/スピードで雰囲気を変える。
+  // 気分に応じた声を読み上げる。高品質ボイスを優先選択し、ピッチ/スピードで雰囲気を変える。
   const speakVoice = (m: (typeof MOODS)[number]) => {
-    if (typeof window === "undefined" || !window.speechSynthesis) return;
     const v = Math.max(0, Math.min(1, volume / 100));
     if (v <= 0) return;
-    try {
-      window.speechSynthesis.cancel();
-      const u = new SpeechSynthesisUtterance(m.voice.sample);
-      u.lang = "ja-JP";
-      u.pitch = m.voice.pitch;
-      u.rate = m.voice.rate;
-      u.volume = v;
-      const voices = window.speechSynthesis.getVoices();
-      const ja = voices.find((vc) => vc.lang?.toLowerCase().startsWith("ja"));
-      if (ja) u.voice = ja;
-      window.speechSynthesis.speak(u);
-    } catch {
-      /* ignore */
-    }
+    speakJa(m.voice.sample, { pitch: m.voice.pitch, rate: m.voice.rate, volume: v });
   };
 
   // --- 設定画面の効果音（Web Audio） ---

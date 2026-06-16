@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import { speakJa } from "@/lib/voice";
 
 const BUBBLE_AT = 1800; // 吹き出し表示（ms）
 const NAVIGATE_AT = 11000; // デモへ自動遷移（ms）
@@ -60,24 +61,9 @@ export default function Opening() {
   }, []);
 
   const speak = useCallback(() => {
-    try {
-      const synth = window.speechSynthesis;
-      if (!synth) return;
-      const u = new SpeechSynthesisUtterance(SPEAK_TEXT);
-      u.lang = "ja-JP";
-      u.pitch = 1.5; // 高めの可愛い声
-      u.rate = 1.04;
-      u.volume = 1;
-      const ja = synth.getVoices().filter((v) => v.lang?.toLowerCase().startsWith("ja"));
-      const fav =
-        ja.find((v) => /kyoko|mizuki|haruka|sayaka|o-ren|google|female|woman/i.test(v.name)) ||
-        ja[0];
-      if (fav) u.voice = fav;
-      synth.cancel();
-      synth.speak(u);
-    } catch {
-      /* noop */
-    }
+    // 自然で明るいトーン（高品質ボイスを優先選択）。
+    // ピッチを上げすぎると不自然になるため控えめにする。
+    speakJa(SPEAK_TEXT, { pitch: 1.15, rate: 1.02, volume: 1 });
   }, []);
 
   // 吹き出しの内容を再生（効果音＋音声）。多重再生はガード。
