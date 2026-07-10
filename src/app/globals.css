@@ -1,28 +1,27 @@
 @import "tailwindcss";
 
-/* Soft pastel theme: warmth, depth, readability (Givingli-inspired mood, original) */
+/* Refined warm theme — calm, trustworthy, not childish */
 :root {
-  --bg-page: #f7f2ed;
-  --bg-page-mid: #faf5f8;
-  --bg-sidebar: #f1ecf9;
-  --surface: #fffcfa;
+  --bg-page: #f9f6f2;
+  --bg-page-mid: #faf8f5;
+  --bg-sidebar: #f3f0f7;
+  --surface: #ffffff;
   --surface-elevated: #ffffff;
-  --text: #362f3d;
-  --text-muted: #6f6678;
-  --line: #e4dce8;
-  --line-soft: rgba(255, 255, 255, 0.65);
-  --primary: #9578c6;
-  --primary-deep: #7d62b0;
-  --primary-soft: #ebe3f7;
-  --accent-peach: #f2beb4;
-  --accent-mint: #bfe5d0;
-  --accent-sky: #b8d9f5;
-  --accent-cream: #fff6ee;
-  /* Layered shadows: ambient + contact */
-  --shadow-soft: 0 1px 2px rgba(54, 47, 61, 0.04),
-    0 12px 40px rgba(54, 47, 61, 0.07);
-  --shadow-hover: 0 4px 12px rgba(54, 47, 61, 0.06),
-    0 20px 50px rgba(54, 47, 61, 0.1);
+  --text: #2d2830;
+  --text-muted: #6b636f;
+  --line: #e8e2ea;
+  --line-soft: rgba(255, 255, 255, 0.7);
+  --primary: #8b6fae;
+  --primary-deep: #6f558f;
+  --primary-soft: #f0eaf7;
+  --accent-peach: #e8b8ad;
+  --accent-mint: #b8dcc8;
+  --accent-sky: #b0cfe8;
+  --accent-cream: #faf5ee;
+  --shadow-soft: 0 1px 2px rgba(45, 40, 48, 0.04),
+    0 8px 28px rgba(45, 40, 48, 0.06);
+  --shadow-hover: 0 4px 12px rgba(45, 40, 48, 0.06),
+    0 16px 40px rgba(45, 40, 48, 0.09);
   --shadow-card-inner: inset 0 1px 0 rgba(255, 255, 255, 0.75);
   --shadow-inset-soft: inset 0 0 0 1px rgba(255, 255, 255, 0.55);
   --radius-lg: 1.35rem;
@@ -32,22 +31,16 @@
 
 body {
   color: var(--text);
-  /* Subtle warmth + depth without loud gradients */
   background-color: var(--bg-page);
   background-image: radial-gradient(
-      1200px 600px at 12% -8%,
-      rgba(235, 227, 247, 0.85),
+      1000px 500px at 10% -5%,
+      rgba(240, 234, 247, 0.7),
       transparent 55%
     ),
     radial-gradient(
-      900px 480px at 88% 0%,
-      rgba(255, 230, 220, 0.55),
+      800px 400px at 90% 0%,
+      rgba(250, 240, 235, 0.45),
       transparent 50%
-    ),
-    radial-gradient(
-      700px 500px at 50% 100%,
-      rgba(191, 229, 208, 0.22),
-      transparent 45%
     );
   background-attachment: fixed;
 }

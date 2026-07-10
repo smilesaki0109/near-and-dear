@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useId, useRef, useState } from "react";
+import { AiMessagePolish } from "@/components/create/AiMessagePolish";
 import { AppShell } from "@/components/layout/AppShell";
 import { CreateLivePreview } from "@/components/create/CreateLivePreview";
 import type { MockCard } from "@/data/mockCards";
@@ -221,6 +222,13 @@ export function CreateCardFlow({ card }: Props) {
                 className="mt-3 w-full resize-y rounded-[var(--radius-lg)] border border-white/80 bg-white/75 px-4 py-3 text-[0.95rem] leading-relaxed text-[var(--text)] shadow-[var(--shadow-soft)] backdrop-blur-md placeholder:text-[var(--text-muted)] focus:border-[var(--primary)]/35 focus:outline-none focus:ring-2 focus:ring-[var(--primary-soft)]"
               />
             </div>
+
+            <AiMessagePolish
+              locale={locale}
+              value={message}
+              onChange={setMessage}
+              cardCategory={card.category}
+            />
 
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--text-muted)]">

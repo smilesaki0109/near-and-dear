@@ -1,15 +1,18 @@
 /**
- * Static card templates for Phase 1 (browse UI).
- * Later: replace with rows from Supabase `card_templates` (or a single table).
+ * Card templates for browse UI — categories aligned with family life abroad.
  */
 
 export type CardCategory =
-  | "encouragement"
-  | "birthday"
-  | "gratitude"
-  | "missing_home"
-  | "new_chapter"
-  | "japan";
+  | "family_birthday"
+  | "parent"
+  | "child"
+  | "miss_you"
+  | "doing_well"
+  | "thank_you"
+  | "salary_day"
+  | "new_beginning"
+  | "homesick"
+  | "seasonal_japan";
 
 export type MockCard = {
   id: string;
@@ -23,143 +26,159 @@ export type MockCard = {
 export const mockCards: MockCard[] = [
   {
     id: "1",
-    category: "japan",
-    titleEn: "Good luck is on your side",
-    titleJa: "いいことが起こりますように",
+    category: "seasonal_japan",
+    titleEn: "A little luck from Japan",
+    titleJa: "日本からの小さな幸運",
     image: "/cards/japan_pop_luckycat.png",
-    gradientClass: "from-[#ff9a9e] via-[#fad0c4] to-[#fad0c4]",
+    gradientClass: "from-[#f5ebe3] via-[#faf6f2] to-[#f0e8f4]",
   },
   {
     id: "2",
-    category: "japan",
-    titleEn: "Shine your day",
-    titleJa: "あなたの一日が輝きますように",
+    category: "doing_well",
+    titleEn: "A good day here in Japan",
+    titleJa: "日本で、いい一日でした",
     image: "/cards/japan_pop_fuji_sun.png",
-    gradientClass: "from-[#fddb92] via-[#d1fdff] to-[#c2e9fb]",
+    gradientClass: "from-[#f8f0e6] via-[#faf8f4] to-[#eef4f8]",
   },
   {
     id: "3",
-    category: "japan",
-    titleEn: "Enjoy the moment in Tokyo",
-    titleJa: "この瞬間を楽しんで",
+    category: "seasonal_japan",
+    titleEn: "Tokyo from my window",
+    titleJa: "窓から見える東京",
     image: "/cards/japan_pop_tokyo_city.png",
-    gradientClass: "from-[#a1c4fd] via-[#c2e9fb] to-[#fbc2eb]",
+    gradientClass: "from-[#eef2f8] via-[#f8f6fc] to-[#f5eef2]",
   },
   {
     id: "4",
-    category: "encouragement",
-    titleEn: "You’re doing better than you think",
-    titleJa: "あなたは思っているより、よくがんばっています",
+    category: "salary_day",
+    titleEn: "Working hard for us",
+    titleJa: "家族のために、がんばっています",
     image: "/cards/effort.png",
-    gradientClass: "from-[#e8dff5] via-[#f5e8f8] to-[#fdecef]",
+    gradientClass: "from-[#eef5f0] via-[#f6faf7] to-[#f5f0f8]",
   },
   {
     id: "5",
-    category: "birthday",
-    titleEn: "Celebrating you today",
-    titleJa: "きょうはあなたの日",
+    category: "family_birthday",
+    titleEn: "Happy birthday, from far away",
+    titleJa: "遠くから、お誕生日おめでとう",
     image: "/cards/birthday.png",
-    gradientClass: "from-[#fde2e4] via-[#fce4ec] to-[#e8dff5]",
+    gradientClass: "from-[#faf0f2] via-[#fdf8f6] to-[#f3eef8]",
   },
   {
     id: "6",
-    category: "gratitude",
-    titleEn: "Thank you for being there",
-    titleJa: "そばにいてくれてありがとう",
+    category: "thank_you",
+    titleEn: "Thank you for everything",
+    titleJa: "いつもありがとう",
     image: "/cards/cat.png",
-    gradientClass: "from-[#d9f2e3] via-[#e8f5e9] to-[#fff8f0]",
+    gradientClass: "from-[#eef6f1] via-[#f8faf7] to-[#faf6f0]",
   },
   {
     id: "7",
-    category: "missing_home",
-    titleEn: "Thinking of home with you",
-    titleJa: "ふるさとのことを、いっしょに思います",
+    category: "homesick",
+    titleEn: "Missing home today",
+    titleJa: "ふるさとが恋しい日",
     image: "/cards/matcha.png",
-    gradientClass: "from-[#dceefb] via-[#e8f0fe] to-[#f3e8ff]",
+    gradientClass: "from-[#eef3f8] via-[#f6f8fc] to-[#f2eef8]",
   },
   {
     id: "8",
-    category: "new_chapter",
-    titleEn: "Brave new step",
-    titleJa: "あたらしい一歩を、ほめたい",
+    category: "new_beginning",
+    titleEn: "A new step forward",
+    titleJa: "新しい一歩を踏み出した日",
     image: "/cards/sakura.png",
-    gradientClass: "from-[#fff3e0] via-[#ffe8e0] to-[#f5e6ff]",
+    gradientClass: "from-[#faf4ee] via-[#fdf9f5] to-[#f4eef8]",
   },
   {
     id: "9",
-    category: "encouragement",
-    titleEn: "Rest is part of strength",
-    titleJa: "やすむことも、つよさのひとつ",
+    category: "doing_well",
+    titleEn: "I'm doing well in Japan",
+    titleJa: "日本で元気にしています",
     image: "/cards/effort.png",
-    gradientClass: "from-[#e0f4f1] via-[#eef6ff] to-[#fce4ec]",
+    gradientClass: "from-[#eef6f3] via-[#f8fcfa] to-[#faf2f6]",
   },
   {
     id: "10",
-    category: "japan",
-    titleEn: "A quiet moment together",
-    titleJa: "静かな時間を、いっしょに",
+    category: "miss_you",
+    titleEn: "I wish you were here",
+    titleJa: "会いたい、そばにいてほしい",
     image: "/cards/japan_couple_window.png",
-    gradientClass: "from-[#f5e6ff] via-[#e8f0fe] to-[#fff8f0]",
+    gradientClass: "from-[#f4eef8] via-[#faf8fc] to-[#faf6f0]",
   },
   {
     id: "11",
-    category: "japan",
-    titleEn: "Peace by the lake",
-    titleJa: "湖のほとりのやすらぎ",
+    category: "parent",
+    titleEn: "To Mom and Dad",
+    titleJa: "お母さん・お父さんへ",
     image: "/cards/japan_fuji_lake.png",
-    gradientClass: "from-[#dceefb] via-[#e8f0fe] to-[#f3e8ff]",
+    gradientClass: "from-[#eef4fa] via-[#f8fafc] to-[#f2eef6]",
   },
   {
     id: "12",
-    category: "japan",
-    titleEn: "A gentle presence",
-    titleJa: "やさしく寄り添う気配",
+    category: "seasonal_japan",
+    titleEn: "A quiet moment in Japan",
+    titleJa: "日本の静かなひととき",
     image: "/cards/japan_kimono_woman.png",
-    gradientClass: "from-[#fde2e4] via-[#fce4ec] to-[#e8dff5]",
+    gradientClass: "from-[#faf0f4] via-[#fdf8fa] to-[#f0eef8]",
   },
   {
     id: "13",
-    category: "japan",
-    titleEn: "Warm lights in winter",
-    titleJa: "冬のあたたかな灯り",
+    category: "seasonal_japan",
+    titleEn: "Winter lights in Niigata",
+    titleJa: "新潟の冬の灯り",
     image: "/cards/japan_snow_village.png",
-    gradientClass: "from-[#e0f4f1] via-[#eef6ff] to-[#fce4ec]",
+    gradientClass: "from-[#eef6f4] via-[#f8fcfa] to-[#faf4f8]",
   },
   {
     id: "14",
-    category: "japan",
-    titleEn: "Walking through time",
-    titleJa: "時を歩く",
+    category: "seasonal_japan",
+    titleEn: "On my way home from work",
+    titleJa: "仕事帰りの道のり",
     image: "/cards/japan_street.png",
-    gradientClass: "from-[#fff3e0] via-[#ffe8e0] to-[#f5e6ff]",
+    gradientClass: "from-[#faf4ee] via-[#fdf9f6] to-[#f2eef8]",
   },
   {
     id: "15",
-    category: "japan",
-    titleEn: "Strength in stillness",
-    titleJa: "静けさの中の強さ",
+    category: "seasonal_japan",
+    titleEn: "Peace by the shrine",
+    titleJa: "神社のほとりのやすらぎ",
     image: "/cards/japan_torii_water.png",
-    gradientClass: "from-[#d9f2e3] via-[#e8f5e9] to-[#fff8f0]",
+    gradientClass: "from-[#eef6f0] via-[#f8faf7] to-[#faf6f0]",
   },
   {
     id: "16",
-    category: "japan",
-    titleEn: "A journey with you",
-    titleJa: "あなたと進む道",
+    category: "child",
+    titleEn: "To my child, with love",
+    titleJa: "子どもへ、愛を込めて",
     image: "/cards/japan_tram_sakura.png",
-    gradientClass: "from-[#fdecef] via-[#f5e8f8] to-[#e8dff5]",
+    gradientClass: "from-[#faf2f6] via-[#fdf8fa] to-[#f0eef8]",
   },
   {
     id: "17",
-    category: "japan",
-    titleEn: "A view just for you",
-    titleJa: "あなただけの景色",
+    category: "seasonal_japan",
+    titleEn: "Sakura season for you",
+    titleJa: "あなたに贈る桜の季節",
     image: "/cards/japan_window_sakura_castle.png",
-    gradientClass: "from-[#fce4ec] via-[#fde2e4] to-[#fff3e0]",
+    gradientClass: "from-[#faf0f4] via-[#fdf8f6] to-[#faf4ee]",
   },
 ];
 
-/** Resolve a browse card by id (used by /create/[cardId] until Supabase backs this). */
 export function getMockCardById(id: string): MockCard | undefined {
   return mockCards.find((c) => c.id === id);
 }
+
+/** Category metadata for tiles and filters. */
+export const categoryMeta: Record<
+  CardCategory,
+  { labelKey: keyof (typeof import("@/lib/i18n/ui").ui)["en"] }
+> = {
+  family_birthday: { labelKey: "categoryFamilyBirthday" },
+  parent: { labelKey: "categoryParent" },
+  child: { labelKey: "categoryChild" },
+  miss_you: { labelKey: "categoryMissYou" },
+  doing_well: { labelKey: "categoryDoingWell" },
+  thank_you: { labelKey: "categoryThankYou" },
+  salary_day: { labelKey: "categorySalaryDay" },
+  new_beginning: { labelKey: "categoryNewBeginning" },
+  homesick: { labelKey: "categoryHomesick" },
+  seasonal_japan: { labelKey: "categorySeasonalJapan" },
+};

@@ -11,9 +11,9 @@ const nunito = Nunito({
 });
 
 export const metadata: Metadata = {
-  title: "Near & Dear — gentle cards for far-away hearts",
+  title: "Near & Dear — send feelings to family far away",
   description:
-    "Browse warm, simple cards for special days and hard days—made for people living away from home.",
+    "Warm cards for workers in Japan. Celebrate birthdays, say thank you, share your daily life—and send love to family back home.",
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {

@@ -120,10 +120,10 @@ function SplashScreen({ onComplete }: { onComplete: () => void }) {
         </div>
         <div className="mt-8 space-y-4">
           <p className="near-dear-splash-text text-[1.7rem] font-semibold tracking-[-0.035em] text-[var(--text)] sm:text-[2.2rem]">
-            It’s time to unwind. <SoftHeartMark className="ml-1 inline h-[0.72em] w-[0.72em] translate-y-[0.03em]" />
+            Send feelings, not just money. <SoftHeartMark className="ml-1 inline h-[0.72em] w-[0.72em] translate-y-[0.03em]" />
           </p>
           <p className="near-dear-splash-text-delay max-w-sm text-base font-medium leading-relaxed text-[var(--text-muted)] sm:text-lg">
-            Small moments can feel like home.
+            A warm card for the family waiting at home.
           </p>
         </div>
       </div>

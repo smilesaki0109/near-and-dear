@@ -1,6 +1,7 @@
 "use client";
 
 import type { CardCategory } from "@/data/mockCards";
+import { categoryMeta } from "@/data/mockCards";
 import { ui, type Locale } from "@/lib/i18n/ui";
 
 export type CategoryFilter = "all" | CardCategory;
@@ -11,18 +12,21 @@ type Props = {
   onChange: (next: CategoryFilter) => void;
 };
 
-const categories: { id: CategoryFilter; labelKey: keyof (typeof ui)["en"] }[] =
-  [
-    { id: "all", labelKey: "categoryAll" },
-    { id: "encouragement", labelKey: "categoryEncouragement" },
-    { id: "birthday", labelKey: "categoryBirthday" },
-    { id: "gratitude", labelKey: "categoryGratitude" },
-    { id: "missing_home", labelKey: "categoryMissingHome" },
-    { id: "new_chapter", labelKey: "categoryNewChapter" },
-    { id: "japan", labelKey: "categoryJapan" },
-  ];
+const categories: CategoryFilter[] = [
+  "all",
+  "family_birthday",
+  "parent",
+  "child",
+  "miss_you",
+  "doing_well",
+  "thank_you",
+  "salary_day",
+  "new_beginning",
+  "homesick",
+  "seasonal_japan",
+];
 
-/** Pill filters: one active state, soft pastel fills when selected. */
+/** Pill filters for family-life card moments. */
 export function CategoryChips({ locale, active, onChange }: Props) {
   const t = ui[locale];
 
@@ -32,12 +36,16 @@ export function CategoryChips({ locale, active, onChange }: Props) {
         {t.chipHint}
       </p>
       <div
-        className="-mx-4 flex flex-nowrap gap-2.5 overflow-x-auto px-4 pb-2 [scrollbar-width:none] md:mx-0 md:flex-wrap md:overflow-visible md:px-0 md:pb-0 [&::-webkit-scrollbar]:hidden"
+        className="-mx-4 flex flex-nowrap gap-2 overflow-x-auto px-4 pb-2 [scrollbar-width:none] md:mx-0 md:flex-wrap md:overflow-visible md:px-0 md:pb-0 [&::-webkit-scrollbar]:hidden"
         role="group"
         aria-label={t.chipHint}
       >
-        {categories.map(({ id, labelKey }) => {
+        {categories.map((id) => {
           const selected = active === id;
+          const label =
+            id === "all"
+              ? t.categoryAll
+              : t[categoryMeta[id].labelKey];
           return (
             <button
               key={id}
@@ -45,11 +53,11 @@ export function CategoryChips({ locale, active, onChange }: Props) {
               onClick={() => onChange(id)}
               className={`shrink-0 rounded-full px-4 py-2.5 text-sm font-medium transition duration-200 active:scale-95 md:active:scale-100 ${
                 selected
-                  ? "bg-gradient-to-r from-[var(--primary-soft)] to-[#fff0f7] text-[var(--primary-deep)] shadow-[var(--shadow-soft)] ring-1 ring-[var(--primary)]/25 md:bg-[var(--primary-soft)] md:bg-none"
-                  : "bg-white/78 text-[var(--text)] shadow-[var(--shadow-soft)] ring-1 ring-white/80 hover:bg-white hover:shadow-[var(--shadow-hover)]"
+                  ? "bg-[var(--primary)] text-white shadow-[var(--shadow-soft)]"
+                  : "bg-white text-[var(--text)] shadow-[var(--shadow-soft)] ring-1 ring-[var(--line)]/80 hover:ring-[var(--primary)]/25"
               }`}
             >
-              {t[labelKey]}
+              {label}
             </button>
           );
         })}
